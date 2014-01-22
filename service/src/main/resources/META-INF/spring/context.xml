@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+
+    <context:component-scan base-package="com.usavich"/>
+
+    <bean id="accountService" class="com.usavich.service.account.impl.AccountServiceImpl"/>
+    <bean id="missionService" class="com.usavich.service.mission.impl.MissionServiceImpl"/>
+    <bean id="productService" class="com.usavich.service.product.impl.ProductServiceImpl"/>
+    <bean id="runningService" class="com.usavich.service.running.impl.RunningServiceImpl"/>
+    <bean id="commonService" class="com.usavich.service.common.impl.CommonServiceImpl"/>
+    <bean id="planService" class="com.usavich.service.plan.impl.PlanServiceImpl"/>
+
+    <bean id="backendJobCache" class="com.usavich.service.backend.BackendJobCache"/>
+
+    <task:scheduled-tasks>
+        <task:scheduled ref="backendJobCache" method="missionServiceJob" fixed-rate="21600000"/>
+        <task:scheduled ref="backendJobCache" method="versionServiceJob" fixed-rate="22000000"/>
+        <task:scheduled ref="backendJobCache" method="systemMessageServiceJob" fixed-rate="23000000"/>
+        <task:scheduled ref="backendJobCache" method="methodCollectorJob" fixed-rate="43200000"/>
+        <task:scheduled ref="backendJobCache" method="sortPlanJob" fixed-rate="24000000"/>
+        <task:scheduled ref="backendJobCache" method="recommendAppServiceJob" fixed-rate="15000000"/>
+    </task:scheduled-tasks>
+</beans>

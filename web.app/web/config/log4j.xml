@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <param name="Threshold" value="OFF"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%5p - %m%n"/>
+        </layout>
+    </appender>
+
+    <!--REST API-->
+    <appender name="REST_ASYNC" class="org.apache.log4j.AsyncAppender">
+        <param name="BufferSize" value="10000"/>
+        <param name="Blocking" value="false"/>
+        <appender-ref ref="REST"/>
+    </appender>
+
+    <appender name="REST" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd-HH" />
+        <param name="File" value="${catalina.base}/logs/rest.log" />
+        <param name="Append" value="true" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{MM/dd/yy HH:mm:ss:SSS:} [%X{SEQID}] [%X{REQID}] [%t]: %-5p %c - %m%n" />
+        </layout>
+    </appender>
+
+    <!--mapper-->
+    <appender name="CATALOG_MAPPER_ASYNC" class="org.apache.log4j.AsyncAppender">
+        <param name="BufferSize" value="10000"/>
+        <param name="Blocking" value="false"/>
+        <appender-ref ref="MAPPER"/>
+    </appender>
+
+    <appender name="MAPPER" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd-HH" />
+        <param name="File" value="${catalina.base}/logs/mapper.log" />
+        <param name="Append" value="true" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{MM/dd/yy HH:mm:ss:SSS:} [%X{SEQID}] [%X{REQID}] [%t]: %-5p %c - %m%n" />
+        </layout>
+    </appender>
+
+    <!--service-->
+    <appender name="CATALOG_SERVICE_ASYNC" class="org.apache.log4j.AsyncAppender">
+        <param name="BufferSize" value="10000"/>
+        <param name="Blocking" value="false"/>
+        <appender-ref ref="ERVICE"/>
+    </appender>
+
+    <appender name="SERVICE" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="DatePattern" value="'.'yyyy-MM-dd-HH" />
+        <param name="File" value="${catalina.base}/logs/service.log" />
+        <param name="Append" value="true" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{MM/dd/yy HH:mm:ss:SSS:} [%X{SEQID}] [%X{REQID}] [%t]: %-5p %c - %m%n" />
+        </layout>
+    </appender>
+
+    <logger name="org.apache.cxf.interceptor" additivity="false">
+        <level value="WARN"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="REST_ASYNC"/>
+    </logger>
+
+    <logger name="com.usavich.rest" additivity="false">
+        <level value="WARN"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="REST_ASYNC"/>
+    </logger>
+
+    <logger name="com.usavich.db" additivity="false">
+        <level value="DEBUG"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="MAPPER_ASYNC"/>
+    </logger>
+
+    <logger name="com.usavich.service" additivity="false">
+        <level value="WARN"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="SERVICE_ASYNC"/>
+    </logger>
+
+    <!-- ROOT -->
+    <root>
+        <level value="WARN"/>
+        <appender-ref ref="CONSOLE"/>
+    </root>
+</log4j:configuration>

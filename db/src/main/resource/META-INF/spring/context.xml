@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd ">
+
+    <!-- Data source configuration: maxpoolsize can be set-->
+    <bean id="tomcatPooledDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" init-method="createPool"
+          destroy-method="close">
+        <property name="driverClassName" value="${mysql.driverClassName}"/>
+        <property name="url" value="${mysql.url}"/>
+        <property name="username" value="${mysql.username}"/>
+        <property name="password" value="${mysql.password}"/>
+        <property name="testOnBorrow" value="${mysql.testOnBorrow}"/>
+        <property name="validationQuery" value="SELECT 1"/>
+        <property name="validationInterval" value="${mysql.validationInterval}"/>
+        <property name="initialSize" value="${mysql.initialSize}"/>
+        <property name="minIdle" value="${mysql.minIdle}"/>
+        <property name="maxIdle" value="${mysql.maxIdle}"/>
+        <property name="maxActive" value="${mysql.maxActive}"/>
+        <property name="defaultReadOnly" value="${mysql.defaultReadOnly}"/>
+        <property name="jmxEnabled" value="${mysql.jmxEnabled}"/>
+        <property name="maxWait" value="${mysql.maxWait}"/>
+    </bean>
+
+    <!-- refer to http://www.mybatis.org/spring/transactions.html -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="tomcatPooledDataSource"/>
+    </bean>
+
+    <!-- sql session factory bean -->
+    <bean id="queryInteceptor" class="com.usavich.common.lib.QueryInterceptor"/>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="tomcatPooledDataSource"/>
+        <property name="transactionFactory">
+            <bean class="org.mybatis.spring.transaction.SpringManagedTransactionFactory"/>
+        </property>
+        <property name="mapperLocations" value="classpath*:mappers/**/*.xml"/>
+        <property name="plugins">
+            <list>
+                <ref bean="queryInteceptor"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="accountDAO" class="com.usavich.db.account.dao.impl.AccountDAOImpl"/>
+
+    <bean id="commonDAO" class="com.usavich.db.common.dao.impl.CommonDAOImpl" />
+
+    <bean id="missionDAO" class="com.usavich.db.mission.dao.impl.MissionDAOImpl"/>
+
+    <bean id="productDAO" class="com.usavich.db.product.dao.impl.ProductADOImpl"/>
+
+    <bean id="runningDAO" class="com.usavich.db.running.dao.impl.RunningDAOImpl"/>
+
+    <bean id="planDAO" class="com.usavich.db.plan.dao.impl.PlanDAOImpl"/>
+
+    <!-- Mappers-->
+    <bean id="baseMapper" class="org.mybatis.spring.support.SqlSessionDaoSupport" abstract="true">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+    </bean>
+
+    <bean id="accountMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" parent="baseMapper">
+        <property name="mapperInterface" value="com.usavich.db.account.dao.impl.AccountMapper"/>
+    </bean>
+
+    <bean id="commonMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" parent="baseMapper">
+        <property name="mapperInterface" value="com.usavich.db.common.dao.impl.CommonMapper"/>
+    </bean>
+
+    <bean id="missionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" parent="baseMapper">
+        <property name="mapperInterface" value="com.usavich.db.mission.dao.impl.MissionMapper"/>
+    </bean>
+
+    <bean id="productMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" parent="baseMapper">
+        <property name="mapperInterface" value="com.usavich.db.product.dao.impl.ProductMapper"/>
+    </bean>
+
+    <bean id="runningMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" parent="baseMapper">
+        <property name="mapperInterface" value="com.usavich.db.running.dao.impl.RunningMapper"/>
+    </bean>
+
+    <bean id="planMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" parent="baseMapper">
+        <property name="mapperInterface" value="com.usavich.db.plan.dao.impl.PlanMapper"/>
+    </bean>
+
+</beans>

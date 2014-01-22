@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.usavich.db.plan.dao.impl.PlanMapper">
+    <resultMap id="planInfo" type="com.usavich.entity.plan.Plan">
+        <id column="PLAN_ID" property="planId"/>
+        <result column="PLAN_NAME" property="planName"/>
+        <result column="PLAN_DESCRIPTION" property="planDescription"/>
+        <result column="PLAN_TYPE" property="planType"/>
+        <result column="MISSION_IDS" property="missionIds"/>
+        <result column="TOTAL_MISSIONS" property="totalMissions"/>
+        <result column="PLAN_SHARE_USER" property="planShareUserId"/>
+        <result column="PLAN_SHARE_USER_NAME" property="planShareUserName"/>
+        <result column="SHARED_PLAN" property="sharedPlan"/>
+        <result column="CYCLE_TIME" property="cycleTime"/>
+        <result column="DURATION" property="duration"/>
+        <result column="DURATION_TYPE" property="durationType"/>
+        <result column="PLAN_STATUS" property="planStatus"/>
+        <result column="PLAN_FLAG" property="planFlag"/>
+        <result column="DURATION_LAST" property="durationLast"/>
+        <result column="LAST_UPDATE_TIME" property="lastUpdateTime"/>
+    </resultMap>
+
+    <resultMap id="planCollectInfo" type="com.usavich.entity.plan.PlanCollect">
+        <id column="USER_ID" property="userId"/>
+        <result column="PLAN_ID" property="planId"/>
+        <result column="COLLECT_TIME" property="collectTime"/>
+        <result column="COLLECT_STATUS" property="collectStatus"/>
+    </resultMap>
+
+    <resultMap id="planUserFollowInfo" type="com.usavich.entity.plan.PlanUserFollow">
+        <id column="USER_ID" property="userId"/>
+        <result column="FOLLOWER_USER_ID" property="followUserId"/>
+        <result column="STATUS" property="status"/>
+        <result column="ADD_TIME" property="addTime"/>
+    </resultMap>
+
+    <resultMap id="planRunHistoryInfo" type="com.usavich.entity.plan.PlanRunHistory">
+        <id column="PLAN_ID" property="planId"/>
+        <result column="PLAN_NAME" property="planName"/>
+        <result column="PLAN_RUN_UUID" property="planRunUuid"/>
+        <result column="NEXT_MISSION_ID" property="nextMissionId"/>
+        <result column="USER_ID" property="userId"/>
+        <result column="NICK_NAME" property="nickName"/>
+        <result column="SEX" property="sex"/>
+        <result column="START_TIME" property="startTime"/>
+        <result column="END_TIME" property="endTime"/>
+        <result column="RATE" property="rate"/>
+        <result column="RATE_COMMENT" property="rateComment"/>
+        <result column="REMAINING_MISSIONS" property="remainingMissions"/>
+        <result column="TOTAL_MISSIONS" property="totalMissions"/>
+        <result column="HISTORY_STATUS" property="historyStatus"/>
+        <result column="LAST_UPDATE_TIME" property="lastUpdateTime"/>
+    </resultMap>
+
+    <sql id="planTable">
+        P.PLAN_ID,
+        P.PLAN_NAME,
+        P.PLAN_DESCRIPTION,
+        P.PLAN_TYPE,
+        P.MISSION_IDS,
+        P.TOTAL_MISSIONS,
+        P.PLAN_SHARE_USER,
+        P.PLAN_SHARE_USER_NAME,
+        P.SHARED_PLAN,
+        P.CYCLE_TIME,
+        P.DURATION,
+        P.DURATION_TYPE,
+        P.PLAN_STATUS,
+        P.DURATION_LAST,
+        P.PLAN_FLAG,
+        P.LAST_UPDATE_TIME
+    </sql>
+
+    <sql id="planCollectTable">
+        USER_ID,
+        PLAN_ID,
+        COLLECT_TIME,
+        COLLECT_STATUS
+    </sql>
+
+    <sql id="planUserFollowTable">
+        USER_ID,
+        FOLLOWER_USER_ID,
+        STATUS,
+        ADD_TIME
+    </sql>
+
+    <sql id="planRunHistoryTable">
+        PRH.PLAN_ID,
+        PRH.PLAN_RUN_UUID,
+        PRH.NEXT_MISSION_ID,
+        PRH.USER_ID,
+        PRH.START_TIME,
+        PRH.END_TIME,
+        PRH.RATE,
+        PRH.RATE_COMMENT,
+        PRH.REMAINING_MISSIONS,
+        PRH.TOTAL_MISSIONS,
+        PRH.HISTORY_STATUS,
+        PRH.LAST_UPDATE_TIME
+    </sql>
+
+    <select id="getPlansByPage" resultMap="planInfo">
+        SELECT
+        <include refid="planTable"/>
+        FROM PLAN_SORT AS PS INNER JOIN PLAN AS P
+        ON P.PLAN_ID = PS.PLAN_ID
+        ORDER BY PS.SEQUENCE DESC
+        LIMIT #{from},#{pageSize}
+    </select>
+
+    <select id="getPlan" resultMap="planInfo">
+        SELECT
+        <include refid="planTable"/>
+        FROM PLAN AS P
+        WHERE PLAN_ID = #{planId}
+        <if test="lastUpdateTime != null"><![CDATA[
+        AND LAST_UPDATE_TIME > #{lastUpdateTime}
+        ]]></if>
+    </select>
+
+    <insert id="createPlan" parameterType="com.usavich.entity.plan.Plan">
+        INSERT INTO PLAN
+        (
+                PLAN_ID,
+                PLAN_NAME,
+                PLAN_DESCRIPTION,
+                PLAN_TYPE,
+                MISSION_IDS,
+                TOTAL_MISSIONS,
+                PLAN_SHARE_USER,
+                PLAN_SHARE_USER_NAME,
+                SHARED_PLAN,
+                CYCLE_TIME,
+                DURATION,
+                DURATION_TYPE,
+                DURATION_LAST,
+                PLAN_STATUS,
+                PLAN_FLAG,
+                LAST_UPDATE_TIME
+        )
+        VALUES
+        (
+                #{entity.planId},
+                #{entity.planName},
+                #{entity.planDescription},
+                #{entity.planType},
+                #{entity.missionIds},
+                #{entity.totalMissions},
+                #{entity.planShareUserId},
+                #{entity.planShareUserName},
+                #{entity.sharedPlan},
+                #{entity.cycleTime},
+                #{entity.duration},
+                #{entity.durationType},
+                #{entity.durationLast},
+                #{entity.planStatus},
+                #{entity.planFlag},
+                #{entity.lastUpdateTime}
+        );
+    </insert>
+
+    <select id="getPlanCollection" resultMap="planCollectInfo">
+        SELECT
+        <include refid="planCollectTable"/>
+        FROM PLAN_COLLECT
+        WHERE USER_ID = #{userId} AND COLLECT_STATUS = 0
+        <if test="lastUpdateTime != null"><![CDATA[
+        AND COLLECT_TIME > #{lastUpdateTime}
+        ]]></if>
+    </select>
+
+    <insert id="createUserCollect" parameterType="com.usavich.entity.plan.PlanCollect">
+        INSERT INTO PLAN_COLLECT
+        (
+            USER_ID,
+            PLAN_ID,
+            COLLECT_TIME,
+            COLLECT_STATUS
+        )
+        VALUES
+        (
+            #{planCollect.userId},
+            #{planCollect.planId},
+            #{planCollect.collectTime},
+            #{planCollect.collectStatus}
+        )
+        ON DUPLICATE KEY UPDATE COLLECT_TIME=#{planCollect.collectTime}, COLLECT_STATUS= #{planCollect.collectStatus};
+    </insert>
+
+    <select id="getPlanRunHistory" resultMap="planRunHistoryInfo">
+        SELECT
+        <include refid="planRunHistoryTable"/>
+        FROM PLAN_RUN_HISTORY AS PRH
+        WHERE PRH.USER_ID = #{userId}
+        <if test="lastUpdateTime != null"><![CDATA[
+        AND PRH.LAST_UPDATE_TIME > #{lastUpdateTime}
+        ]]></if>
+    </select>
+
+    <select id="getPlanRunning" resultMap="planRunHistoryInfo">
+        SELECT
+        <include refid="planRunHistoryTable"/>
+        FROM PLAN_RUN_HISTORY AS PRH
+        WHERE PRH.USER_ID = #{userId} AND PRH.HISTORY_STATUS = 0
+    </select>
+
+    <insert id="createPlanRunning" parameterType="com.usavich.entity.plan.PlanRunHistory">
+         INSERT INTO PLAN_RUN_HISTORY
+         (
+                PLAN_ID,
+                PLAN_RUN_UUID,
+                NEXT_MISSION_ID,
+                USER_ID,
+                END_TIME,
+                START_TIME,
+                RATE,
+                RATE_COMMENT,
+                REMAINING_MISSIONS,
+                TOTAL_MISSIONS,
+                HISTORY_STATUS,
+                LAST_UPDATE_TIME
+         )
+        VALUES
+        (
+                #{planHistory.planId},
+                #{planHistory.planRunUuid},
+                #{planHistory.nextMissionId},
+                #{planHistory.userId},
+                #{planHistory.endTime},
+                #{planHistory.startTime},
+                #{planHistory.rate},
+                #{planHistory.rateComment},
+                #{planHistory.remainingMissions},
+                #{planHistory.totalMissions},
+                #{planHistory.historyStatus},
+                #{planHistory.lastUpdateTime}
+        )
+    </insert>
+
+    <update id="updatePlanRunning" parameterType="com.usavich.entity.plan.PlanRunHistory">
+        UPDATE PLAN_RUN_HISTORY
+        SET
+        PLAN_ID = #{planHistory.planId},
+        NEXT_MISSION_ID = #{planHistory.nextMissionId},
+        END_TIME = #{planHistory.endTime},
+        START_TIME = #{planHistory.startTime},
+        RATE = #{planHistory.rate},
+        RATE_COMMENT = #{planHistory.rateComment},
+        REMAINING_MISSIONS = #{planHistory.remainingMissions},
+        TOTAL_MISSIONS = #{planHistory.totalMissions},
+        HISTORY_STATUS = #{planHistory.historyStatus},
+        LAST_UPDATE_TIME =  #{planHistory.lastUpdateTime}
+        WHERE USER_ID = #{planHistory.userId} AND PLAN_RUN_UUID = #{planHistory.planRunUuid}
+    </update>
+
+    <select id="getPlanRunningByPlanId" resultMap="planRunHistoryInfo">
+        SELECT
+        U.NICK_NAME,
+        U.SEX,
+        P.PLAN_NAME,
+        <include refid="planRunHistoryTable"/>
+        FROM PLAN_RUN_HISTORY AS PRH
+        INNER JOIN USER AS U
+        ON PRH.USER_ID = U.USER_ID
+        INNER JOIN PLAN AS P
+        ON P.PLAN_ID = PRH.PLAN_ID
+        WHERE PRH.PLAN_ID = #{planId} AND PRH.HISTORY_STATUS = 0
+        ORDER BY PRH.LAST_UPDATE_TIME DESC
+        LIMIT #{from},#{pageSize}
+    </select>
+
+    <select id="getPlanRunningByUserId" resultMap="planRunHistoryInfo">
+        SELECT
+        U.NICK_NAME,
+        U.SEX,
+        P.PLAN_NAME,
+        <include refid="planRunHistoryTable"/>
+        FROM PLAN_USER_FOLLOW AS PUF
+        INNER JOIN PLAN_RUN_HISTORY AS PRH
+        ON PRH.USER_ID = PUF.FOLLOWER_USER_ID
+        INNER JOIN USER AS U
+        ON PRH.USER_ID = U.USER_ID
+        INNER JOIN PLAN AS P
+        ON P.PLAN_ID = PRH.PLAN_ID
+        WHERE PUF.USER_ID = #{userId} AND PRH.HISTORY_STATUS = 0 AND PUF.STATUS = 0
+        ORDER BY PRH.LAST_UPDATE_TIME DESC
+        LIMIT #{from},#{pageSize}
+    </select>
+
+    <select id="getUserLastUpdatePlan" resultMap="planRunHistoryInfo">
+        SELECT
+        U.NICK_NAME,
+        U.SEX,
+        P.PLAN_NAME,
+        <include refid="planRunHistoryTable"/>
+        FROM PLAN_RUN_HISTORY AS PRH
+        INNER JOIN USER AS U
+        ON PRH.USER_ID = U.USER_ID
+        INNER JOIN PLAN AS P
+        ON P.PLAN_ID = PRH.PLAN_ID
+        WHERE PRH.USER_ID = #{userId}
+        ORDER BY PRH.LAST_UPDATE_TIME DESC, PRH.HISTORY_STATUS ASC
+        LIMIT 0,1
+    </select>
+
+    <select id="getPlanFollower" resultMap="planUserFollowInfo">
+        SELECT
+        <include refid="planUserFollowTable"/>
+        FROM PLAN_USER_FOLLOW
+        WHERE USER_ID = #{userId} AND STATUS = 0
+        <if test="lastUpdateTime != null"><![CDATA[
+        AND ADD_TIME > #{lastUpdateTime}
+        ]]></if>
+    </select>
+
+    <insert id="createPlanFollower" parameterType="com.usavich.entity.plan.PlanUserFollow">
+        INSERT INTO PLAN_USER_FOLLOW
+        (
+                USER_ID,
+                FOLLOWER_USER_ID,
+                STATUS,
+                ADD_TIME
+        )
+        VALUES
+        (
+                #{planUserFollow.userId},
+                #{planUserFollow.followUserId},
+                #{planUserFollow.status},
+                #{planUserFollow.addTime}
+        )
+        ON DUPLICATE KEY UPDATE STATUS= #{planUserFollow.status}, ADD_TIME=  #{planUserFollow.addTime};
+    </insert>
+
+</mapper>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:cxf="http://cxf.apache.org/core"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xmlns:jaxws="http://cxf.apache.org/jaxrs"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+       http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+       http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+
+    <context:component-scan base-package="com.usavich"/>
+
+    <!-- This enables autowiring of dependencies. -->
+    <context:annotation-config/>
+
+    <!-- Lets us use the @Configurable annotation to configure objects not instantiated
+        by Spring. This also requires that compile time weaving is setup in the POM. -->
+    <context:spring-configured/>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!-- Load all spring bean definitions -->
+    <import resource="classpath*:META-INF/spring/context.xml"/>
+
+    <bean id="cryptoService" class="com.usavich.common.cryptoservice.impl.CryptoServiceImpl"/>
+
+    <bean class="com.usavich.common.lib.ConfigurationService">
+        <property name="cryptoService" ref="cryptoService"/>
+        <property name="locations">
+            <list>
+                <value>config/default.properties</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- Logger Interceptor -->
+    <bean id="logInbound" class="org.apache.cxf.interceptor.LoggingInInterceptor"/>
+    <bean id="logOutbound" class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>
+    <bean id="GZIPInStream" class="org.apache.cxf.transport.common.gzip.GZIPInInterceptor"/>
+    <bean id="GZIPOutStream" class="org.apache.cxf.transport.common.gzip.GZIPOutInterceptor"/>
+
+    <cxf:bus>
+        <cxf:inInterceptors>
+            <ref bean="logInbound"/>
+            <ref bean="GZIPInStream"/>
+            <ref bean="headerInterceptor"/>
+        </cxf:inInterceptors>
+        <cxf:outInterceptors>
+            <ref bean="logOutbound"/>
+            <ref bean="GZIPOutStream"/>
+            <ref bean="cleanupInterceptor"/>
+        </cxf:outInterceptors>
+        <cxf:inFaultInterceptors>
+            <ref bean="logInbound"/>
+        </cxf:inFaultInterceptors>
+        <cxf:outFaultInterceptors>
+            <ref bean="logOutbound"/>
+        </cxf:outFaultInterceptors>
+    </cxf:bus>
+
+    <jaxrs:server id="rootHandler" address="/api">
+        <jaxrs:serviceBeans>
+            <ref bean="accountRestService"/>
+            <ref bean="systemRestService"/>
+            <ref bean="missionRestService"/>
+            <ref bean="productRestService"/>
+            <ref bean="runningRestService"/>
+            <ref bean="weatherRestService"/>
+            <ref bean="planRestService"/>
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+            <ref bean="jsonProvider"/>
+            <ref bean="jaxbProvider"/>
+            <ref bean="txtProvider"/>
+            <bean class="com.usavich.rest.common.RestExceptionMapper"/>
+        </jaxrs:providers>
+    </jaxrs:server>
+
+    <jaxws:client name="restSchema" createdFromAPI="true">
+        <jaxws:properties>
+            <entry key="schema-validation-enabled" value="true"/>
+        </jaxws:properties>
+    </jaxws:client>
+
+</beans>

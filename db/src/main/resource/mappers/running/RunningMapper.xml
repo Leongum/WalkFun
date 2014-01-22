@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.usavich.db.running.dao.impl.RunningMapper">
+    <resultMap id="runningHistoryInfo" type="com.usavich.entity.running.RunningHistory">
+        <id column="USER_ID" property="userId"/>
+        <result column="RUN_UUID" property="runUuid"/>
+        <result column="MISSION_ID" property="missionId"/>
+        <result column="MISSION_TYPE_ID" property="missionTypeId"/>
+        <result column="MISSION_ROUTE" property="missionRoute"/>
+        <result column="WAVE_FORM" property="waveForm"/>
+        <result column="MISSION_START_TIME" property="missionStartTime"/>
+        <result column="MISSION_END_TIME" property="missionEndTime"/>
+        <result column="MISSION_DATE" property="missionDate"/>
+        <result column="SPEND_CARLORIE" property="spendCarlorie"/>
+        <result column="DURATION" property="duration"/>
+        <result column="AVG_SPEED" property="avgSpeed"/>
+        <result column="STEPS" property="steps"/>
+        <result column="DISTANCE" property="distance"/>
+        <result column="OFFER_USERS" property="offerUsers"/>
+        <result column="MISSION_GRADE" property="missionGrade"/>
+        <result column="SCORES" property="scores"/>
+        <result column="EXPERIENCE" property="experience"/>
+        <result column="EXTRA_EXPERIENCE" property="extraExperience"/>
+        <result column="COMMENT" property="comment"/>
+        <result column="COMMIT_TIME" property="commitTime"/>
+        <result column="UUID" property="uuid"/>
+        <result column="GRADE" property="grade"/>
+        <result column="VALID" property="valid"/>
+        <result column="PLAN_RUN_UUID" property="planRunUuid"/>
+        <result column="SEQUENCE" property="sequence"/>
+        <result column="SPEED_LIST" property="speedList"/>
+    </resultMap>
+
+    <resultMap id="runningOnGoingInfo" type="com.usavich.entity.running.OnGoingRunning">
+        <id column="USER_ID" property="userId"/>
+        <result column="RUN_UUID" property="runUuid"/>
+        <result column="MISSION_PACKAGE_ID" property="missionPackageId" />
+        <result column="MISSION_ID" property="missionId"/>
+        <result column="MISSION_TYPE_ID" property="missionTypeId"/>
+        <result column="MISSION_STATUS" property="missionStatus"/>
+        <result column="START_TIME" property="startTime"/>
+        <result column="END_TIME" property="endTime"/>
+        <result column="COMMIT_TIME" property="commitTime"/>
+    </resultMap>
+
+    <sql id="runningHistoryTable">
+        USER_ID,
+        RUN_UUID,
+        MISSION_ID,
+        MISSION_TYPE_ID,
+        MISSION_ROUTE,
+        WAVE_FORM,
+        MISSION_START_TIME,
+        MISSION_END_TIME,
+        MISSION_DATE,
+        SPEND_CARLORIE,
+        DURATION,
+        AVG_SPEED,
+        STEPS,
+        DISTANCE,
+        OFFER_USERS,
+        MISSION_GRADE,
+        SCORES,
+        EXPERIENCE,
+        EXTRA_EXPERIENCE,
+        COMMENT,
+        COMMIT_TIME,
+        UUID,
+        GRADE,
+        VALID,
+        PLAN_RUN_UUID,
+        SEQUENCE,
+        SPEED_LIST
+    </sql>
+
+    <sql id="runningOnGoingTable">
+        USER_ID,
+        RUN_UUID,
+        MISSION_PACKAGE_ID,
+        MISSION_ID,
+        MISSION_TYPE_ID,
+        MISSION_STATUS,
+        START_TIME,
+        END_TIME,
+        COMMIT_TIME
+    </sql>
+
+    <select id="getRunningHistories" resultMap="runningHistoryInfo">
+        SELECT
+        <include refid="runningHistoryTable"/>
+        FROM USER_RUNNING_HISTORY
+        WHERE USER_ID = #{userId}
+        <if test="missionId != null"><![CDATA[
+        AND MISSION_ID = #{missionId}
+        ]]></if>
+    </select>
+
+    <select id="getRunningHistoryByUuid" resultMap="runningHistoryInfo">
+        SELECT
+        <include refid="runningHistoryTable"/>
+        FROM USER_RUNNING_HISTORY
+        WHERE RUN_UUID = #{runUuid}
+    </select>
+
+    <select id="getRunningHistoriesByDate" resultMap="runningHistoryInfo">
+        SELECT
+        <include refid="runningHistoryTable"/>
+        FROM USER_RUNNING_HISTORY
+        WHERE USER_ID = #{userId}
+        AND COMMIT_TIME > #{lastUpdateTime}
+        ORDER BY MISSION_DATE DESC
+        LIMIT #{startSize}, #{pageSize}
+    </select>
+
+    <insert id="createRunningHistory" parameterType="com.usavich.entity.running.RunningHistory">
+        INSERT INTO USER_RUNNING_HISTORY
+        (
+            USER_ID,
+            RUN_UUID,
+            MISSION_ID,
+            MISSION_TYPE_ID,
+            MISSION_ROUTE,
+            WAVE_FORM,
+            MISSION_START_TIME,
+            MISSION_END_TIME,
+            MISSION_DATE,
+            SPEND_CARLORIE,
+            DURATION,
+            AVG_SPEED,
+            STEPS,
+            DISTANCE,
+            OFFER_USERS,
+            MISSION_GRADE,
+            SCORES,
+            EXPERIENCE,
+            EXTRA_EXPERIENCE,
+            COMMENT,
+            COMMIT_TIME,
+            UUID,
+            GRADE,
+            VALID,
+            PLAN_RUN_UUID,
+            SEQUENCE,
+            SPEED_LIST
+        )
+        VALUES
+        (
+            #{entity.userId},
+            #{entity.runUuid},
+            #{entity.missionId},
+            #{entity.missionTypeId},
+            #{entity.missionRoute},
+            #{entity.waveForm},
+            #{entity.missionStartTime},
+            #{entity.missionEndTime},
+            #{entity.missionDate},
+            #{entity.spendCarlorie},
+            #{entity.duration},
+            #{entity.avgSpeed},
+            #{entity.steps},
+            #{entity.distance},
+            #{entity.offerUsers},
+            #{entity.missionGrade},
+            #{entity.scores},
+            #{entity.experience},
+            #{entity.extraExperience},
+            #{entity.comment},
+            #{entity.commitTime},
+            #{entity.uuid},
+            #{entity.grade},
+            #{entity.valid},
+            #{entity.planRunUuid},
+            #{entity.sequence},
+            #{entity.speedList}
+        )
+    </insert>
+
+    <select id="getOnGoingRunning" resultMap="runningOnGoingInfo">
+        SELECT
+        <include refid="runningOnGoingTable"/>
+        FROM USER_RUNNING
+        WHERE USER_ID = #{userId}
+        AND COMMIT_TIME > #{lastUpdateTime}
+    </select>
+
+    <select id="getOnGoingRunningByUuid" resultMap="runningOnGoingInfo">
+        SELECT
+        <include refid="runningOnGoingTable"/>
+        FROM USER_RUNNING
+        WHERE RUN_UUID = #{runUuid}
+    </select>
+
+    <insert id="createOnGoingRunning" parameterType="com.usavich.entity.running.OnGoingRunning">
+        INSERT INTO USER_RUNNING
+        (
+            USER_ID,
+            RUN_UUID,
+            MISSION_PACKAGE_ID,
+            MISSION_ID,
+            MISSION_TYPE_ID,
+            MISSION_STATUS,
+            START_TIME,
+            END_TIME,
+            COMMIT_TIME
+        )
+        VALUES
+        (
+            #{entity.userId},
+            #{entity.runUuid},
+            #{entity.missionPackageId},
+            #{entity.missionId},
+            #{entity.missionTypeId},
+            #{entity.missionStatus},
+            #{entity.startTime},
+            #{entity.endTime},
+            #{entity.commitTime}
+        );
+
+    </insert>
+
+</mapper>

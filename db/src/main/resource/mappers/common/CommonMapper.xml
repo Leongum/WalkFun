@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.usavich.db.common.dao.impl.CommonMapper">
+
+    <!-- Experience -->
+    <resultMap id="experienceInfo" type="com.usavich.entity.common.Experience">
+        <id column="LEVEL" property="level"/>
+        <result column="EXPERIENCE" property="experience"/>
+        <result column="EXPERIENCE_TOTAL" property="experienceTotal" />
+    </resultMap>
+
+    <sql id="experienceTable">
+        LEVEL,
+        EXPERIENCE,
+        EXPERIENCE_TOTAL
+    </sql>
+
+    <select id="getExperienceLevel" resultMap="experienceInfo">
+        SELECT
+        <include refid="experienceTable"/>
+        FROM EXPERIENCE_COMPARISON
+        WHERE EXPERIENCE_TOTAL > #{experience}
+        ORDER BY LEVEL ASC
+        LIMIT 1
+    </select>
+
+    <!-- VersionControl -->
+    <resultMap id="versionControl" type="com.usavich.entity.common.VersionControl">
+        <id column="PLATFORM" property="platform"/>
+        <result column="VERSION" property="version"/>
+        <result column="SUB_VERSION" property="subVersion"/>
+        <result column="DESCRIPTION" property="description"/>
+    </resultMap>
+
+    <sql id="versionControlTable">
+        VC.PLATFORM,
+        VC.VERSION,
+        VC.SUB_VERSION,
+        VC.DESCRIPTION
+    </sql>
+
+    <select id="getVersionControl" resultMap="versionControl">
+        SELECT
+        <include refid="versionControlTable"/>
+        FROM VERSION_CONTROL AS VC
+        WHERE VC.PLATFORM = #{platform}
+    </select>
+
+    <insert id="updateVersionControl" parameterType="com.usavich.entity.common.VersionControl">
+        UPDATE version_control
+        SET
+            VERSION = #{entity.version},
+            SUB_VERSION = #{entity.subVersion}
+            DESCRIPTION = #{entity.description}
+        WHERE PLATFORM = #{entity.platform}
+    </insert>
+
+    <!-- system message -->
+    <resultMap id="systemMessageInfo" type="com.usavich.entity.common.SystemMessage">
+        <id column="MESSAGE_ID" property="messageId"/>
+        <result column="MESSAGE" property="message"/>
+        <result column="RULE" property="rule" />
+        <result column="LAST_UPDATE_TIME" property="lastUpdateTime"/>
+    </resultMap>
+
+    <sql id="systemMessageTable">
+        MESSAGE_ID,
+        MESSAGE,
+        RULE,
+        LAST_UPDATE_TIME
+    </sql>
+
+    <select id="getSystemMessageInfo" resultMap="systemMessageInfo">
+        SELECT
+        <include refid="systemMessageTable"/>
+        FROM SYSTEM_MESSAGE
+        WHERE LAST_UPDATE_TIME > #{lastUpdateTime}
+    </select>
+
+
+    <!-- Feedback -->
+    <resultMap id="feedbackInfo" type="com.usavich.entity.common.Feedback">
+        <id column="CONTACT" property="contact"/>
+        <result column="SUGGESTION" property="suggestion"/>
+        <result column="COMMIT_TIME" property="commitTime"/>
+        <result column="USER_ID" property="userId"/>
+    </resultMap>
+
+    <sql id="feedbackTable">
+        CONTACT,
+        SUGGESTION,
+        COMMIT_TIME,
+        USER_ID
+    </sql>
+
+    <insert id="createFeedback" parameterType="com.usavich.entity.common.Feedback">
+        INSERT INTO FEEDBACK
+        (
+            CONTACT,
+            SUGGESTION,
+            COMMIT_TIME,
+            USER_ID
+        )
+        VALUES
+        (
+            #{entity.contact},
+            #{entity.suggestion},
+            #{entity.commitTime},
+            #{entity.userId}
+        )
+    </insert>
+
+    <!-- down Load info -->
+    <resultMap id="statisticsInfo" type="com.usavich.entity.common.Statistics">
+        <id column="PLATFORM" property="platform"/>
+        <result column="DOWNLOAD_TIME" property="downloadTime"/>
+        <result column="VERSION" property="version"/>
+    </resultMap>
+
+    <sql id="statisticsTable">
+        PLATFORM,
+        DOWNLOAD_TIME,
+        VERSION
+    </sql>
+
+    <insert id="createDownLoadInfo" parameterType="com.usavich.entity.common.Statistics">
+        INSERT INTO STATISTICS
+        (
+            PLATFORM,
+            DOWNLOAD_TIME,
+            VERSION
+        )
+        VALUES
+        (
+            #{entity.platform},
+            #{entity.downloadTime},
+            #{entity.version}
+        )
+    </insert>
+
+
+    <!--id generation -->
+    <resultMap id="idGenerationInfo" type="com.usavich.entity.common.IDGeneration">
+        <id column="MISSION_ID" property="missionId"/>
+        <result column="PLAN_ID" property="planId"/>
+    </resultMap>
+
+    <sql id="idGenerationTable">
+        MISSION_ID,
+        PLAN_ID
+    </sql>
+
+    <select id="getIDGenerationInfo" resultMap="idGenerationInfo">
+        SELECT
+        <include refid="idGenerationTable"/>
+        FROM ID_GENERATION
+        LIMIT 1
+    </select>
+
+    <update id="updateIDGenerationFriend" parameterType="com.usavich.entity.common.IDGeneration">
+         UPDATE ID_GENERATION
+         SET
+             MISSION_ID = #{entity.missionId},
+             PLAN_ID = #{entity.planId}
+    </update>
+
+    <!-- Method Collector -->
+    <resultMap id="methodCollectorInfo" type="com.usavich.entity.common.MethodCollector">
+        <id column="METHOD_NAME" property="methodName"/>
+        <result column="METHOD_TIMES" property="methodTimes"/>
+        <result column="USE_DATE" property="useDate"/>
+    </resultMap>
+
+    <sql id="methodCollectorTable">
+        METHOD_NAME,
+        METHOD_TIMES,
+        USE_DATE
+    </sql>
+
+    <insert id="createMethodCollector" parameterType="com.usavich.entity.common.MethodCollector">
+        INSERT INTO METHOD_COLLECTOR
+        (
+            METHOD_NAME,
+            METHOD_TIMES,
+            USE_DATE
+        )
+        VALUES
+        (
+            #{entity.methodName},
+            #{entity.methodTimes},
+            #{entity.useDate}
+        )
+    </insert>
+
+    <!-- Recommend App -->
+    <resultMap id="recommendAppInfo" type="com.usavich.entity.common.RecommendApp">
+        <id column="APP_ID" property="appId"/>
+        <result column="APP_NAME" property="appName"/>
+        <result column="APP_DESCRIPTION" property="appDescription"/>
+        <result column="APP_PIC_LINK" property="appPicLink"/>
+        <result column="LAST_UPDATE_TIME" property="lastUpdateTime"/>
+        <result column="RECOMMEND_STATUS" property="recommendStatus"/>
+        <result column="SEQUENCE" property="sequence"/>
+        <result column="APP_ADDRESS" property="appAddress"/>
+    </resultMap>
+
+    <sql id="recommendAppTable">
+        APP_ID,
+        APP_NAME,
+        APP_DESCRIPTION,
+        APP_PIC_LINK,
+        LAST_UPDATE_TIME,
+        RECOMMEND_STATUS,
+        SEQUENCE,
+        APP_ADDRESS
+    </sql>
+
+    <select id="getRecommendApp" resultMap="recommendAppInfo">
+        SELECT
+        <include refid="recommendAppTable"/>
+        FROM RECOMMEND_APP
+        WHERE 1 = 1
+        <if test="lastUpdateTime != null"><![CDATA[
+        AND LAST_UPDATE_TIME > #{lastUpdateTime}
+        ]]></if>
+        ORDER BY SEQUENCE ASC
+    </select>
+
+</mapper>

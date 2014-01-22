@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="classpath*:META-INF/spring/context.xml" />
+
+    <bean id="cryptoService" class="com.usavich.common.cryptoservice.impl.CryptoServiceImpl" />
+
+    <bean class="com.usavich.common.lib.ConfigurationService">
+        <property name="cryptoService" ref="cryptoService"/>
+        <property name="locations">
+            <list>
+                <value>test.properties</value>
+            </list>
+        </property>
+    </bean>
+
+</beans>

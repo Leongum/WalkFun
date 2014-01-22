@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.usavich.db.account.dao.impl.AccountMapper">
+
+    <resultMap id="accountInfo" type="com.usavich.entity.account.UserInfo">
+        <id column="USER_ID" property="userId"/>
+        <result column="USER_EMAIL" property="userEmail"/>
+        <result column="SEX" property="sex"/>
+        <result column="NICK_NAME" property="nickName"/>
+        <result column="UUID" property="uuid"/>
+        <result column="LEVEL" property="level"/>
+        <result column="SCORES" property="scores"/>
+        <result column="EXPERIENCE" property="experience"/>
+        <result column="MAX_POWER" property="maxPower"/>
+        <result column="REMAINING_POWER" property="remainingPower"/>
+        <result column="ENDURANCE" property="endurance"/>
+        <result column="SPIRIT" property="spirit"/>
+        <result column="RAPIDLY" property="rapidly"/>
+        <result column="RECOVER_SPEED" property="recoverSpeed"/>
+        <result column="WEIGHT" property="weight"/>
+        <result column="HEIGHT" property="height"/>
+        <result column="AGE" property="age"/>
+        <result column="TOTAL_DISTANCE" property="totalDistance"/>
+        <result column="AVG_SPEED" property="avgSpeed"/>
+        <result column="SPEND_CARLORIE" property="spendCarlorie"/>
+        <result column="TOTAL_RUN_TIMES" property="totalRunTimes"/>
+        <!-- <result column="BASE_ACC" property="baseAcc"/>
+        <result column="INERTIA_ACC" property="inertiaAcc"/>
+        <result column="CRIT" property="crit"/>
+        <result column="LUCK" property="luck"/>-->
+    </resultMap>
+
+    <resultMap id="userFriendInfo" type="com.usavich.entity.account.UserFriend">
+        <id column="USER_ID" property="userId"/>
+        <result column="USER_EMAIL" property="userEmail"/>
+        <result column="NICK_NAME" property="nickName"/>
+        <result column="UUID" property="uuid"/>
+        <result column="SEX" property="sex"/>
+        <result column="FRIEND_ID" property="friendId"/>
+        <result column="FRIEND_STATUS" property="friendStatus"/>
+        <result column="ADD_TIME" property="addTime"/>
+        <result column="LAST_LOCATION_CONTENT" property="lastLocationContent"/>
+        <result column="LAST_LOCATION_POINT" property="lastLocationPoint"/>
+        <result column="LAST_ACTIVE_TIME" property="lastActiveTime"/>
+    </resultMap>
+
+    <resultMap id="userLocation" type="com.usavich.entity.account.UserLocation">
+        <id column="USER_ID" property="userId"/>
+        <result column="USER_EMAIL" property="userEmail"/>
+        <result column="NICK_NAME" property="nickName"/>
+        <result column="UUID" property="uuid"/>
+        <result column="SEX" property="sex"/>
+        <result column="LAST_LOCATION_CONTENT" property="lastLocationContent"/>
+        <result column="LAST_LOCATION_POINT" property="lastLocationPoint"/>
+        <result column="LAST_ACTIVE_TIME" property="lastActiveTime"/>
+    </resultMap>
+
+    <sql id="accountInfoTable">
+        U.USER_ID,
+        U.USER_EMAIL,
+        U.NICK_NAME,
+        U.SEX,
+        U.UUID,
+        UD.SCORES,
+        UD.LEVEL,
+        UD.SCORES,
+        UD.EXPERIENCE,
+        UD.MAX_POWER,
+        UD.REMAINING_POWER,
+        UD.ENDURANCE,
+        UD.SPIRIT,
+        UD.RAPIDLY,
+        UD.RECOVER_SPEED,
+        UD.WEIGHT,
+        UD.HEIGHT,
+        UD.AGE,
+        UD.TOTAL_DISTANCE,
+        UD.AVG_SPEED,
+        UD.SPEND_CARLORIE,
+        UD.TOTAL_RUN_TIMES
+    </sql>
+
+    <sql id="userFriendInfoTable">
+        U.USER_EMAIL,
+        U.NICK_NAME,
+        U.SEX,
+        U.UUID,
+        UF.USER_ID,
+        UF.FRIEND_ID,
+        UF.FRIEND_STATUS,
+        UF.ADD_TIME,
+        UF.UPDATE_TIME
+        UL.LAST_LOCATION_CONTENT,
+        UL.LAST_LOCATION_POINT,
+        UL.LAST_ACTIVE_TIME
+    </sql>
+
+    <sql id="userFriend">
+        USER_ID,
+        FRIEND_ID,
+        FRIEND_STATUS,
+        ADD_TIME,
+        UPDATE_TIME
+    </sql>
+
+    <sql id="userLocationTable">
+        U.USER_ID,
+        U.USER_EMAIL,
+        U.NICK_NAME,
+        U.UUID,
+        U.SEX,
+        UL.LAST_LOCATION_CONTENT,
+        UL.LAST_LOCATION_POINT,
+        UL.LAST_ACTIVE_TIME
+    </sql>
+
+    <select id="getAccountInfo" resultMap="accountInfo">
+        SELECT
+        <include refid="accountInfoTable"/>
+        FROM USER AS U
+        INNER JOIN USER_DETAIL AS UD
+        ON U.USER_ID = UD.USER_ID
+        WHERE U.USER_EMAIL = #{userEmail}
+        AND U.USER_PASSWORD = #{password}
+    </select>
+
+    <select id="getAccountInfoByMail" resultMap="accountInfo">
+        SELECT
+        <include refid="accountInfoTable"/>
+        FROM USER AS U
+        INNER JOIN USER_DETAIL AS UD
+        ON U.USER_ID = UD.USER_ID
+        WHERE U.USER_EMAIL = #{userEmail}
+    </select>
+
+    <insert id="createBase" parameterType="com.usavich.entity.account.UserBase" useGeneratedKeys="true"
+            keyProperty="baseEntity.userId">
+        INSERT INTO USER
+        (
+            USER_EMAIL,
+            USER_PASSWORD,
+            SEX,
+            UUID,
+            NICK_NAME
+        )
+        VALUES
+        (
+            #{baseEntity.userEmail},
+            #{baseEntity.password},
+            #{baseEntity.sex},
+            #{baseEntity.uuid},
+            #{baseEntity.nickName}
+        )
+    </insert>
+
+    <insert id="createDetail" parameterType="com.usavich.entity.account.UserInfo">
+        INSERT INTO USER_DETAIL
+        (
+          USER_ID,
+          LEVEL,
+          SCORES,
+          EXPERIENCE,
+          MAX_POWER,
+          REMAINING_POWER,
+          ENDURANCE,
+          SPIRIT,
+          RAPIDLY,
+          RECOVER_SPEED
+        )
+        VALUES
+        (
+          #{detailEntity.userId},
+          #{detailEntity.level},
+          #{detailEntity.scores},
+          #{detailEntity.experience},
+          #{detailEntity.maxPower},
+          #{detailEntity.remainingPower},
+          #{detailEntity.endurance},
+          #{detailEntity.spirit},
+          #{detailEntity.rapidly},
+          #{detailEntity.recoverSpeed}
+        );
+    </insert>
+
+    <select id="getAccountInfoByID" resultMap="accountInfo">
+        SELECT
+        <include refid="accountInfoTable"/>
+        FROM USER AS U
+        INNER JOIN USER_DETAIL AS UD
+        ON U.USER_ID = UD.USER_ID
+        WHERE U.USER_ID = #{userId}
+    </select>
+
+    <select id="getUserFriends" resultMap="userFriendInfo">
+        SELECT
+        <include refid="userFriendInfoTable"/>
+        FROM USER_FRIEND AS UF
+        INNER JOIN USER AS U
+        ON UF.FRIEND_ID = U.USER_ID
+        LEFT JOIN USER_LOCATION AS UL
+        ON UF.FRIEND_ID = UL.USER_ID
+        WHERE UF.USER_ID = #{userId}
+        AND UPDATE_TIME > #{lastUpdateTime}
+    </select>
+
+    <select id="getUserFriend" resultMap="userFriendInfo">
+        SELECT
+        <include refid="userFriend"/>
+        FROM USER_FRIEND
+        WHERE USER_ID = #{userId}
+        AND FRIEND_ID = #{friendId}
+    </select>
+
+    <insert id="createUserFriend" parameterType="com.usavich.entity.account.UserFriend">
+        INSERT INTO USER_FRIEND
+        (
+            USER_ID,
+            FRIEND_ID,
+            FRIEND_STATUS,
+            ADD_TIME,
+            UPDATE_TIME
+        )
+        VALUES
+        (
+            #{entity.userId},
+            #{entity.friendId},
+            #{entity.friendStatus},
+            #{entity.addTime},
+            #{entity.updateTime}
+        )
+    </insert>
+
+    <update id="updateUserFriend" parameterType="com.usavich.entity.account.UserFriend">
+         UPDATE USER_FRIEND
+         SET
+             FRIEND_STATUS = #{entity.friendStatus},
+             UPDATE_TIME = #{entity.updateTime}
+         WHERE USER_ID = #{entity.userId} AND FRIEND_ID = #{entity.friendId}
+    </update>
+
+    <update id="updateAccountInfo" parameterType="com.usavich.entity.account.UserInfo">
+        UPDATE USER_DETAIL
+        SET
+            LEVEL = #{entity.level},
+            SCORES = #{entity.scores},
+            EXPERIENCE = #{entity.experience},
+            MAX_POWER = #{entity.maxPower},
+            REMAINING_POWER = #{entity.remainingPower},
+            ENDURANCE = #{entity.endurance},
+            SPIRIT = #{entity.spirit},
+            RAPIDLY = #{entity.rapidly},
+            RECOVER_SPEED = #{entity.recoverSpeed},
+            WEIGHT = #{entity.weight},
+            HEIGHT = #{entity.height},
+            AGE = #{entity.age},
+            TOTAL_DISTANCE = #{entity.totalDistance},
+            AVG_SPEED = #{entity.avgSpeed},
+            SPEND_CARLORIE = #{entity.spendCarlorie},
+            TOTAL_RUN_TIMES = #{entity.totalRunTimes}
+        WHERE USER_ID = #{entity.userId}
+    </update>
+
+    <update id="updateAccountPowerInfo">
+        UPDATE USER_DETAIL
+        SET
+            REMAINING_POWER = #{remainingPower}
+        WHERE USER_ID = #{userId}
+    </update>
+
+    <update id="updateAccountBase" parameterType="com.usavich.entity.account.UserBase">
+        UPDATE USER
+        SET
+            <if test="entity.password != null"><![CDATA[
+            USER_PASSWORD = #{entity.password},
+            ]]></if>
+            SEX = #{entity.sex},
+            UUID = #{entity.uuid},
+            NICK_NAME = #{entity.nickName}
+        WHERE USER_ID = #{entity.userId}
+        AND USER_EMAIL = #{entity.userEmail}
+    </update>
+
+    <select id="getUserLocation" resultMap="userLocation">
+        SELECT
+        <include refid="userLocationTable"/>
+        FROM USER AS U
+        LEFT JOIN USER_LOCATION AS UL
+        ON U.USER_ID = UL.USER_ID
+        WHERE U.USER_ID = #{userId}
+    </select>
+
+    <select id="getUserLocations" resultMap="userLocation">
+        SELECT
+        <include refid="userLocationTable"/>
+        FROM USER AS U
+        LEFT JOIN USER_LOCATION AS UL
+        ON U.USER_ID = UL.USER_ID
+    </select>
+
+    <insert id="createUserLocation" parameterType="com.usavich.entity.account.UserLocation">
+        INSERT INTO USER_LOCATION
+        (
+            USER_ID,
+            LAST_LOCATION_CONTENT,
+            LAST_LOCATION_POINT,
+            LAST_ACTIVE_TIME
+        )
+        VALUES
+        (
+            #{entity.userId},
+            #{entity.lastLocationContent},
+            #{entity.lastLocationPoint},
+            #{entity.lastActiveTime}
+        )
+    </insert>
+
+    <update id="updateUserLocation" parameterType="com.usavich.entity.account.UserLocation">
+         UPDATE USER_LOCATION
+         SET
+            LAST_LOCATION_CONTENT = #{entity.lastLocationContent},
+            LAST_LOCATION_POINT = #{entity.lastLocationPoint},
+            LAST_ACTIVE_TIME = #{entity.lastActiveTime}
+         WHERE USER_ID = #{entity.userId}
+    </update>
+
+    <select id="getUserFollowerInformation" resultMap="accountInfo">
+        SELECT
+        <include refid="accountInfoTable"/>
+        FROM PLAN_USER_FOLLOW AS PUF
+        INNER JOIN USER AS U
+        ON PUF.FOLLOWER_USER_ID = U.USER_ID
+        INNER JOIN USER_DETAIL AS UD
+        ON U.USER_ID = UD.USER_ID
+        WHERE PUF.USER_ID = #{userId} AND PUF.STATUS = 0
+        ORDER BY PUF.ADD_TIME DESC
+        LIMIT #{from},#{pageSize}
+    </select>
+
+</mapper>
