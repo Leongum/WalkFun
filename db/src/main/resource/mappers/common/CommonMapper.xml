@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.usavich.db.common.dao.impl.CommonMapper">
+<mapper namespace="com.walkfun.db.common.dao.impl.CommonMapper">
 
     <!-- Experience -->
-    <resultMap id="experienceInfo" type="com.usavich.entity.common.Experience">
+    <resultMap id="experienceInfo" type="com.walkfun.entity.common.Experience">
         <id column="LEVEL" property="level"/>
         <result column="EXPERIENCE" property="experience"/>
         <result column="EXPERIENCE_TOTAL" property="experienceTotal" />
@@ -26,7 +26,7 @@
     </select>
 
     <!-- VersionControl -->
-    <resultMap id="versionControl" type="com.usavich.entity.common.VersionControl">
+    <resultMap id="versionControl" type="com.walkfun.entity.common.VersionControl">
         <id column="PLATFORM" property="platform"/>
         <result column="VERSION" property="version"/>
         <result column="SUB_VERSION" property="subVersion"/>
@@ -47,7 +47,7 @@
         WHERE VC.PLATFORM = #{platform}
     </select>
 
-    <insert id="updateVersionControl" parameterType="com.usavich.entity.common.VersionControl">
+    <insert id="updateVersionControl" parameterType="com.walkfun.entity.common.VersionControl">
         UPDATE version_control
         SET
             VERSION = #{entity.version},
@@ -57,7 +57,7 @@
     </insert>
 
     <!-- system message -->
-    <resultMap id="systemMessageInfo" type="com.usavich.entity.common.SystemMessage">
+    <resultMap id="systemMessageInfo" type="com.walkfun.entity.common.SystemMessage">
         <id column="MESSAGE_ID" property="messageId"/>
         <result column="MESSAGE" property="message"/>
         <result column="RULE" property="rule" />
@@ -80,7 +80,7 @@
 
 
     <!-- Feedback -->
-    <resultMap id="feedbackInfo" type="com.usavich.entity.common.Feedback">
+    <resultMap id="feedbackInfo" type="com.walkfun.entity.common.Feedback">
         <id column="CONTACT" property="contact"/>
         <result column="SUGGESTION" property="suggestion"/>
         <result column="COMMIT_TIME" property="commitTime"/>
@@ -94,7 +94,7 @@
         USER_ID
     </sql>
 
-    <insert id="createFeedback" parameterType="com.usavich.entity.common.Feedback">
+    <insert id="createFeedback" parameterType="com.walkfun.entity.common.Feedback">
         INSERT INTO FEEDBACK
         (
             CONTACT,
@@ -112,7 +112,7 @@
     </insert>
 
     <!-- down Load info -->
-    <resultMap id="statisticsInfo" type="com.usavich.entity.common.Statistics">
+    <resultMap id="statisticsInfo" type="com.walkfun.entity.common.Statistics">
         <id column="PLATFORM" property="platform"/>
         <result column="DOWNLOAD_TIME" property="downloadTime"/>
         <result column="VERSION" property="version"/>
@@ -124,7 +124,7 @@
         VERSION
     </sql>
 
-    <insert id="createDownLoadInfo" parameterType="com.usavich.entity.common.Statistics">
+    <insert id="createDownLoadInfo" parameterType="com.walkfun.entity.common.Statistics">
         INSERT INTO STATISTICS
         (
             PLATFORM,
@@ -141,7 +141,7 @@
 
 
     <!--id generation -->
-    <resultMap id="idGenerationInfo" type="com.usavich.entity.common.IDGeneration">
+    <resultMap id="idGenerationInfo" type="com.walkfun.entity.common.IDGeneration">
         <id column="MISSION_ID" property="missionId"/>
         <result column="PLAN_ID" property="planId"/>
     </resultMap>
@@ -158,7 +158,7 @@
         LIMIT 1
     </select>
 
-    <update id="updateIDGenerationFriend" parameterType="com.usavich.entity.common.IDGeneration">
+    <update id="updateIDGenerationFriend" parameterType="com.walkfun.entity.common.IDGeneration">
          UPDATE ID_GENERATION
          SET
              MISSION_ID = #{entity.missionId},
@@ -166,7 +166,7 @@
     </update>
 
     <!-- Method Collector -->
-    <resultMap id="methodCollectorInfo" type="com.usavich.entity.common.MethodCollector">
+    <resultMap id="methodCollectorInfo" type="com.walkfun.entity.common.MethodCollector">
         <id column="METHOD_NAME" property="methodName"/>
         <result column="METHOD_TIMES" property="methodTimes"/>
         <result column="USE_DATE" property="useDate"/>
@@ -178,7 +178,7 @@
         USE_DATE
     </sql>
 
-    <insert id="createMethodCollector" parameterType="com.usavich.entity.common.MethodCollector">
+    <insert id="createMethodCollector" parameterType="com.walkfun.entity.common.MethodCollector">
         INSERT INTO METHOD_COLLECTOR
         (
             METHOD_NAME,
@@ -194,7 +194,7 @@
     </insert>
 
     <!-- Recommend App -->
-    <resultMap id="recommendAppInfo" type="com.usavich.entity.common.RecommendApp">
+    <resultMap id="recommendAppInfo" type="com.walkfun.entity.common.RecommendApp">
         <id column="APP_ID" property="appId"/>
         <result column="APP_NAME" property="appName"/>
         <result column="APP_DESCRIPTION" property="appDescription"/>

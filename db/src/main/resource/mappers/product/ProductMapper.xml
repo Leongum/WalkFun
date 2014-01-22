@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.usavich.db.product.dao.impl.ProductMapper">
-    <resultMap id="productInfo" type="com.usavich.entity.product.Product">
+<mapper namespace="com.walkfun.db.product.dao.impl.ProductMapper">
+    <resultMap id="productInfo" type="com.walkfun.entity.product.Product">
         <id column="PRODUCT_ID" property="productId"/>
         <result column="PRODUCT_NAME" property="productName"/>
         <result column="PRODUCT_DESC" property="productDesc"/>
@@ -22,7 +22,7 @@
         <result column="LAST_UPDATE_TIME" property="lastUpdateTime"/>
     </resultMap>
 
-    <resultMap id="productHistoryInfo" type="com.usavich.entity.product.ProductHistory">
+    <resultMap id="productHistoryInfo" type="com.walkfun.entity.product.ProductHistory">
         <id column="USER_ID" property="userId"/>
         <result column="PRODUCT_ID" property="productId"/>
         <result column="SCORES" property="scores"/>
@@ -87,7 +87,7 @@
         AND PRODUCT_ID = #{productId}
     </select>
 
-    <insert id="createProductHistory" parameterType="com.usavich.entity.product.ProductHistory">
+    <insert id="createProductHistory" parameterType="com.walkfun.entity.product.ProductHistory">
         INSERT INTO USER_PRODUCTS_HISTORY
         (
             USER_ID,

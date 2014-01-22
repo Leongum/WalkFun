@@ -15,7 +15,7 @@
        http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
        http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
 
-    <context:component-scan base-package="com.usavich"/>
+    <context:component-scan base-package="com.walkfun"/>
 
     <!-- This enables autowiring of dependencies. -->
     <context:annotation-config/>
@@ -29,9 +29,9 @@
     <!-- Load all spring bean definitions -->
     <import resource="classpath*:META-INF/spring/context.xml"/>
 
-    <bean id="cryptoService" class="com.usavich.common.cryptoservice.impl.CryptoServiceImpl"/>
+    <bean id="cryptoService" class="com.walkfun.common.cryptoservice.impl.CryptoServiceImpl"/>
 
-    <bean class="com.usavich.common.lib.ConfigurationService">
+    <bean class="com.walkfun.common.lib.ConfigurationService">
         <property name="cryptoService" ref="cryptoService"/>
         <property name="locations">
             <list>
@@ -79,7 +79,7 @@
             <ref bean="jsonProvider"/>
             <ref bean="jaxbProvider"/>
             <ref bean="txtProvider"/>
-            <bean class="com.usavich.rest.common.RestExceptionMapper"/>
+            <bean class="com.walkfun.rest.common.RestExceptionMapper"/>
         </jaxrs:providers>
     </jaxrs:server>
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.usavich.db.account.dao.impl.AccountMapper">
+<mapper namespace="com.walkfun.db.account.dao.impl.AccountMapper">
 
-    <resultMap id="accountInfo" type="com.usavich.entity.account.UserInfo">
+    <resultMap id="accountInfo" type="com.walkfun.entity.account.UserInfo">
         <id column="USER_ID" property="userId"/>
         <result column="USER_EMAIL" property="userEmail"/>
         <result column="SEX" property="sex"/>
@@ -31,7 +31,7 @@
         <result column="LUCK" property="luck"/>-->
     </resultMap>
 
-    <resultMap id="userFriendInfo" type="com.usavich.entity.account.UserFriend">
+    <resultMap id="userFriendInfo" type="com.walkfun.entity.account.UserFriend">
         <id column="USER_ID" property="userId"/>
         <result column="USER_EMAIL" property="userEmail"/>
         <result column="NICK_NAME" property="nickName"/>
@@ -45,7 +45,7 @@
         <result column="LAST_ACTIVE_TIME" property="lastActiveTime"/>
     </resultMap>
 
-    <resultMap id="userLocation" type="com.usavich.entity.account.UserLocation">
+    <resultMap id="userLocation" type="com.walkfun.entity.account.UserLocation">
         <id column="USER_ID" property="userId"/>
         <result column="USER_EMAIL" property="userEmail"/>
         <result column="NICK_NAME" property="nickName"/>
@@ -134,7 +134,7 @@
         WHERE U.USER_EMAIL = #{userEmail}
     </select>
 
-    <insert id="createBase" parameterType="com.usavich.entity.account.UserBase" useGeneratedKeys="true"
+    <insert id="createBase" parameterType="com.walkfun.entity.account.UserBase" useGeneratedKeys="true"
             keyProperty="baseEntity.userId">
         INSERT INTO USER
         (
@@ -154,7 +154,7 @@
         )
     </insert>
 
-    <insert id="createDetail" parameterType="com.usavich.entity.account.UserInfo">
+    <insert id="createDetail" parameterType="com.walkfun.entity.account.UserInfo">
         INSERT INTO USER_DETAIL
         (
           USER_ID,
@@ -212,7 +212,7 @@
         AND FRIEND_ID = #{friendId}
     </select>
 
-    <insert id="createUserFriend" parameterType="com.usavich.entity.account.UserFriend">
+    <insert id="createUserFriend" parameterType="com.walkfun.entity.account.UserFriend">
         INSERT INTO USER_FRIEND
         (
             USER_ID,
@@ -231,7 +231,7 @@
         )
     </insert>
 
-    <update id="updateUserFriend" parameterType="com.usavich.entity.account.UserFriend">
+    <update id="updateUserFriend" parameterType="com.walkfun.entity.account.UserFriend">
          UPDATE USER_FRIEND
          SET
              FRIEND_STATUS = #{entity.friendStatus},
@@ -239,7 +239,7 @@
          WHERE USER_ID = #{entity.userId} AND FRIEND_ID = #{entity.friendId}
     </update>
 
-    <update id="updateAccountInfo" parameterType="com.usavich.entity.account.UserInfo">
+    <update id="updateAccountInfo" parameterType="com.walkfun.entity.account.UserInfo">
         UPDATE USER_DETAIL
         SET
             LEVEL = #{entity.level},
@@ -268,7 +268,7 @@
         WHERE USER_ID = #{userId}
     </update>
 
-    <update id="updateAccountBase" parameterType="com.usavich.entity.account.UserBase">
+    <update id="updateAccountBase" parameterType="com.walkfun.entity.account.UserBase">
         UPDATE USER
         SET
             <if test="entity.password != null"><![CDATA[
@@ -298,7 +298,7 @@
         ON U.USER_ID = UL.USER_ID
     </select>
 
-    <insert id="createUserLocation" parameterType="com.usavich.entity.account.UserLocation">
+    <insert id="createUserLocation" parameterType="com.walkfun.entity.account.UserLocation">
         INSERT INTO USER_LOCATION
         (
             USER_ID,
@@ -315,7 +315,7 @@
         )
     </insert>
 
-    <update id="updateUserLocation" parameterType="com.usavich.entity.account.UserLocation">
+    <update id="updateUserLocation" parameterType="com.walkfun.entity.account.UserLocation">
          UPDATE USER_LOCATION
          SET
             LAST_LOCATION_CONTENT = #{entity.lastLocationContent},

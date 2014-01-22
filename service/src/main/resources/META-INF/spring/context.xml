@@ -10,16 +10,16 @@
        http://www.springframework.org/schema/task
        http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
-    <context:component-scan base-package="com.usavich"/>
+    <context:component-scan base-package="com.walkfun"/>
 
-    <bean id="accountService" class="com.usavich.service.account.impl.AccountServiceImpl"/>
-    <bean id="missionService" class="com.usavich.service.mission.impl.MissionServiceImpl"/>
-    <bean id="productService" class="com.usavich.service.product.impl.ProductServiceImpl"/>
-    <bean id="runningService" class="com.usavich.service.running.impl.RunningServiceImpl"/>
-    <bean id="commonService" class="com.usavich.service.common.impl.CommonServiceImpl"/>
-    <bean id="planService" class="com.usavich.service.plan.impl.PlanServiceImpl"/>
+    <bean id="accountService" class="com.walkfun.service.account.impl.AccountServiceImpl"/>
+    <bean id="missionService" class="com.walkfun.service.mission.impl.MissionServiceImpl"/>
+    <bean id="productService" class="com.walkfun.service.product.impl.ProductServiceImpl"/>
+    <bean id="runningService" class="com.walkfun.service.running.impl.RunningServiceImpl"/>
+    <bean id="commonService" class="com.walkfun.service.common.impl.CommonServiceImpl"/>
+    <bean id="planService" class="com.walkfun.service.plan.impl.PlanServiceImpl"/>
 
-    <bean id="backendJobCache" class="com.usavich.service.backend.BackendJobCache"/>
+    <bean id="backendJobCache" class="com.walkfun.service.backend.BackendJobCache"/>
 
     <task:scheduled-tasks>
         <task:scheduled ref="backendJobCache" method="missionServiceJob" fixed-rate="21600000"/>

@@ -83,9 +83,9 @@ function deploy(){
     #chmod u+rx ${_app_root_path}/WEB-INF/upload/ > /dev/null 2>&1
     #chmod u+rx *.sh > /dev/null 2>&1
     echo Copying files to remote 1box ...
-    run_scp_cmd_r "${_app_root_path}/WEB-INF/upload/*.jar" "/alidata/apache-tomcat-7.0.39/webapps/usavich/WEB-INF/lib/"
+    run_scp_cmd_r "${_app_root_path}/WEB-INF/upload/*.jar" "/alidata/apache-tomcat-7.0.39/webapps/walkfun/WEB-INF/lib/"
     check_task_status $?
-    run_scp_cmd_r "${_app_root_path}/WEB-INF/*.xml" "/alidata/apache-tomcat-7.0.39/webapps/usavich/WEB-INF/"
+    run_scp_cmd_r "${_app_root_path}/WEB-INF/*.xml" "/alidata/apache-tomcat-7.0.39/webapps/walkfun/WEB-INF/"
     check_task_status $?
 
     echo Waiting for remote 1box to finish deploying ...

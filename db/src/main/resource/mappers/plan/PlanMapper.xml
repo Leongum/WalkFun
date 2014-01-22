@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.usavich.db.plan.dao.impl.PlanMapper">
-    <resultMap id="planInfo" type="com.usavich.entity.plan.Plan">
+<mapper namespace="com.walkfun.db.plan.dao.impl.PlanMapper">
+    <resultMap id="planInfo" type="com.walkfun.entity.plan.Plan">
         <id column="PLAN_ID" property="planId"/>
         <result column="PLAN_NAME" property="planName"/>
         <result column="PLAN_DESCRIPTION" property="planDescription"/>
@@ -21,21 +21,21 @@
         <result column="LAST_UPDATE_TIME" property="lastUpdateTime"/>
     </resultMap>
 
-    <resultMap id="planCollectInfo" type="com.usavich.entity.plan.PlanCollect">
+    <resultMap id="planCollectInfo" type="com.walkfun.entity.plan.PlanCollect">
         <id column="USER_ID" property="userId"/>
         <result column="PLAN_ID" property="planId"/>
         <result column="COLLECT_TIME" property="collectTime"/>
         <result column="COLLECT_STATUS" property="collectStatus"/>
     </resultMap>
 
-    <resultMap id="planUserFollowInfo" type="com.usavich.entity.plan.PlanUserFollow">
+    <resultMap id="planUserFollowInfo" type="com.walkfun.entity.plan.PlanUserFollow">
         <id column="USER_ID" property="userId"/>
         <result column="FOLLOWER_USER_ID" property="followUserId"/>
         <result column="STATUS" property="status"/>
         <result column="ADD_TIME" property="addTime"/>
     </resultMap>
 
-    <resultMap id="planRunHistoryInfo" type="com.usavich.entity.plan.PlanRunHistory">
+    <resultMap id="planRunHistoryInfo" type="com.walkfun.entity.plan.PlanRunHistory">
         <id column="PLAN_ID" property="planId"/>
         <result column="PLAN_NAME" property="planName"/>
         <result column="PLAN_RUN_UUID" property="planRunUuid"/>
@@ -120,7 +120,7 @@
         ]]></if>
     </select>
 
-    <insert id="createPlan" parameterType="com.usavich.entity.plan.Plan">
+    <insert id="createPlan" parameterType="com.walkfun.entity.plan.Plan">
         INSERT INTO PLAN
         (
                 PLAN_ID,
@@ -171,7 +171,7 @@
         ]]></if>
     </select>
 
-    <insert id="createUserCollect" parameterType="com.usavich.entity.plan.PlanCollect">
+    <insert id="createUserCollect" parameterType="com.walkfun.entity.plan.PlanCollect">
         INSERT INTO PLAN_COLLECT
         (
             USER_ID,
@@ -206,7 +206,7 @@
         WHERE PRH.USER_ID = #{userId} AND PRH.HISTORY_STATUS = 0
     </select>
 
-    <insert id="createPlanRunning" parameterType="com.usavich.entity.plan.PlanRunHistory">
+    <insert id="createPlanRunning" parameterType="com.walkfun.entity.plan.PlanRunHistory">
          INSERT INTO PLAN_RUN_HISTORY
          (
                 PLAN_ID,
@@ -239,7 +239,7 @@
         )
     </insert>
 
-    <update id="updatePlanRunning" parameterType="com.usavich.entity.plan.PlanRunHistory">
+    <update id="updatePlanRunning" parameterType="com.walkfun.entity.plan.PlanRunHistory">
         UPDATE PLAN_RUN_HISTORY
         SET
         PLAN_ID = #{planHistory.planId},
@@ -315,7 +315,7 @@
         ]]></if>
     </select>
 
-    <insert id="createPlanFollower" parameterType="com.usavich.entity.plan.PlanUserFollow">
+    <insert id="createPlanFollower" parameterType="com.walkfun.entity.plan.PlanUserFollow">
         INSERT INTO PLAN_USER_FOLLOW
         (
                 USER_ID,

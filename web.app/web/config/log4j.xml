@@ -63,19 +63,19 @@
         <appender-ref ref="REST_ASYNC"/>
     </logger>
 
-    <logger name="com.usavich.rest" additivity="false">
+    <logger name="com.walkfun.rest" additivity="false">
         <level value="WARN"/>
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="REST_ASYNC"/>
     </logger>
 
-    <logger name="com.usavich.db" additivity="false">
+    <logger name="com.walkfun.db" additivity="false">
         <level value="DEBUG"/>
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="MAPPER_ASYNC"/>
     </logger>
 
-    <logger name="com.usavich.service" additivity="false">
+    <logger name="com.walkfun.service" additivity="false">
         <level value="WARN"/>
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="SERVICE_ASYNC"/>

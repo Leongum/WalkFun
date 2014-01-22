@@ -29,7 +29,7 @@
     </bean>
 
     <!-- sql session factory bean -->
-    <bean id="queryInteceptor" class="com.usavich.common.lib.QueryInterceptor"/>
+    <bean id="queryInteceptor" class="com.walkfun.common.lib.QueryInterceptor"/>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="tomcatPooledDataSource"/>
@@ -44,17 +44,17 @@
         </property>
     </bean>
 
-    <bean id="accountDAO" class="com.usavich.db.account.dao.impl.AccountDAOImpl"/>
+    <bean id="accountDAO" class="com.walkfun.db.account.dao.impl.AccountDAOImpl"/>
 
-    <bean id="commonDAO" class="com.usavich.db.common.dao.impl.CommonDAOImpl" />
+    <bean id="commonDAO" class="com.walkfun.db.common.dao.impl.CommonDAOImpl" />
 
-    <bean id="missionDAO" class="com.usavich.db.mission.dao.impl.MissionDAOImpl"/>
+    <bean id="missionDAO" class="com.walkfun.db.mission.dao.impl.MissionDAOImpl"/>
 
-    <bean id="productDAO" class="com.usavich.db.product.dao.impl.ProductADOImpl"/>
+    <bean id="productDAO" class="com.walkfun.db.product.dao.impl.ProductADOImpl"/>
 
-    <bean id="runningDAO" class="com.usavich.db.running.dao.impl.RunningDAOImpl"/>
+    <bean id="runningDAO" class="com.walkfun.db.running.dao.impl.RunningDAOImpl"/>
 
-    <bean id="planDAO" class="com.usavich.db.plan.dao.impl.PlanDAOImpl"/>
+    <bean id="planDAO" class="com.walkfun.db.plan.dao.impl.PlanDAOImpl"/>
 
     <!-- Mappers-->
     <bean id="baseMapper" class="org.mybatis.spring.support.SqlSessionDaoSupport" abstract="true">
@@ -62,27 +62,27 @@
     </bean>
 
     <bean id="accountMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" parent="baseMapper">
-        <property name="mapperInterface" value="com.usavich.db.account.dao.impl.AccountMapper"/>
+        <property name="mapperInterface" value="com.walkfun.db.account.dao.impl.AccountMapper"/>
     </bean>
 
     <bean id="commonMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" parent="baseMapper">
-        <property name="mapperInterface" value="com.usavich.db.common.dao.impl.CommonMapper"/>
+        <property name="mapperInterface" value="com.walkfun.db.common.dao.impl.CommonMapper"/>
     </bean>
 
     <bean id="missionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" parent="baseMapper">
-        <property name="mapperInterface" value="com.usavich.db.mission.dao.impl.MissionMapper"/>
+        <property name="mapperInterface" value="com.walkfun.db.mission.dao.impl.MissionMapper"/>
     </bean>
 
     <bean id="productMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" parent="baseMapper">
-        <property name="mapperInterface" value="com.usavich.db.product.dao.impl.ProductMapper"/>
+        <property name="mapperInterface" value="com.walkfun.db.product.dao.impl.ProductMapper"/>
     </bean>
 
     <bean id="runningMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" parent="baseMapper">
-        <property name="mapperInterface" value="com.usavich.db.running.dao.impl.RunningMapper"/>
+        <property name="mapperInterface" value="com.walkfun.db.running.dao.impl.RunningMapper"/>
     </bean>
 
     <bean id="planMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" parent="baseMapper">
-        <property name="mapperInterface" value="com.usavich.db.plan.dao.impl.PlanMapper"/>
+        <property name="mapperInterface" value="com.walkfun.db.plan.dao.impl.PlanMapper"/>
     </bean>
 
 </beans>

@@ -7,17 +7,17 @@
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
 
-    <context:component-scan base-package="com.usavich.rest"/>
+    <context:component-scan base-package="com.walkfun.rest"/>
 
     <tx:annotation-driven/>
 
-    <bean id="accountRestService" class="com.usavich.rest.account.AccountRestService"/>
-    <bean id="systemRestService" class="com.usavich.rest.system.SystemRestService"/>
-    <bean id="missionRestService" class="com.usavich.rest.mission.MissionRestService"/>
-    <bean id="productRestService" class="com.usavich.rest.product.ProductRestService"/>
-    <bean id="runningRestService" class="com.usavich.rest.running.RunningRestService"/>
-    <bean id="weatherRestService" class="com.usavich.rest.thirdParty.WeatherRestService"/>
-    <bean id="planRestService" class="com.usavich.rest.plan.PlanRestService"/>
+    <bean id="accountRestService" class="com.walkfun.rest.account.AccountRestService"/>
+    <bean id="systemRestService" class="com.walkfun.rest.system.SystemRestService"/>
+    <bean id="missionRestService" class="com.walkfun.rest.mission.MissionRestService"/>
+    <bean id="productRestService" class="com.walkfun.rest.product.ProductRestService"/>
+    <bean id="runningRestService" class="com.walkfun.rest.running.RunningRestService"/>
+    <bean id="weatherRestService" class="com.walkfun.rest.thirdParty.WeatherRestService"/>
+    <bean id="planRestService" class="com.walkfun.rest.plan.PlanRestService"/>
 
     <bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
     <bean id="txtProvider" class="org.apache.cxf.jaxrs.provider.PrimitiveTextProvider"/>
@@ -34,6 +34,6 @@
     <bean id="schemaHandler" class="org.apache.cxf.jaxrs.utils.schemas.SchemaHandler"/>
 
     <!-- interceptors -->
-    <bean id="headerInterceptor" class="com.usavich.rest.common.HeaderInterceptor"/>
-    <bean id="cleanupInterceptor" class="com.usavich.rest.common.CleanupInterceptor"/>
+    <bean id="headerInterceptor" class="com.walkfun.rest.common.HeaderInterceptor"/>
+    <bean id="cleanupInterceptor" class="com.walkfun.rest.common.CleanupInterceptor"/>
 </beans>

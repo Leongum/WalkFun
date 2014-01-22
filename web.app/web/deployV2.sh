@@ -83,17 +83,17 @@ function deploy(){
     #chmod u+rx ${_app_root_path}/WEB-INF/upload/ > /dev/null 2>&1
     #chmod u+rx *.sh > /dev/null 2>&1
     echo Copying files to remote 1box ...
-    run_scp_cmd_r "${_app_root_path}/WEB-INF/upload/*.jar" "/alidata/apache-tomcat-7.0.39/webapps/usavichV2/WEB-INF/lib/"
+    run_scp_cmd_r "${_app_root_path}/WEB-INF/upload/*.jar" "/alidata/apache-tomcat-7.0.39/webapps/walkfunV2/WEB-INF/lib/"
     check_task_status $?
-    run_scp_cmd_r "${_app_root_path}/WEB-INF/*.xml" "/alidata/apache-tomcat-7.0.39/webapps/usavichV2/WEB-INF/"
+    run_scp_cmd_r "${_app_root_path}/WEB-INF/*.xml" "/alidata/apache-tomcat-7.0.39/webapps/walkfunV2/WEB-INF/"
     check_task_status $?
-    run_scp_cmd_r "${_app_root_path}/css/*.css" "/alidata/apache-tomcat-7.0.39/webapps/usavichV2/css/"
+    run_scp_cmd_r "${_app_root_path}/css/*.css" "/alidata/apache-tomcat-7.0.39/webapps/walkfunV2/css/"
     check_task_status $?
-    run_scp_cmd_r "${_app_root_path}/js/*.js" "/alidata/apache-tomcat-7.0.39/webapps/usavichV2/js/"
+    run_scp_cmd_r "${_app_root_path}/js/*.js" "/alidata/apache-tomcat-7.0.39/webapps/walkfunV2/js/"
     check_task_status $?
-    run_scp_cmd_r "${_app_root_path}/images/*.*" "/alidata/apache-tomcat-7.0.39/webapps/usavichV2/images/"
+    run_scp_cmd_r "${_app_root_path}/images/*.*" "/alidata/apache-tomcat-7.0.39/webapps/walkfunV2/images/"
     check_task_status $?
-    run_scp_cmd_r "${_app_root_path}/index.html" "/alidata/apache-tomcat-7.0.39/webapps/usavichV2"
+    run_scp_cmd_r "${_app_root_path}/index.html" "/alidata/apache-tomcat-7.0.39/webapps/walkfunV2"
     check_task_status $?
 
     echo Waiting for remote 1box to finish deploying ...

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.usavich.db.running.dao.impl.RunningMapper">
-    <resultMap id="runningHistoryInfo" type="com.usavich.entity.running.RunningHistory">
+<mapper namespace="com.walkfun.db.running.dao.impl.RunningMapper">
+    <resultMap id="runningHistoryInfo" type="com.walkfun.entity.running.RunningHistory">
         <id column="USER_ID" property="userId"/>
         <result column="RUN_UUID" property="runUuid"/>
         <result column="MISSION_ID" property="missionId"/>
@@ -32,7 +32,7 @@
         <result column="SPEED_LIST" property="speedList"/>
     </resultMap>
 
-    <resultMap id="runningOnGoingInfo" type="com.usavich.entity.running.OnGoingRunning">
+    <resultMap id="runningOnGoingInfo" type="com.walkfun.entity.running.OnGoingRunning">
         <id column="USER_ID" property="userId"/>
         <result column="RUN_UUID" property="runUuid"/>
         <result column="MISSION_PACKAGE_ID" property="missionPackageId" />
@@ -113,7 +113,7 @@
         LIMIT #{startSize}, #{pageSize}
     </select>
 
-    <insert id="createRunningHistory" parameterType="com.usavich.entity.running.RunningHistory">
+    <insert id="createRunningHistory" parameterType="com.walkfun.entity.running.RunningHistory">
         INSERT INTO USER_RUNNING_HISTORY
         (
             USER_ID,
@@ -191,7 +191,7 @@
         WHERE RUN_UUID = #{runUuid}
     </select>
 
-    <insert id="createOnGoingRunning" parameterType="com.usavich.entity.running.OnGoingRunning">
+    <insert id="createOnGoingRunning" parameterType="com.walkfun.entity.running.OnGoingRunning">
         INSERT INTO USER_RUNNING
         (
             USER_ID,

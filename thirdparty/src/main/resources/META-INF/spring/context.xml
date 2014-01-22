@@ -10,28 +10,28 @@
        http://www.springframework.org/schema/task
        http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
-    <context:component-scan base-package="com.usavich.thirdparty"/>
+    <context:component-scan base-package="com.walkfun.thirdparty"/>
 
     <task:annotation-driven/>
 
-    <bean id="httpClientConnectionPool" class="com.usavich.thirdparty.httpService.HttpClientConnectionPool"
+    <bean id="httpClientConnectionPool" class="com.walkfun.thirdparty.httpService.HttpClientConnectionPool"
           init-method="afterPropertiesSet" destroy-method="destroy">
     </bean>
 
-    <bean id="pm25GetRequest" class="com.usavich.thirdparty.httpService.impl.PM25GetRequest">
+    <bean id="pm25GetRequest" class="com.walkfun.thirdparty.httpService.impl.PM25GetRequest">
         <property name="pm25GetUrl" value="http://www.pm25.in/api/querys/aqi_ranking.json?token=6iAVdKGrvMsPqamKvvBu"/>
         <property name="client" ref="httpClientConnectionPool"/>
     </bean>
 
-    <bean id="pmCityGetRequest" class="com.usavich.thirdparty.httpService.impl.PMCityGetRequest">
+    <bean id="pmCityGetRequest" class="com.walkfun.thirdparty.httpService.impl.PMCityGetRequest">
         <property name="pmCityGetUrl" value="http://www.pm25.in/api/querys.json?token=6iAVdKGrvMsPqamKvvBu"/>
         <property name="client" ref="httpClientConnectionPool"/>
     </bean>
 
 
-    <bean id="weatherService" class="com.usavich.thirdparty.weather.impl.WeatherServiceImpl"/>
+    <bean id="weatherService" class="com.walkfun.thirdparty.weather.impl.WeatherServiceImpl"/>
 
-    <bean id="taskJobs" class="com.usavich.thirdparty.backend.TaskJobs"/>
+    <bean id="taskJobs" class="com.walkfun.thirdparty.backend.TaskJobs"/>
 
     <task:scheduled-tasks>
         <task:scheduled ref="taskJobs" method="pm25SyncJob" fixed-rate="1800000"/>

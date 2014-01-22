@@ -1,5 +1,5 @@
-import com.usavich.common.logService.LogHelper;
-import com.usavich.thirdparty.weather.def.WeatherService;
+import com.walkfun.common.logService.LogHelper;
+import com.walkfun.thirdparty.weather.def.WeatherService;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.Assert;
