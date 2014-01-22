@@ -40,7 +40,7 @@ public interface SystemRestDef extends RestDef {
 
     @POST
     @Path("/download")
-    void createDownLoadInfo(Statistics statistics);
+    void createDownLoadInfo(DownloadStatistics statistics);
 
     @GET
     @Path("/cache/evict/{" + PARAM_CACHE_ID + "}")

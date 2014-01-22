@@ -1,8 +1,6 @@
 package com.walkfun.db.running.dao.impl;
 
 import com.walkfun.db.running.dao.def.RunningDAO;
-import com.walkfun.entity.common.Experience;
-import com.walkfun.entity.running.OnGoingRunning;
 import com.walkfun.entity.running.RunningHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -36,19 +34,6 @@ public class RunningDAOImpl implements RunningDAO {
         RunningHistory existingHistory = runningMapper.getRunningHistoryByUuid(runningHistory.getRunUuid());
         if (existingHistory == null || existingHistory.getUserId() == null) {
             runningMapper.createRunningHistory(runningHistory);
-        }
-    }
-
-    @Override
-    public List<OnGoingRunning> getOnGoingRunning(Integer userId, Date lastUpdateTime) {
-        return runningMapper.getOnGoingRunning(userId, lastUpdateTime);
-    }
-
-    @Override
-    public void createOnGoingRunning(OnGoingRunning goingRunning) {
-        OnGoingRunning existingRunning = runningMapper.getOnGoingRunningByUuid(goingRunning.getRunUuid());
-        if (existingRunning == null || existingRunning.getUserId() == null) {
-            runningMapper.createOnGoingRunning(goingRunning);
         }
     }
 }

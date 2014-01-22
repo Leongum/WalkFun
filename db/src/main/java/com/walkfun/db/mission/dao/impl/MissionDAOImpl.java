@@ -23,24 +23,4 @@ public class MissionDAOImpl implements MissionDAO {
     public List<Mission> getMissions(Integer missionId, Date lastUpdateTime, Integer missionTypeId) {
         return missionMapper.getMissions(missionId, lastUpdateTime, missionTypeId);
     }
-
-    @Override
-    public List<MissionPlacePackage> getMissionPlacePackage(Integer missionPlacePackageId) {
-        return missionMapper.getMissionPlacePackage(missionPlacePackageId);
-    }
-
-    @Override
-    public List<MissionChallenge> getMissionChallenges(Integer challengeId) {
-        return missionMapper.getMissionChallenges(challengeId);
-    }
-
-    @Override
-    public List<Mission> getMissionsByPlanId(Integer planId) {
-        return missionMapper.getMissionsByPlanId(planId);
-    }
-
-    @Override
-    public void createMission(Mission mission) {
-        missionMapper.createMission(mission);
-    }
 }

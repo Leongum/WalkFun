@@ -15,12 +15,4 @@ import java.util.List;
 public interface MissionDAO {
 
     public List<Mission> getMissions(Integer missionId, Date lastUpdateTime, Integer missionTypeId);
-
-    public List<MissionPlacePackage> getMissionPlacePackage(Integer missionPlacePackageId);
-
-    public List<MissionChallenge> getMissionChallenges(Integer challengeId);
-
-    public List<Mission> getMissionsByPlanId(Integer planId);
-
-    public void createMission(Mission mission);
 }

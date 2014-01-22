@@ -20,11 +20,6 @@ public class CommonDAOImpl implements CommonDAO{
     private CommonMapper commonMapper;
 
     @Override
-    public Experience getExperienceLevel(double experience) {
-        return commonMapper.getExperienceLevel(experience);
-    }
-
-    @Override
     public List<SystemMessage> getSystemMessage(Date lastUpdateTime) {
         return commonMapper.getSystemMessageInfo(lastUpdateTime);
     }
@@ -35,18 +30,8 @@ public class CommonDAOImpl implements CommonDAO{
     }
 
     @Override
-    public void createDownLoadInfo(Statistics statistics) {
+    public void createDownLoadInfo(DownloadStatistics statistics) {
         commonMapper.createDownLoadInfo(statistics);
-    }
-
-    @Override
-    public IDGeneration getIDGenerationInfo() {
-        return commonMapper.getIDGenerationInfo();
-    }
-
-    @Override
-    public void updateIDGenerationFriend(IDGeneration idGeneration) {
-        commonMapper.updateIDGenerationFriend(idGeneration);
     }
 
     @Override
@@ -62,10 +47,5 @@ public class CommonDAOImpl implements CommonDAO{
     @Override
     public VersionControl getVersionControl(String platform) {
         return commonMapper.getVersionControl(platform);
-    }
-
-    @Override
-    public void updateVersionControl(VersionControl versionControl) {
-        commonMapper.updateVersionControl(versionControl);
     }
 }

@@ -1,7 +1,7 @@
 package com.walkfun.rest.mission;
 
 import com.walkfun.common.lib.CommonUtils;
-import com.walkfun.entity.enums.MissionType;
+import com.walkfun.entity.enums.MissionTypeEnum;
 import com.walkfun.entity.mission.*;
 import com.walkfun.service.mission.def.MissionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class MissionRestService implements MissionRestDef {
         CommonUtils.newMethodCall("MissionRestService.getMissions");
         int missionTypeId = -1;
         if (missionType != null) {
-            missionTypeId = MissionType.valueOf(missionType).ordinal();
+            missionTypeId = MissionTypeEnum.valueOf(missionType).ordinal();
         }
         return missionService.getMissionsForRest(CommonUtils.parseIntegerToNull(missionId),
                 CommonUtils.parseDateDefaultToNull(lastUpdateTime), missionTypeId);

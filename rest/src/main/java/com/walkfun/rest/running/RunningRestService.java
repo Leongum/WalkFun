@@ -1,7 +1,6 @@
 package com.walkfun.rest.running;
 
 import com.walkfun.common.lib.CommonUtils;
-import com.walkfun.entity.running.OnGoingRunning;
 import com.walkfun.entity.running.RunningHistory;
 import com.walkfun.service.account.def.AccountService;
 import com.walkfun.service.running.def.RunningService;
@@ -39,12 +38,6 @@ public class RunningRestService implements RunningRestDef {
     }
 
     @Override
-    public List<OnGoingRunning> getOnGoingRunning(String userId, String lastUpdateTime) {
-        CommonUtils.newMethodCall("RunningRestService.getOnGoingRunning");
-        return runningService.getOnGoingRunning(CommonUtils.parseIntegerToNull(userId), CommonUtils.parseDateDefaultToNull(lastUpdateTime));
-    }
-
-    @Override
     public void createRunningHistory(String userId, List<RunningHistory> runningHistoryList) {
         CommonUtils.newMethodCall("RunningRestService.createRunningHistory");
         accountService.checkUserLoginStatus(CommonUtils.parseIntegerToNull(userId));
@@ -60,15 +53,5 @@ public class RunningRestService implements RunningRestDef {
             }
         }
         runningService.createRunningHistory(CommonUtils.parseIntegerToNull(userId), runningHistoryList);
-    }
-
-    @Override
-    public void createOnGoingRunning(String userId, List<OnGoingRunning> onGoingRunningList) {
-        CommonUtils.newMethodCall("RunningRestService.createOnGoingRunning");
-        accountService.checkUserLoginStatus(CommonUtils.parseIntegerToNull(userId));
-        for (OnGoingRunning onGoingRunning : onGoingRunningList) {
-            onGoingRunning.setUserId(CommonUtils.parseIntegerToNull(userId));
-        }
-        runningService.createOnGoingRunning(CommonUtils.parseIntegerToNull(userId), onGoingRunningList);
     }
 }

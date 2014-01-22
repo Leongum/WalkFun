@@ -3,8 +3,6 @@ package com.walkfun.service.running.impl;
 import com.walkfun.db.common.dao.def.CommonDAO;
 import com.walkfun.db.running.dao.def.RunningDAO;
 import com.walkfun.entity.account.UserInfo;
-import com.walkfun.entity.common.Experience;
-import com.walkfun.entity.running.OnGoingRunning;
 import com.walkfun.entity.running.RunningHistory;
 import com.walkfun.service.account.def.AccountService;
 import com.walkfun.service.running.def.RunningService;
@@ -55,32 +53,20 @@ public class RunningServiceImpl implements RunningService {
     }
 
     private UserInfo updateUserInfo(UserInfo userInfo, RunningHistory runningHistory) {
-        if (runningHistory.getValid() == 1) {
-            double experience = userInfo.getExperience() + runningHistory.getExperience();
-            userInfo.setExperience(experience);
-            double scores = userInfo.getScores() + runningHistory.getScores();
-            userInfo.setScores(scores);
-            Experience experienceInfo = commonDAO.getExperienceLevel(experience);
-            double level = experienceInfo.getLevel() + (experience - (experienceInfo.getExperienceTotal() - experienceInfo.getExperience())) / experienceInfo.getExperience();
-            userInfo.setLevel(level);
-            userInfo.setTotalRunTimes(userInfo.getTotalRunTimes() + 1);
-            userInfo.setAvgSpeed((userInfo.getAvgSpeed() + runningHistory.getAvgSpeed()) / 2);
-            userInfo.setTotalDistance(userInfo.getTotalDistance() + runningHistory.getDistance());
-            userInfo.setSpendCarlorie(userInfo.getSpendCarlorie() + runningHistory.getSpendCarlorie());
-        }
+        //todo:: add userInfo update.
+//        if (runningHistory.getValid() == 1) {
+//            double experience = userInfo.getExperience() + runningHistory.getExperience();
+//            userInfo.setExperience(experience);
+//            double scores = userInfo.getScores() + runningHistory.getScores();
+//            userInfo.setScores(scores);
+//            Experience experienceInfo = commonDAO.getExperienceLevel(experience);
+//            double level = experienceInfo.getLevel() + (experience - (experienceInfo.getExperienceTotal() - experienceInfo.getExperience())) / experienceInfo.getExperience();
+//            userInfo.setLevel(level);
+//            userInfo.setTotalRunTimes(userInfo.getTotalRunTimes() + 1);
+//            userInfo.setAvgSpeed((userInfo.getAvgSpeed() + runningHistory.getAvgSpeed()) / 2);
+//            userInfo.setTotalDistance(userInfo.getTotalDistance() + runningHistory.getDistance());
+//            userInfo.setSpendCarlorie(userInfo.getSpendCarlorie() + runningHistory.getSpendCarlorie());
+//        }
         return userInfo;
-    }
-
-    @Override
-    public List<OnGoingRunning> getOnGoingRunning(Integer userId, Date lastUpdateTime) {
-        return runningDAO.getOnGoingRunning(userId, lastUpdateTime);
-    }
-
-    @Override
-    @Transactional
-    public void createOnGoingRunning(Integer userId, List<OnGoingRunning> goingRunningList) {
-        for (OnGoingRunning onGoingRunning : goingRunningList) {
-            runningDAO.createOnGoingRunning(onGoingRunning);
-        }
     }
 }

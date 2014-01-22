@@ -27,7 +27,7 @@ public class AccountRestService implements AccountRestDef {
     public UserInfo getAccountInfo(String userEmail, String password) {
         CommonUtils.newMethodCall("AccountRestService.getAccountInfo");
         UserInfo userInfo = accountService.getAccountInfo(userEmail, password);
-        userInfo.setUuid(UUID.randomUUID().toString());
+        userInfo.setDeviceId(UUID.randomUUID().toString());
         UserBase userBase = new UserBase();
         userBase = userBase.initUserBase(userInfo);
         accountService.updateAccountBase(userBase);
@@ -47,7 +47,7 @@ public class AccountRestService implements AccountRestDef {
     @Override
     public UserInfo createAccountInfo(UserBase userBase) {
         CommonUtils.newMethodCall("AccountRestService.createAccountInfo");
-        userBase.setUuid(UUID.randomUUID().toString());
+        userBase.setDeviceId(UUID.randomUUID().toString());
         UserInfo userInfo = accountService.createAccountInfo(userBase);
         return  userInfo;
     }
@@ -99,20 +99,6 @@ public class AccountRestService implements AccountRestDef {
         accountService.checkUserLoginStatus(CommonUtils.parseIntegerToNull(userId));
         userFriend.setUserId(CommonUtils.parseIntegerToNull(userId));
         accountService.updateUserFriendStatus(userFriend);
-    }
-
-    @Override
-    public UserLocation getUserLocation(String userId) {
-        CommonUtils.newMethodCall("AccountRestService.getUserLocation");
-        return accountService.getUserLocation(CommonUtils.parseIntegerToNull(userId));
-    }
-
-    @Override
-    public void updateUserLocation(String userId, UserLocation userLocation) {
-        CommonUtils.newMethodCall("AccountRestService.updateUserLocation");
-        accountService.checkUserLoginStatus(CommonUtils.parseIntegerToNull(userId));
-        userLocation.setUserId(CommonUtils.parseIntegerToNull(userId));
-        accountService.updateUserLocation(userLocation);
     }
 
     @Override

@@ -16,19 +16,11 @@ public interface CommonDAO {
 
     public VersionControl getVersionControl(String platform);
 
-    public void updateVersionControl(VersionControl versionControl);
-
-    public Experience getExperienceLevel(double experience);
-
     public List<SystemMessage> getSystemMessage(Date lastUpdateTime);
 
     public void createFeedback(Feedback feedback);
 
-    public void createDownLoadInfo(Statistics statistics);
-
-    public IDGeneration getIDGenerationInfo();
-
-    public void updateIDGenerationFriend(IDGeneration idGeneration);
+    public void createDownLoadInfo(DownloadStatistics statistics);
 
     public void createMethodCollector(MethodCollector methodCollector);
 

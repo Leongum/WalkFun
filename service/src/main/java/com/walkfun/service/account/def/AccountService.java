@@ -32,11 +32,5 @@ public interface AccountService {
 
     void updateUserFriendStatus(UserFriend userFriend);
 
-    UserLocation getUserLocation(Integer userId);
-
-    void updateUserLocation(UserLocation userLocation);
-
-    List<UserLocation> getUserLocations();
-
     List<UserInfo> getUserFollowerInformation(Integer userId, Integer pageNo);
 }

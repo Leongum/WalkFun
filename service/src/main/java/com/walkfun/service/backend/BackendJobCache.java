@@ -6,10 +6,8 @@ import com.walkfun.entity.common.RecommendApp;
 import com.walkfun.entity.common.SystemMessage;
 import com.walkfun.entity.common.VersionControl;
 import com.walkfun.entity.mission.Mission;
-import com.walkfun.entity.plan.Plan;
 import com.walkfun.service.common.def.CommonService;
 import com.walkfun.service.mission.def.MissionService;
-import com.walkfun.service.plan.def.PlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,16 +32,11 @@ public class BackendJobCache {
     @Autowired
     private CommonService commonService;
 
-    @Autowired
-    private PlanService planService;
-
     public static VersionControl versionControlIOS = new VersionControl();
 
     public static List<Mission> allMissions = new ArrayList<Mission>();
 
     public static List<SystemMessage> allMessages = new ArrayList<SystemMessage>();
-
-    public static List<Plan> first100Plan  = new ArrayList<Plan>();
 
     public static List<RecommendApp> allRecommendApp = new ArrayList<RecommendApp>();
 
@@ -62,11 +55,11 @@ public class BackendJobCache {
     public void missionServiceJob() {
         allMissions = missionService.getMissions(null, CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00"), -1);
         for (Mission mission : allMissions) {
-            if (mission.getLastUpdateTime().after(missionLastTime)) {
-                missionLastTime = mission.getLastUpdateTime();
+            if (mission.getUpdateTime().after(missionLastTime)) {
+                missionLastTime = mission.getUpdateTime();
             }
-            if (mission.getLastUpdateTime().before(missionFirstTime)) {
-                missionFirstTime = mission.getLastUpdateTime();
+            if (mission.getUpdateTime().before(missionFirstTime)) {
+                missionFirstTime = mission.getUpdateTime();
             }
         }
     }
@@ -75,11 +68,11 @@ public class BackendJobCache {
     public void systemMessageServiceJob() {
         allMessages = commonService.getSystemMessage(CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00"));
         for (SystemMessage systemMessage : allMessages) {
-            if (systemMessage.getLastUpdateTime().after(messageLastTime)) {
-                messageLastTime = systemMessage.getLastUpdateTime();
+            if (systemMessage.getUpdateTime().after(messageLastTime)) {
+                messageLastTime = systemMessage.getUpdateTime();
             }
-            if (systemMessage.getLastUpdateTime().before(messageFirstTime)) {
-                messageFirstTime = systemMessage.getLastUpdateTime();
+            if (systemMessage.getUpdateTime().before(messageFirstTime)) {
+                messageFirstTime = systemMessage.getUpdateTime();
             }
         }
     }
@@ -87,11 +80,11 @@ public class BackendJobCache {
     public void recommendAppServiceJob() {
         allRecommendApp = commonService.getRecommendApp(CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00"));
         for (RecommendApp recommendApp : allRecommendApp) {
-            if (recommendApp.getLastUpdateTime().after(recommendAppLastTime)) {
-                recommendAppLastTime = recommendApp.getLastUpdateTime();
+            if (recommendApp.getUpdateTime().after(recommendAppLastTime)) {
+                recommendAppLastTime = recommendApp.getUpdateTime();
             }
-            if (recommendApp.getLastUpdateTime().before(recommendAppFirstTime)) {
-                recommendAppFirstTime = recommendApp.getLastUpdateTime();
+            if (recommendApp.getUpdateTime().before(recommendAppFirstTime)) {
+                recommendAppFirstTime = recommendApp.getUpdateTime();
             }
         }
     }
@@ -105,7 +98,4 @@ public class BackendJobCache {
         MethodCollector.methods = new HashMap<String, Integer>();
     }
 
-    public void sortPlanJob(){
-        first100Plan = planService.getPlanByPageNo(0,100);
-    }
 }

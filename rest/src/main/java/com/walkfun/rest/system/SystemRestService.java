@@ -49,7 +49,7 @@ public class SystemRestService implements SystemRestDef{
     }
 
     @Override
-    public void createDownLoadInfo(Statistics statistics) {
+    public void createDownLoadInfo(DownloadStatistics statistics) {
         CommonUtils.newMethodCall("SystemRestService.createDownLoadInfo");
         statistics.setDownloadTime(new Date());
         commonService.createDownLoadInfo(statistics);

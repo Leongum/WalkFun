@@ -37,13 +37,5 @@ public interface AccountDAO {
 
     public void updateUserFriendStatus(UserFriend userFriend);
 
-    public UserLocation getUserLocation(Integer userId);
-
-    public void createUserLocation(UserLocation userLocation);
-
-    public void updateUserLocation(UserLocation userLocation);
-
-    public List<UserLocation> getUserLocations();
-
     public List<UserInfo> getUserFollowerInformation(Integer userId, Integer from, Integer pageSize);
 }

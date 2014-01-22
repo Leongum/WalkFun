@@ -26,7 +26,7 @@
     </appender>
 
     <!--mapper-->
-    <appender name="CATALOG_MAPPER_ASYNC" class="org.apache.log4j.AsyncAppender">
+    <appender name="MAPPER_ASYNC" class="org.apache.log4j.AsyncAppender">
         <param name="BufferSize" value="10000"/>
         <param name="Blocking" value="false"/>
         <appender-ref ref="MAPPER"/>
@@ -42,7 +42,7 @@
     </appender>
 
     <!--service-->
-    <appender name="CATALOG_SERVICE_ASYNC" class="org.apache.log4j.AsyncAppender">
+    <appender name="SERVICE_ASYNC" class="org.apache.log4j.AsyncAppender">
         <param name="BufferSize" value="10000"/>
         <param name="Blocking" value="false"/>
         <appender-ref ref="ERVICE"/>

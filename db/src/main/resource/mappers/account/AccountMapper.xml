@@ -5,56 +5,47 @@
 
     <resultMap id="accountInfo" type="com.walkfun.entity.account.UserInfo">
         <id column="USER_ID" property="userId"/>
-        <result column="USER_EMAIL" property="userEmail"/>
-        <result column="SEX" property="sex"/>
+        <result column="DEVICE_ID" property="deviceId"/>
+        <result column="USER_NAME" property="userName"/>
         <result column="NICK_NAME" property="nickName"/>
-        <result column="UUID" property="uuid"/>
+        <result column="SEX" property="sex"/>
+        <result column="AGE" property="age"/>
+        <result column="WEIGHT" property="weight"/>
+        <result column="HEIGHT" property="height"/>
+        <!--<result column="CREATE_TIME" property="createTime"/>-->
+        <!--<result column="UPDATE_TIME" property="updateTime"/>-->
+        <result column="USER_TITLE_ID" property="userTitleId"/>
+        <result column="USER_TITLE" property="userTitle"/>
         <result column="LEVEL" property="level"/>
         <result column="SCORES" property="scores"/>
         <result column="EXPERIENCE" property="experience"/>
-        <result column="MAX_POWER" property="maxPower"/>
-        <result column="REMAINING_POWER" property="remainingPower"/>
-        <result column="ENDURANCE" property="endurance"/>
-        <result column="SPIRIT" property="spirit"/>
-        <result column="RAPIDLY" property="rapidly"/>
-        <result column="RECOVER_SPEED" property="recoverSpeed"/>
-        <result column="WEIGHT" property="weight"/>
-        <result column="HEIGHT" property="height"/>
-        <result column="AGE" property="age"/>
         <result column="TOTAL_DISTANCE" property="totalDistance"/>
+        <result column="TOTAL_CARLORIE" property="totalCarlorie"/>
+        <result column="TOTAL_STEPS" property="totalSteps"/>
+        <result column="TOTAL_WALKING_TIMES" property="totalWalkingTimes"/>
+        <result column="TOTAL_ACTIVE_TIMES" property="totalActiveTimes"/>
         <result column="AVG_SPEED" property="avgSpeed"/>
-        <result column="SPEND_CARLORIE" property="spendCarlorie"/>
-        <result column="TOTAL_RUN_TIMES" property="totalRunTimes"/>
-        <!-- <result column="BASE_ACC" property="baseAcc"/>
-        <result column="INERTIA_ACC" property="inertiaAcc"/>
-        <result column="CRIT" property="crit"/>
-        <result column="LUCK" property="luck"/>-->
+        <result column="LAST_ACTIVE_TIME" property="lastActiveTime"/>
+        <result column="LAST_WALKING_TIME" property="lastWalkingTime"/>
+        <result column="LAST_WALKING_STEPS" property="lastWalkingSteps"/>
+        <result column="LAST_WALKING_DISTANCE" property="lastWalkingDistance"/>
+        <result column="LAST_WALKING_POINT" property="lastWalkingPoint"/>
+        <result column="LAST_WALKING_ADDRESS" property="lastWalkingAddress"/>
+        <result column="CURRENT_COMBO" property="currentCombo"/>
+        <result column="MAX_COMBO" property="maxCombo"/>
+        <result column="UPDATE_TIME" property="updateTime"/>
     </resultMap>
 
     <resultMap id="userFriendInfo" type="com.walkfun.entity.account.UserFriend">
         <id column="USER_ID" property="userId"/>
-        <result column="USER_EMAIL" property="userEmail"/>
-        <result column="NICK_NAME" property="nickName"/>
-        <result column="UUID" property="uuid"/>
-        <result column="SEX" property="sex"/>
         <result column="FRIEND_ID" property="friendId"/>
         <result column="FRIEND_STATUS" property="friendStatus"/>
+        <result column="FRIEND_EACH" property="friendEach"/>
         <result column="ADD_TIME" property="addTime"/>
-        <result column="LAST_LOCATION_CONTENT" property="lastLocationContent"/>
-        <result column="LAST_LOCATION_POINT" property="lastLocationPoint"/>
-        <result column="LAST_ACTIVE_TIME" property="lastActiveTime"/>
+        <result column="UPDATE_TIME" property="updateTime"/>
     </resultMap>
 
-    <resultMap id="userLocation" type="com.walkfun.entity.account.UserLocation">
-        <id column="USER_ID" property="userId"/>
-        <result column="USER_EMAIL" property="userEmail"/>
-        <result column="NICK_NAME" property="nickName"/>
-        <result column="UUID" property="uuid"/>
-        <result column="SEX" property="sex"/>
-        <result column="LAST_LOCATION_CONTENT" property="lastLocationContent"/>
-        <result column="LAST_LOCATION_POINT" property="lastLocationPoint"/>
-        <result column="LAST_ACTIVE_TIME" property="lastActiveTime"/>
-    </resultMap>
+    //todo::
 
     <sql id="accountInfoTable">
         U.USER_ID,

@@ -14,10 +14,8 @@
     <bean id="accountRestService" class="com.walkfun.rest.account.AccountRestService"/>
     <bean id="systemRestService" class="com.walkfun.rest.system.SystemRestService"/>
     <bean id="missionRestService" class="com.walkfun.rest.mission.MissionRestService"/>
-    <bean id="productRestService" class="com.walkfun.rest.product.ProductRestService"/>
     <bean id="runningRestService" class="com.walkfun.rest.running.RunningRestService"/>
     <bean id="weatherRestService" class="com.walkfun.rest.thirdParty.WeatherRestService"/>
-    <bean id="planRestService" class="com.walkfun.rest.plan.PlanRestService"/>
 
     <bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
     <bean id="txtProvider" class="org.apache.cxf.jaxrs.provider.PrimitiveTextProvider"/>

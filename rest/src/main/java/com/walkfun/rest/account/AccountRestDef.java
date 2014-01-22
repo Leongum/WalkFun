@@ -64,17 +64,6 @@ public interface AccountRestDef extends RestDef {
     void updateUserFriendStatus(@PathParam(PARAM_USER_ID) String userId,
                                 UserFriend userFriend);
 
-
-    @GET
-    @Path("/location/{" + PARAM_USER_ID + "}")
-    UserLocation getUserLocation(
-            @PathParam(PARAM_USER_ID) String userId);
-
-    @PUT
-    @Path("/location/{" + PARAM_USER_ID + "}")
-    void updateUserLocation(@PathParam(PARAM_USER_ID) String userId,
-                            UserLocation userLocation);
-
     @GET
     @Path("/follower/{" + PARAM_USER_ID + "}")
     List<UserInfo> getUserFollowerInformation(

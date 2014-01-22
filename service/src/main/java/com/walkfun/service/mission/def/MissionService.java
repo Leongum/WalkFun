@@ -17,12 +17,4 @@ public interface MissionService {
     List<Mission> getMissionsForRest(Integer missionId, Date lastUpdateTime, Integer missionTypeId);
 
     List<Mission> getMissions(Integer missionId, Date lastUpdateTime, Integer missionTypeId);
-
-    List<MissionPlacePackage> getMissionPlacePackage(Integer missionPlacePackageId);
-
-    List<MissionChallenge> getMissionChallenge(Integer challengeId);
-
-    List<Mission> getMissionsByPlanId(Integer planId);
-
-    void createMission(Mission mission);
 }

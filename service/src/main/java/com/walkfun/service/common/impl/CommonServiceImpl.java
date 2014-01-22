@@ -2,10 +2,10 @@ package com.walkfun.service.common.impl;
 
 import com.walkfun.db.common.dao.def.CommonDAO;
 import com.walkfun.entity.common.*;
-import com.walkfun.service.Cache.CacheFacade;
 import com.walkfun.service.backend.BackendJobCache;
 import com.walkfun.service.common.def.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -25,6 +25,7 @@ public class CommonServiceImpl implements CommonService {
     @Autowired
     private CommonDAO commonDAO;
 
+    @Qualifier("backendJobCache")
     @Autowired
     private BackendJobCache backendJobCache;
 
@@ -70,7 +71,7 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public void createDownLoadInfo(Statistics statistics) {
+    public void createDownLoadInfo(DownloadStatistics statistics) {
         commonDAO.createDownLoadInfo(statistics);
     }
 
@@ -88,12 +89,6 @@ public class CommonServiceImpl implements CommonService {
 
     @Override
     public void evictCache(String cacheId) {
-        if (cacheId.equalsIgnoreCase("all")) {
-            CacheFacade.PLAN.evictAll();
-        }
-        if (cacheId.startsWith("plan")) {
-            CacheFacade.PLAN.evict(cacheId);
-        }
     }
 
     @Override
@@ -125,9 +120,6 @@ public class CommonServiceImpl implements CommonService {
         }
         else if(jobCache.equalsIgnoreCase("versionServiceJob")){
             backendJobCache.versionServiceJob();
-        }
-        else if(jobCache.equalsIgnoreCase("sortPlanJob")){
-            backendJobCache.sortPlanJob ();
         }
     }
 }

@@ -3,28 +3,6 @@
 
 <mapper namespace="com.walkfun.db.common.dao.impl.CommonMapper">
 
-    <!-- Experience -->
-    <resultMap id="experienceInfo" type="com.walkfun.entity.common.Experience">
-        <id column="LEVEL" property="level"/>
-        <result column="EXPERIENCE" property="experience"/>
-        <result column="EXPERIENCE_TOTAL" property="experienceTotal" />
-    </resultMap>
-
-    <sql id="experienceTable">
-        LEVEL,
-        EXPERIENCE,
-        EXPERIENCE_TOTAL
-    </sql>
-
-    <select id="getExperienceLevel" resultMap="experienceInfo">
-        SELECT
-        <include refid="experienceTable"/>
-        FROM EXPERIENCE_COMPARISON
-        WHERE EXPERIENCE_TOTAL > #{experience}
-        ORDER BY LEVEL ASC
-        LIMIT 1
-    </select>
-
     <!-- VersionControl -->
     <resultMap id="versionControl" type="com.walkfun.entity.common.VersionControl">
         <id column="PLATFORM" property="platform"/>
@@ -47,84 +25,70 @@
         WHERE VC.PLATFORM = #{platform}
     </select>
 
-    <insert id="updateVersionControl" parameterType="com.walkfun.entity.common.VersionControl">
-        UPDATE version_control
-        SET
-            VERSION = #{entity.version},
-            SUB_VERSION = #{entity.subVersion}
-            DESCRIPTION = #{entity.description}
-        WHERE PLATFORM = #{entity.platform}
-    </insert>
-
     <!-- system message -->
     <resultMap id="systemMessageInfo" type="com.walkfun.entity.common.SystemMessage">
         <id column="MESSAGE_ID" property="messageId"/>
         <result column="MESSAGE" property="message"/>
         <result column="RULE" property="rule" />
-        <result column="LAST_UPDATE_TIME" property="lastUpdateTime"/>
+        <result column="UPDATE_TIME" property="updateTime"/>
     </resultMap>
 
     <sql id="systemMessageTable">
         MESSAGE_ID,
         MESSAGE,
         RULE,
-        LAST_UPDATE_TIME
+        UPDATE_TIME
     </sql>
 
     <select id="getSystemMessageInfo" resultMap="systemMessageInfo">
         SELECT
         <include refid="systemMessageTable"/>
         FROM SYSTEM_MESSAGE
-        WHERE LAST_UPDATE_TIME > #{lastUpdateTime}
+        WHERE UPDATE_TIME > #{lastUpdateTime}
     </select>
 
-
     <!-- Feedback -->
-    <resultMap id="feedbackInfo" type="com.walkfun.entity.common.Feedback">
-        <id column="CONTACT" property="contact"/>
-        <result column="SUGGESTION" property="suggestion"/>
-        <result column="COMMIT_TIME" property="commitTime"/>
-        <result column="USER_ID" property="userId"/>
-    </resultMap>
-
     <sql id="feedbackTable">
-        CONTACT,
+        DEVICE_ID,
+        USER_ID,
         SUGGESTION,
         COMMIT_TIME,
-        USER_ID
+        CONTACT
     </sql>
 
     <insert id="createFeedback" parameterType="com.walkfun.entity.common.Feedback">
         INSERT INTO FEEDBACK
         (
-            CONTACT,
+            DEVICE_ID,
+            USER_ID,
             SUGGESTION,
             COMMIT_TIME,
-            USER_ID
+            CONTACT
         )
         VALUES
         (
-            #{entity.contact},
+            #{entity.deviceId},
+            #{entity.userId},
             #{entity.suggestion},
             #{entity.commitTime},
-            #{entity.userId}
+            #{entity.contact}
         )
     </insert>
 
     <!-- down Load info -->
-    <resultMap id="statisticsInfo" type="com.walkfun.entity.common.Statistics">
+    <resultMap id="downloadStatisticsInfo" type="com.walkfun.entity.common.DownloadStatistics">
         <id column="PLATFORM" property="platform"/>
         <result column="DOWNLOAD_TIME" property="downloadTime"/>
         <result column="VERSION" property="version"/>
     </resultMap>
 
-    <sql id="statisticsTable">
+    <sql id="downloadStatisticsTable">
         PLATFORM,
         DOWNLOAD_TIME,
         VERSION
     </sql>
 
-    <insert id="createDownLoadInfo" parameterType="com.walkfun.entity.common.Statistics">
+    <insert id="createDownLoadInfo" parameterType="com.walkfun.entity.common.DownloadStatistics">
         INSERT INTO STATISTICS
         (
             PLATFORM,
@@ -138,32 +102,6 @@
             #{entity.version}
         )
     </insert>
-
-
-    <!--id generation -->
-    <resultMap id="idGenerationInfo" type="com.walkfun.entity.common.IDGeneration">
-        <id column="MISSION_ID" property="missionId"/>
-        <result column="PLAN_ID" property="planId"/>
-    </resultMap>
-
-    <sql id="idGenerationTable">
-        MISSION_ID,
-        PLAN_ID
-    </sql>
-
-    <select id="getIDGenerationInfo" resultMap="idGenerationInfo">
-        SELECT
-        <include refid="idGenerationTable"/>
-        FROM ID_GENERATION
-        LIMIT 1
-    </select>
-
-    <update id="updateIDGenerationFriend" parameterType="com.walkfun.entity.common.IDGeneration">
-         UPDATE ID_GENERATION
-         SET
-             MISSION_ID = #{entity.missionId},
-             PLAN_ID = #{entity.planId}
-    </update>
 
     <!-- Method Collector -->
     <resultMap id="methodCollectorInfo" type="com.walkfun.entity.common.MethodCollector">
@@ -199,7 +137,7 @@
         <result column="APP_NAME" property="appName"/>
         <result column="APP_DESCRIPTION" property="appDescription"/>
         <result column="APP_PIC_LINK" property="appPicLink"/>
-        <result column="LAST_UPDATE_TIME" property="lastUpdateTime"/>
+        <result column="UPDATE_TIME" property="updateTime"/>
         <result column="RECOMMEND_STATUS" property="recommendStatus"/>
         <result column="SEQUENCE" property="sequence"/>
         <result column="APP_ADDRESS" property="appAddress"/>
@@ -210,7 +148,7 @@
         APP_NAME,
         APP_DESCRIPTION,
         APP_PIC_LINK,
-        LAST_UPDATE_TIME,
+        UPDATE_TIME,
         RECOMMEND_STATUS,
         SEQUENCE,
         APP_ADDRESS
@@ -222,7 +160,7 @@
         FROM RECOMMEND_APP
         WHERE 1 = 1
         <if test="lastUpdateTime != null"><![CDATA[
-        AND LAST_UPDATE_TIME > #{lastUpdateTime}
+        AND UPDATE_TIME > #{lastUpdateTime}
         ]]></if>
         ORDER BY SEQUENCE ASC
     </select>

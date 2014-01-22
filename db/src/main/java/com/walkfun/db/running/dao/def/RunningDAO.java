@@ -20,7 +20,4 @@ public interface RunningDAO {
 
     public void createRunningHistory(RunningHistory runningHistory);
 
-    public List<OnGoingRunning> getOnGoingRunning(Integer userId, Date lastUpdateTime);
-
-    public void createOnGoingRunning(OnGoingRunning goingRunning);
 }

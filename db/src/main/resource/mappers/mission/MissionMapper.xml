@@ -29,24 +29,6 @@
         <result column="SUGGESTION_MIN_SPEED" property="suggestionMinSpeed"/>
     </resultMap>
 
-    <resultMap id="missionPlacePackageInfo" type="com.walkfun.entity.mission.MissionPlacePackage">
-        <id column="PACKAGE_ID" property="packageId"/>
-        <result column="PLACE_NAME" property="placeName"/>
-        <result column="PLACE_POINT" property="placePoint"/>
-        <result column="SEQUENCE" property="sequence"/>
-    </resultMap>
-
-    <resultMap id="missionChallengeInfo" type="com.walkfun.entity.mission.MissionChallenge">
-        <id column="CHALLENGE_ID" property="challengeId"/>
-        <result column="GRADE" property="grade"/>
-        <result column="SEX" property="sex"/>
-        <result column="TIME" property="time"/>
-        <result column="DISTANCE" property="distance"/>
-        <result column="SEQUENCE" property="sequence"/>
-        <result column="NOTE" property="note"/>
-        <result column="RULE" property="rule"/>
-    </resultMap>
-
     <sql id="missionTable">
         MISSION_ID,
         MISSION_TYPE_ID,
@@ -74,24 +56,6 @@
         SUGGESTION_MIN_SPEED
     </sql>
 
-    <sql id="missionPlacePackageTable">
-        PACKAGE_ID,
-        PLACE_NAME,
-        PLACE_POINT,
-        SEQUENCE
-    </sql>
-
-    <sql id="missionChallengeTable">
-        CHALLENGE_ID,
-        GRADE,
-        SEX,
-        TIME,
-        DISTANCE,
-        SEQUENCE,
-        NOTE,
-        RULE
-    </sql>
-
     <select id="getMissions" resultMap="missionInfo">
         SELECT
         <include refid="missionTable"/>
@@ -110,86 +74,4 @@
         AND MISSION_TYPE_ID = #{missionTypeId}
         ]]></if>
     </select>
-
-    <insert id="createMission" parameterType="com.walkfun.entity.mission.Mission">
-        INSERT INTO MISSION
-        (
-                MISSION_ID,
-                MISSION_TYPE_ID,
-                MISSION_NAME,
-                MISSION_CONTENT,
-                SCORES,
-                EXPERIENCE,
-                MISSION_FLAG,
-                LEVEL_LIMITED,
-                MISSION_TIME,
-                MISSION_DISTANCE,
-                CYCLE_TIME,
-                MISSION_FROM,
-                MISSION_TO,
-                MISSION_PLACE_PACKAGE_ID,
-                MISSION_STEPS,
-                MISSION_SPEED,
-                LAST_UPDATE_TIME,
-                CHALLENGE_ID,
-                SUB_MISSION_LIST,
-                MISSION_PACKAGE_ID,
-                SEQUENCE,
-                PLAN_ID,
-                SUGGESTION_MAX_SPEED,
-                SUGGESTION_MIN_SPEED
-        )
-        VALUES
-        (
-                #{entity.missionId},
-                #{entity.missionTypeId},
-                #{entity.missionName},
-                #{entity.missionContent},
-                #{entity.scores},
-                #{entity.experience},
-                #{entity.missionFlag},
-                #{entity.levelLimited},
-                #{entity.missionTime},
-                #{entity.missionDistance},
-                #{entity.cycleTime},
-                #{entity.missionFrom},
-                #{entity.missionTo},
-                #{entity.missionPlacePackageId},
-                #{entity.missionSteps},
-                #{entity.missionSpeed},
-                #{entity.lastUpdateTime},
-                #{entity.challengeId},
-                #{entity.subMissionList},
-                #{entity.missionPackageId},
-                #{entity.sequence},
-                #{entity.planId},
-                #{entity.suggestionMaxSpeed},
-                #{entity.suggestionMinSpeed}
-        );
-    </insert>
-
-    <select id="getMissionPlacePackage" resultMap="missionPlacePackageInfo">
-        SELECT
-        <include refid="missionPlacePackageTable"/>
-        FROM MISSION_PLACE_PACKAGE
-        WHERE PACKAGE_ID = #{missionPlacePackageId}
-        ORDER BY SEQUENCE ASC
-    </select>
-
-    <select id="getMissionChallenges" resultMap="missionChallengeInfo">
-        SELECT
-        <include refid="missionChallengeTable"/>
-        FROM MISSION_CHALLENGE
-        WHERE CHALLENGE_ID = #{challengeId}
-        ORDER BY SEX ASC,SEQUENCE ASC
-    </select>
-
-    <select id="getMissionsByPlanId" resultMap="missionInfo">
-        SELECT
-        <include refid="missionTable"/>
-        FROM MISSION
-        WHERE PLAN_ID = #{planId}
-        ORDER BY SEQUENCE ASC
-    </select>
-
 </mapper>

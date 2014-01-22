@@ -32,18 +32,6 @@
         <result column="SPEED_LIST" property="speedList"/>
     </resultMap>
 
-    <resultMap id="runningOnGoingInfo" type="com.walkfun.entity.running.OnGoingRunning">
-        <id column="USER_ID" property="userId"/>
-        <result column="RUN_UUID" property="runUuid"/>
-        <result column="MISSION_PACKAGE_ID" property="missionPackageId" />
-        <result column="MISSION_ID" property="missionId"/>
-        <result column="MISSION_TYPE_ID" property="missionTypeId"/>
-        <result column="MISSION_STATUS" property="missionStatus"/>
-        <result column="START_TIME" property="startTime"/>
-        <result column="END_TIME" property="endTime"/>
-        <result column="COMMIT_TIME" property="commitTime"/>
-    </resultMap>
-
     <sql id="runningHistoryTable">
         USER_ID,
         RUN_UUID,
@@ -74,17 +62,6 @@
         SPEED_LIST
     </sql>
 
-    <sql id="runningOnGoingTable">
-        USER_ID,
-        RUN_UUID,
-        MISSION_PACKAGE_ID,
-        MISSION_ID,
-        MISSION_TYPE_ID,
-        MISSION_STATUS,
-        START_TIME,
-        END_TIME,
-        COMMIT_TIME
-    </sql>
 
     <select id="getRunningHistories" resultMap="runningHistoryInfo">
         SELECT
@@ -175,48 +152,4 @@
             #{entity.speedList}
         )
     </insert>
-
-    <select id="getOnGoingRunning" resultMap="runningOnGoingInfo">
-        SELECT
-        <include refid="runningOnGoingTable"/>
-        FROM USER_RUNNING
-        WHERE USER_ID = #{userId}
-        AND COMMIT_TIME > #{lastUpdateTime}
-    </select>
-
-    <select id="getOnGoingRunningByUuid" resultMap="runningOnGoingInfo">
-        SELECT
-        <include refid="runningOnGoingTable"/>
-        FROM USER_RUNNING
-        WHERE RUN_UUID = #{runUuid}
-    </select>
-
-    <insert id="createOnGoingRunning" parameterType="com.walkfun.entity.running.OnGoingRunning">
-        INSERT INTO USER_RUNNING
-        (
-            USER_ID,
-            RUN_UUID,
-            MISSION_PACKAGE_ID,
-            MISSION_ID,
-            MISSION_TYPE_ID,
-            MISSION_STATUS,
-            START_TIME,
-            END_TIME,
-            COMMIT_TIME
-        )
-        VALUES
-        (
-            #{entity.userId},
-            #{entity.runUuid},
-            #{entity.missionPackageId},
-            #{entity.missionId},
-            #{entity.missionTypeId},
-            #{entity.missionStatus},
-            #{entity.startTime},
-            #{entity.endTime},
-            #{entity.commitTime}
-        );
-
-    </insert>
-
 </mapper>

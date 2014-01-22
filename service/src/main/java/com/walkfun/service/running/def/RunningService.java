@@ -1,6 +1,5 @@
 package com.walkfun.service.running.def;
 
-import com.walkfun.entity.running.OnGoingRunning;
 import com.walkfun.entity.running.RunningHistory;
 
 import java.util.Date;
@@ -21,7 +20,4 @@ public interface RunningService {
 
     void createRunningHistory(Integer userId, List<RunningHistory> runningHistoryList);
 
-    List<OnGoingRunning> getOnGoingRunning(Integer userId, Date lastUpdateTime);
-
-    void createOnGoingRunning(Integer userId, List<OnGoingRunning> goingRunningList);
 }

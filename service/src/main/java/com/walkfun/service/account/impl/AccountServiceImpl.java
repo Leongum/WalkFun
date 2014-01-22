@@ -31,7 +31,7 @@ public class AccountServiceImpl implements AccountService {
             if (userInfo == null || userInfo.getUserId() != Universe.current().getUserId()) {
                 throw new ServerRequestException(ErrorMessageMapper.LOGIN_CHECK_FAIL.toString());
             }
-            if (!userInfo.getUuid().equalsIgnoreCase(Universe.current().getUuid())) {
+            if (!userInfo.getDeviceId().equalsIgnoreCase(Universe.current().getDeviceId())) {
                 throw new ServerRequestException(ErrorMessageMapper.LOGIN_CHECK_FAIL.toString());
             }
         } else {
@@ -59,7 +59,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     @Transactional
     public UserInfo createAccountInfo(UserBase userBase) {
-        UserInfo userInfo = accountDAO.getAccountInfoByMail(userBase.getUserEmail());
+        UserInfo userInfo = accountDAO.getAccountInfoByMail(userBase.getUserName());
         if (userInfo != null && userInfo.getUserId() != null) {
             throw new ServerRequestException(ErrorMessageMapper.USER_ALREADY_EXISTS.toString());
         }
@@ -117,24 +117,6 @@ public class AccountServiceImpl implements AccountService {
             throw new ServerRequestException(ErrorMessageMapper.FRIEND_STATUS_ERROR.toString());
         }
         accountDAO.updateUserFriendStatus(userFriend);
-    }
-
-    @Override
-    public UserLocation getUserLocation(Integer userId) {
-        checkUserExisting(userId);
-        return accountDAO.getUserLocation(userId);
-    }
-
-    @Override
-    @Transactional
-    public void updateUserLocation(UserLocation userLocation) {
-        checkUserExisting(userLocation.getUserId());
-        accountDAO.updateUserLocation(userLocation);
-    }
-
-    @Override
-    public List<UserLocation> getUserLocations() {
-        return accountDAO.getUserLocations();
     }
 
     @Override

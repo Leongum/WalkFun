@@ -56,9 +56,6 @@ public class AccountDAOImpl implements AccountDAO {
         accountMapper.createBase(userBase);
         UserInfo accountInfo = new UserInfo(userBase);
         accountMapper.createDetail(accountInfo);
-        UserLocation userLocation = new UserLocation();
-        userLocation.setUserId(userBase.getUserId());
-        createUserLocation(userLocation);
         return accountInfo;
     }
 
@@ -74,12 +71,12 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public void createUserFriendInvite(UserFriend userFriend) {
-        userFriend.setFriendStatus(FriendStatus.Invited.ordinal());
+        userFriend.setFriendStatus(FriendStatus.ONLYFOLLOWED.ordinal());
         accountMapper.createUserFriend(userFriend);
         UserFriend userFriendInvited = new UserFriend();
         userFriendInvited.setUserId(userFriend.getFriendId());
         userFriendInvited.setFriendId(userFriend.getUserId());
-        userFriendInvited.setFriendStatus(FriendStatus.NeedAccept.ordinal());
+        userFriendInvited.setFriendStatus(FriendStatus.ONLYFOLLOWED.ordinal());
         userFriendInvited.setAddTime(userFriend.getAddTime());
         userFriendInvited.setUpdateTime(userFriend.getUpdateTime());
         accountMapper.createUserFriend(userFriendInvited);
@@ -95,26 +92,6 @@ public class AccountDAOImpl implements AccountDAO {
         userFriendStatus.setAddTime(userFriend.getAddTime());
         userFriendStatus.setUpdateTime(userFriend.getUpdateTime());
         accountMapper.updateUserFriend(userFriendStatus);
-    }
-
-    @Override
-    public UserLocation getUserLocation(Integer userId) {
-        return accountMapper.getUserLocation(userId);
-    }
-
-    @Override
-    public void createUserLocation(UserLocation userLocation) {
-        accountMapper.createUserLocation(userLocation);
-    }
-
-    @Override
-    public void updateUserLocation(UserLocation userLocation) {
-        accountMapper.updateUserLocation(userLocation);
-    }
-
-    @Override
-    public List<UserLocation> getUserLocations() {
-        return accountMapper.getUserLocations();
     }
 
     @Override

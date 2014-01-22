@@ -1,7 +1,6 @@
 package com.walkfun.service.mission.impl;
 
 import com.walkfun.db.mission.dao.def.MissionDAO;
-import com.walkfun.entity.enums.MissionType;
 import com.walkfun.entity.mission.*;
 import com.walkfun.service.backend.BackendJobCache;
 import com.walkfun.service.mission.def.MissionService;
@@ -44,37 +43,6 @@ public class MissionServiceImpl implements MissionService {
 
         missionList = missionDAO.getMissions(missionId, lastUpdateTime, missionTypeId);
 
-        for (Mission mission : missionList) {
-            if (mission.getMissionPlacePackageId() != null) {
-                List<MissionPlacePackage> missionPlacePackageList = missionDAO.getMissionPlacePackage(mission.getMissionPlacePackageId());
-                mission.setMissionPlacePackages(missionPlacePackageList);
-            }
-            if (mission.getChallengeId() != null) {
-                List<MissionChallenge> missionChallengeList = missionDAO.getMissionChallenges(mission.getChallengeId());
-                mission.setMissionChallenges(missionChallengeList);
-            }
-        }
-
         return missionList;
-    }
-
-    @Override
-    public List<MissionPlacePackage> getMissionPlacePackage(Integer missionPlacePackageId) {
-        return missionDAO.getMissionPlacePackage(missionPlacePackageId);
-    }
-
-    @Override
-    public List<MissionChallenge> getMissionChallenge(Integer challengeId) {
-        return missionDAO.getMissionChallenges(challengeId);
-    }
-
-    @Override
-    public List<Mission> getMissionsByPlanId(Integer planId) {
-        return missionDAO.getMissionsByPlanId(planId);
-    }
-
-    @Override
-    public void createMission(Mission mission) {
-        missionDAO.createMission(mission);
     }
 }

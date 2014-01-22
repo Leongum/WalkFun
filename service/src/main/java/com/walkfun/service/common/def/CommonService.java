@@ -24,7 +24,7 @@ public interface CommonService {
 
     void createFeedback(Feedback feedback);
 
-    void createDownLoadInfo(Statistics statistics);
+    void createDownLoadInfo(DownloadStatistics statistics);
 
     void createMethodCollector(Map<String,Integer> methods);
 

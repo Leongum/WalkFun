@@ -1,6 +1,5 @@
 package com.walkfun.db.running.dao.impl;
 
-import com.walkfun.entity.running.OnGoingRunning;
 import com.walkfun.entity.running.RunningHistory;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,12 +20,6 @@ public interface RunningMapper {
     public List<RunningHistory> getRunningHistories(@Param("userId") Integer userId, @Param("missionId") Integer missionId);
 
     public void createRunningHistory(@Param("entity") RunningHistory runningHistory);
-
-    public OnGoingRunning getOnGoingRunningByUuid(@Param("runUuid") String runUuid);
-
-    public List<OnGoingRunning> getOnGoingRunning(@Param("userId") Integer userId, @Param("lastUpdateTime") Date lastUpdateTime);
-
-    public void createOnGoingRunning(@Param("entity") OnGoingRunning goingRunning);
 
     public List<RunningHistory> getRunningHistoriesByDate(@Param("userId") Integer userId, @Param("lastUpdateTime") Date lastUpdateTime, @Param("startSize") int startSize, @Param("pageSize") int pageSize);
 }
