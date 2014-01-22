@@ -9,7 +9,7 @@ package com.walkfun.entity.enums;
  */
 public enum HistoryStatusEnum {
 
-    Execute ,
+    Execute,
 
     Finished,
 

@@ -21,29 +21,20 @@ public class Mission {
     private Integer missionId;
     private Integer missionTypeId;
     private String missionName;
-    private String missionContent;
+    private String missionDescription;
     private double scores;
     private double experience;
     private Integer missionFlag;
     private double levelLimited;
-    private BigInteger missionTime;
-    private double missionDistance;
+    private BigInteger missionTimeLimited;
+    private double missionDistanceLimited;
+    private Date missionFromTimeLimited;
+    private Date missionToTimeLimited;
     private double cycleTime;
-    private String missionFrom;
-    private String missionTo;
-    private Integer missionPlacePackageId;
-    private List<MissionPlacePackage> missionPlacePackages;
-    private Integer challengeId;
-    private List<MissionChallenge> missionChallenges;
-    private BigInteger missionSteps;
-    private double missionSpeed;
-    private Date lastUpdateTime;
-    private String subMissionList;
-    private Integer missionPackageId;
-    private Integer sequence;
-    private Integer planId;
     private double suggestionMaxSpeed;
     private double suggestionMinSpeed;
+    private Integer sequence;
+    private Date updateTime;
 
     public Integer getMissionId() {
         return missionId;
@@ -69,12 +60,12 @@ public class Mission {
         this.missionName = missionName;
     }
 
-    public String getMissionContent() {
-        return missionContent;
+    public String getMissionDescription() {
+        return missionDescription;
     }
 
-    public void setMissionContent(String missionContent) {
-        this.missionContent = missionContent;
+    public void setMissionDescription(String missionDescription) {
+        this.missionDescription = missionDescription;
     }
 
     public double getScores() {
@@ -109,20 +100,40 @@ public class Mission {
         this.levelLimited = levelLimited;
     }
 
-    public BigInteger getMissionTime() {
-        return missionTime;
+    public BigInteger getMissionTimeLimited() {
+        return missionTimeLimited;
     }
 
-    public void setMissionTime(BigInteger missionTime) {
-        this.missionTime = missionTime;
+    public void setMissionTimeLimited(BigInteger missionTimeLimited) {
+        this.missionTimeLimited = missionTimeLimited;
     }
 
-    public double getMissionDistance() {
-        return missionDistance;
+    public double getMissionDistanceLimited() {
+        return missionDistanceLimited;
     }
 
-    public void setMissionDistance(double missionDistance) {
-        this.missionDistance = missionDistance;
+    public void setMissionDistanceLimited(double missionDistanceLimited) {
+        this.missionDistanceLimited = missionDistanceLimited;
+    }
+
+    @JsonSerialize(using = CustomDateSerializer.class)
+    public Date getMissionFromTimeLimited() {
+        return missionFromTimeLimited;
+    }
+
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    public void setMissionFromTimeLimited(Date missionFromTimeLimited) {
+        this.missionFromTimeLimited = missionFromTimeLimited;
+    }
+
+    @JsonSerialize(using = CustomDateSerializer.class)
+    public Date getMissionToTimeLimited() {
+        return missionToTimeLimited;
+    }
+
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    public void setMissionToTimeLimited(Date missionToTimeLimited) {
+        this.missionToTimeLimited = missionToTimeLimited;
     }
 
     public double getCycleTime() {
@@ -131,112 +142,6 @@ public class Mission {
 
     public void setCycleTime(double cycleTime) {
         this.cycleTime = cycleTime;
-    }
-
-    public String getMissionFrom() {
-        return missionFrom;
-    }
-
-    public void setMissionFrom(String missionFrom) {
-        this.missionFrom = missionFrom;
-    }
-
-    public String getMissionTo() {
-        return missionTo;
-    }
-
-    public void setMissionTo(String missionTo) {
-        this.missionTo = missionTo;
-    }
-
-    public Integer getMissionPlacePackageId() {
-        return missionPlacePackageId;
-    }
-
-    public void setMissionPlacePackageId(Integer missionPlacePackageId) {
-        this.missionPlacePackageId = missionPlacePackageId;
-    }
-
-    public BigInteger getMissionSteps() {
-        return missionSteps;
-    }
-
-    public void setMissionSteps(BigInteger missionSteps) {
-        this.missionSteps = missionSteps;
-    }
-
-    public double getMissionSpeed() {
-        return missionSpeed;
-    }
-
-    public void setMissionSpeed(double missionSpeed) {
-        this.missionSpeed = missionSpeed;
-    }
-
-    public List<MissionPlacePackage> getMissionPlacePackages() {
-        return missionPlacePackages;
-    }
-
-    public void setMissionPlacePackages(List<MissionPlacePackage> missionPlacePackages) {
-        this.missionPlacePackages = missionPlacePackages;
-    }
-
-    public Integer getChallengeId() {
-        return challengeId;
-    }
-
-    public void setChallengeId(Integer challengeId) {
-        this.challengeId = challengeId;
-    }
-
-    public List<MissionChallenge> getMissionChallenges() {
-        return missionChallenges;
-    }
-
-    public void setMissionChallenges(List<MissionChallenge> missionChallenges) {
-        this.missionChallenges = missionChallenges;
-    }
-
-    @JsonSerialize(using = CustomDateSerializer.class)
-    public Date getLastUpdateTime() {
-        return lastUpdateTime;
-    }
-
-    @JsonDeserialize(using = CustomDateDeserializer.class)
-    public void setLastUpdateTime(Date lastUpdateTime) {
-        this.lastUpdateTime = lastUpdateTime;
-    }
-
-    public String getSubMissionList() {
-        return subMissionList;
-    }
-
-    public void setSubMissionList(String subMissionList) {
-        this.subMissionList = subMissionList;
-    }
-
-    public Integer getMissionPackageId() {
-        return missionPackageId;
-    }
-
-    public void setMissionPackageId(Integer missionPackageId) {
-        this.missionPackageId = missionPackageId;
-    }
-
-    public Integer getSequence() {
-        return sequence;
-    }
-
-    public void setSequence(Integer sequence) {
-        this.sequence = sequence;
-    }
-
-    public Integer getPlanId() {
-        return planId;
-    }
-
-    public void setPlanId(Integer planId) {
-        this.planId = planId;
     }
 
     public double getSuggestionMaxSpeed() {
@@ -253,5 +158,23 @@ public class Mission {
 
     public void setSuggestionMinSpeed(double suggestionMinSpeed) {
         this.suggestionMinSpeed = suggestionMinSpeed;
+    }
+
+    public Integer getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(Integer sequence) {
+        this.sequence = sequence;
+    }
+
+    @JsonSerialize(using = CustomDateSerializer.class)
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

@@ -5,11 +5,11 @@ import java.util.Date;
 /**
  * Created with IntelliJ IDEA.
  * User: p
- * Date: 13-10-18
- * Time: 下午3:05
+ * Date: 14-1-22
+ * Time: 下午10:16
  * To change this template use File | Settings | File Templates.
  */
-public class Statistics {
+public class DownloadStatistics {
 
     private String platform;
 

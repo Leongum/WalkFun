@@ -21,7 +21,7 @@ public class RecommendApp {
     private String appDescription;
     private String appPicLink;
     private String appAddress;
-    private Date lastUpdateTime;
+    private Date updateTime;
     private Integer recommendStatus;
     private Integer sequence;
 
@@ -66,13 +66,13 @@ public class RecommendApp {
     }
 
     @JsonSerialize(using = CustomDateSerializer.class)
-    public Date getLastUpdateTime() {
-        return lastUpdateTime;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
     @JsonDeserialize(using = CustomDateDeserializer.class)
-    public void setLastUpdateTime(Date lastUpdateTime) {
-        this.lastUpdateTime = lastUpdateTime;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public Integer getRecommendStatus() {

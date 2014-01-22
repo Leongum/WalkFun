@@ -9,11 +9,7 @@ package com.walkfun.entity.enums;
  */
 public enum FriendStatus {
 
-    Invited,
+    ONLYFOLLOWED,
 
-    NeedAccept,
-
-    Accept,
-
-    Refused
+    FOLLOWEACHOTHER,
 }

@@ -9,7 +9,7 @@ package com.walkfun.entity.enums;
  */
 public enum FollowStatusEnum {
 
-    Followed,
+    FOLLOWED,
 
-    NotFollowed,
+    DELETED,
 }

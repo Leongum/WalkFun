@@ -9,9 +9,9 @@ package com.walkfun.entity.enums;
  */
 public enum OperateEnum {
 
-    Update,
+    UPDATE,
 
-    Insert,
+    INSERT,
 
-    Delete,
+    DELETE,
 }

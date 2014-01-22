@@ -14,16 +14,13 @@ import java.util.Date;
  * Time: 5:29 PM
  * To change this template use File | Settings | File Templates.
  */
-public class UserFriend extends UserLocation{
+public class UserFriend extends UserInfo{
 
     private Integer userId;
-
     private Integer friendId;
-
-    private Integer friendStatus;
-
+    private Integer friendStatus; //'0 - 关注 1 - 删除',
+    private Integer friendEach;   //'0 - 仅关注 1 - 相互关注',
     private Date addTime;
-
     private Date updateTime;
 
     public Integer getUserId() {
@@ -48,6 +45,14 @@ public class UserFriend extends UserLocation{
 
     public void setFriendStatus(Integer friendStatus) {
         this.friendStatus = friendStatus;
+    }
+
+    public Integer getFriendEach() {
+        return friendEach;
+    }
+
+    public void setFriendEach(Integer friendEach) {
+        this.friendEach = friendEach;
     }
 
     @JsonSerialize(using = CustomDateSerializer.class)

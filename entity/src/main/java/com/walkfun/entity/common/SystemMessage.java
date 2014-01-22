@@ -19,7 +19,7 @@ public class SystemMessage {
     private Integer messageId;
     private String message;
     private String rule;
-    private Date lastUpdateTime;
+    private Date updateTime;
 
     public Integer getMessageId() {
         return messageId;
@@ -46,12 +46,12 @@ public class SystemMessage {
     }
 
     @JsonSerialize(using = CustomDateSerializer.class)
-    public Date getLastUpdateTime() {
-        return lastUpdateTime;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
     @JsonDeserialize(using = CustomDateDeserializer.class)
-    public void setLastUpdateTime(Date lastUpdateTime) {
-        this.lastUpdateTime = lastUpdateTime;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

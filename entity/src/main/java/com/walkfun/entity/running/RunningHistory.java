@@ -21,7 +21,7 @@ public class RunningHistory {
     private Integer missionId;
     private Integer missionTypeId;
     private String missionRoute;
-    private String waveForm;
+    private String speedList;
     private Date missionStartTime;
     private Date missionEndTime;
     private Date missionDate;
@@ -30,19 +30,15 @@ public class RunningHistory {
     private double avgSpeed;
     private Integer steps;
     private double distance;
-    private String offerUsers;
     private Integer missionGrade;
     private double scores;
     private double experience;
     private double extraExperience;
     private String comment;
-    private Date commitTime;
-    private String uuid;
-    private Integer grade;
     private Integer valid;
-    private String planRunUuid;
+    private String missionUuid;
     private Integer sequence;
-    private String speedList;
+    private Date commitTime;
 
     public Integer getUserId() {
         return userId;
@@ -146,14 +142,6 @@ public class RunningHistory {
         this.distance = distance;
     }
 
-    public String getOfferUsers() {
-        return offerUsers;
-    }
-
-    public void setOfferUsers(String offerUsers) {
-        this.offerUsers = offerUsers;
-    }
-
     public double getScores() {
         return scores;
     }
@@ -196,28 +184,12 @@ public class RunningHistory {
         this.commitTime = commitTime;
     }
 
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
     public Integer getMissionGrade() {
         return missionGrade;
     }
 
     public void setMissionGrade(Integer missionGrade) {
         this.missionGrade = missionGrade;
-    }
-
-    public Integer getGrade() {
-        return grade;
-    }
-
-    public void setGrade(Integer grade) {
-        this.grade = grade;
     }
 
     public Integer getSteps() {
@@ -228,28 +200,12 @@ public class RunningHistory {
         this.steps = steps;
     }
 
-    public String getWaveForm() {
-        return waveForm;
-    }
-
-    public void setWaveForm(String waveForm) {
-        this.waveForm = waveForm;
-    }
-
     public Integer getValid() {
         return valid;
     }
 
     public void setValid(Integer valid) {
         this.valid = valid;
-    }
-
-    public String getPlanRunUuid() {
-        return planRunUuid;
-    }
-
-    public void setPlanRunUuid(String planRunUuid) {
-        this.planRunUuid = planRunUuid;
     }
 
     public Integer getSequence() {
@@ -266,5 +222,13 @@ public class RunningHistory {
 
     public void setSpeedList(String speedList) {
         this.speedList = speedList;
+    }
+
+    public String getMissionUuid() {
+        return missionUuid;
+    }
+
+    public void setMissionUuid(String missionUuid) {
+        this.missionUuid = missionUuid;
     }
 }

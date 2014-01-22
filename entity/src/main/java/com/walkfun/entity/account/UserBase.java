@@ -1,6 +1,13 @@
 package com.walkfun.entity.account;
 
 
+import com.walkfun.common.lib.CustomDateDeserializer;
+import com.walkfun.common.lib.CustomDateSerializer;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import java.util.Date;
+
 /**
  * Created with IntelliJ IDEA.
  * User: LeonLu
@@ -11,25 +18,28 @@ package com.walkfun.entity.account;
 public class UserBase {
 
     private Integer userId;
-
-    private String userEmail;
-
+    private String deviceId;
+    private String userName;
     private String password;
-
     private String nickName;
-
     private String sex;
-
-    private String uuid;
+    private Integer age;
+    private Double weight;
+    private Double height;
+    private Date createTime;
+    private Date updateTime;
 
     public UserBase initUserBase(UserInfo userInfo) {
         UserBase userBase = new UserBase();
         userBase.setUserId(userInfo.getUserId());
-        userBase.setUserEmail(userInfo.getUserEmail());
+        userBase.setDeviceId(userInfo.getDeviceId());
+        userBase.setUserName(userInfo.getUserName());
         userBase.setNickName(userInfo.getNickName());
         userBase.setPassword(userInfo.getPassword());
-        userBase.setUuid(userInfo.getUuid());
         userBase.setSex(userInfo.getSex());
+        userBase.setAge(userInfo.getAge());
+        userBase.setHeight(userInfo.getHeight());
+        userBase.setWeight(userInfo.getWeight());
         return  userBase;
     }
 
@@ -41,12 +51,20 @@ public class UserBase {
         this.userId = userId;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getDeviceId() {
+        return deviceId;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail;
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -73,11 +91,47 @@ public class UserBase {
         this.sex = sex;
     }
 
-    public String getUuid() {
-        return uuid;
+    public Integer getAge() {
+        return age;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
+    public Double getHeight() {
+        return height;
+    }
+
+    public void setHeight(Double height) {
+        this.height = height;
+    }
+
+    @JsonSerialize(using = CustomDateSerializer.class)
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    @JsonSerialize(using = CustomDateSerializer.class)
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

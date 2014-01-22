@@ -1,5 +1,10 @@
 package com.walkfun.entity.common;
 
+import com.walkfun.common.lib.CustomDateDeserializer;
+import com.walkfun.common.lib.CustomDateSerializer;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 import java.util.Date;
 
 /**
@@ -11,22 +16,32 @@ import java.util.Date;
  */
 public class Feedback {
 
-    private String contact;
+    private String deviceId;
+
+    private String userId;
 
     private String suggestion;
 
-    private Date commitTime;
-
     private String answer;
 
-    private Integer userId;
+    private Date commitTime;
 
-    public String getContact() {
-        return contact;
+    private String contact;
+
+    public String getDeviceId() {
+        return deviceId;
     }
 
-    public void setContact(String contact) {
-        this.contact = contact;
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getSuggestion() {
@@ -37,14 +52,6 @@ public class Feedback {
         this.suggestion = suggestion;
     }
 
-    public Date getCommitTime() {
-        return commitTime;
-    }
-
-    public void setCommitTime(Date commitTime) {
-        this.commitTime = commitTime;
-    }
-
     public String getAnswer() {
         return answer;
     }
@@ -53,11 +60,21 @@ public class Feedback {
         this.answer = answer;
     }
 
-    public Integer getUserId() {
-        return userId;
+    @JsonSerialize(using = CustomDateSerializer.class)
+    public Date getCommitTime() {
+        return commitTime;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    public void setCommitTime(Date commitTime) {
+        this.commitTime = commitTime;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 }
