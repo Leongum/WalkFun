@@ -25,8 +25,8 @@ public class MissionServiceImpl implements MissionService {
 
     @Override
     @Transactional
-    public List<Mission> getMissionsForRest(Integer missionId, Date lastUpdateTime, Integer missionTypeId) {
-        if (missionId == null && missionTypeId == -1) {
+    public List<Mission> getMissionsForRest(Integer missionId, Date lastUpdateTime) {
+        if (missionId == null) {
             if (lastUpdateTime.before(BackendJobCache.missionFirstTime)) {
                 return BackendJobCache.allMissions;
             }
@@ -34,14 +34,14 @@ public class MissionServiceImpl implements MissionService {
                 return new ArrayList<Mission>();
             }
         }
-        return getMissions(missionId, lastUpdateTime, missionTypeId);
+        return getMissions(missionId, lastUpdateTime);
     }
 
     @Override
-    public List<Mission> getMissions(Integer missionId, Date lastUpdateTime, Integer missionTypeId) {
+    public List<Mission> getMissions(Integer missionId, Date lastUpdateTime) {
         List<Mission> missionList = new ArrayList<Mission>();
 
-        missionList = missionDAO.getMissions(missionId, lastUpdateTime, missionTypeId);
+        missionList = missionDAO.getMissions(missionId, lastUpdateTime);
 
         return missionList;
     }

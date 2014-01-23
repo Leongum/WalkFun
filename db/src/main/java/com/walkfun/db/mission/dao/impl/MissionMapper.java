@@ -15,5 +15,5 @@ import java.util.List;
  */
 public interface MissionMapper {
 
-    public List<Mission> getMissions(@Param("missionId") Integer missionId, @Param("lastUpdateTime") Date lastUpdateTime, @Param("missionTypeId") Integer missionTypeId);
+    public List<Mission> getMissions(@Param("missionId") Integer missionId, @Param("lastUpdateTime") Date lastUpdateTime);
 }

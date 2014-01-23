@@ -53,7 +53,7 @@ public class BackendJobCache {
     public static Date recommendAppFirstTime = CommonUtils.parseDateDefaultToNull("3001-01-01 00:00:00");
 
     public void missionServiceJob() {
-        allMissions = missionService.getMissions(null, CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00"), -1);
+        allMissions = missionService.getMissions(null, CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00"));
         for (Mission mission : allMissions) {
             if (mission.getUpdateTime().after(missionLastTime)) {
                 missionLastTime = mission.getUpdateTime();

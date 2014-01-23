@@ -6,27 +6,20 @@
         <id column="MISSION_ID" property="missionId"/>
         <result column="MISSION_TYPE_ID" property="missionTypeId"/>
         <result column="MISSION_NAME" property="missionName"/>
-        <result column="MISSION_CONTENT" property="missionContent"/>
+        <result column="MISSION_DESCRIPTION" property="missionDescription"/>
         <result column="SCORES" property="scores"/>
         <result column="EXPERIENCE" property="experience"/>
         <result column="MISSION_FLAG" property="missionFlag"/>
         <result column="LEVEL_LIMITED" property="levelLimited"/>
-        <result column="MISSION_TIME" property="missionTime"/>
-        <result column="MISSION_DISTANCE" property="missionDistance"/>
+        <result column="MISSION_TIME_LIMITED" property="missionTimeLimited"/>
+        <result column="MISSION_DISTANCE_LIMITED" property="missionDistanceLimited"/>
+        <result column="MISSION_FROM_TIME_LIMITED" property="missionFromTimeLimited"/>
+        <result column="MISSION_TO_TIME_LIMITED" property="missionToTimeLimited"/>
         <result column="CYCLE_TIME" property="cycleTime"/>
-        <result column="MISSION_FROM" property="missionFrom"/>
-        <result column="MISSION_TO" property="missionTo"/>
-        <result column="MISSION_PLACE_PACKAGE_ID" property="missionPlacePackageId"/>
-        <result column="MISSION_STEPS" property="missionSteps"/>
-        <result column="MISSION_SPEED" property="missionSpeed"/>
-        <result column="LAST_UPDATE_TIME" property="lastUpdateTime"/>
-        <result column="CHALLENGE_ID" property="challengeId"/>
-        <result column="SUB_MISSION_LIST" property="subMissionList"/>
-        <result column="MISSION_PACKAGE_ID" property="missionPackageId"/>
-        <result column="SEQUENCE" property="sequence"/>
-        <result column="PLAN_ID" property="planId"/>
         <result column="SUGGESTION_MAX_SPEED" property="suggestionMaxSpeed"/>
         <result column="SUGGESTION_MIN_SPEED" property="suggestionMinSpeed"/>
+        <result column="SEQUENCE" property="sequence"/>
+        <result column="UPDATE_TIME" property="updateTime"/>
     </resultMap>
 
     <sql id="missionTable">
@@ -38,22 +31,15 @@
         EXPERIENCE,
         MISSION_FLAG,
         LEVEL_LIMITED,
-        MISSION_TIME,
-        MISSION_DISTANCE,
+        MISSION_TIME_LIMITED,
+        MISSION_DISTANCE_LIMITED,
+        MISSION_FROM_TIME_LIMITED,
+        MISSION_TO_TIME_LIMITED,
         CYCLE_TIME,
-        MISSION_FROM,
-        MISSION_TO,
-        MISSION_PLACE_PACKAGE_ID,
-        MISSION_STEPS,
-        MISSION_SPEED,
-        LAST_UPDATE_TIME,
-        CHALLENGE_ID,
-        SUB_MISSION_LIST,
-        MISSION_PACKAGE_ID,
-        SEQUENCE,
-        PLAN_ID,
         SUGGESTION_MAX_SPEED,
-        SUGGESTION_MIN_SPEED
+        SUGGESTION_MIN_SPEED,
+        SEQUENCE,
+        UPDATE_TIME
     </sql>
 
     <select id="getMissions" resultMap="missionInfo">
@@ -64,14 +50,8 @@
         <if test="missionId != null"><![CDATA[
         AND MISSION_ID = #{missionId}
         ]]></if>
-        <if test="missionId == null"><![CDATA[
-        AND MISSION_ID < 5000
-        ]]></if>
         <if test="lastUpdateTime != null"><![CDATA[
         AND LAST_UPDATE_TIME > #{lastUpdateTime}
-        ]]></if>
-        <if test="missionTypeId != -1"><![CDATA[
-        AND MISSION_TYPE_ID = #{missionTypeId}
         ]]></if>
     </select>
 </mapper>

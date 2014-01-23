@@ -23,6 +23,5 @@ public interface MissionRestDef extends RestDef {
     @Path("/mission")
     List<Mission> getMissions(
             @QueryParam(PARAM_MISSION_ID) String missionId,
-            @QueryParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime,
-            @HeaderParam(HEADER_PARAM_MISSION_TYPE) String missionType);
+            @QueryParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
 }

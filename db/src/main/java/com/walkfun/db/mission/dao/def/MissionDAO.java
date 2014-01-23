@@ -14,5 +14,5 @@ import java.util.List;
  */
 public interface MissionDAO {
 
-    public List<Mission> getMissions(Integer missionId, Date lastUpdateTime, Integer missionTypeId);
+    public List<Mission> getMissions(Integer missionId, Date lastUpdateTime);
 }
