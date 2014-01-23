@@ -33,7 +33,7 @@ public class HeaderInterceptor extends AbstractPhaseInterceptor<Message> {
             List<String> keyList = headers.get(RestDef.HEADER_PARAM_KEY);
             if (keyList != null && keyList.size() > 0) {
                 String key = keyList.get(UNIQUE);
-                Universe.current().setDeviceId(key.split("#")[0]);
+                Universe.current().setUuid(key.split("#")[0]);
                 Universe.current().setUserId(CommonUtils.parseIntegerToNull(key.split("#")[1]));
             }
         }

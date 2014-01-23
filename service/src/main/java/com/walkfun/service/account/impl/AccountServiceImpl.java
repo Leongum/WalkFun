@@ -1,8 +1,10 @@
 package com.walkfun.service.account.impl;
 
 import com.walkfun.common.exception.*;
+import com.walkfun.common.lib.Callable;
 import com.walkfun.common.lib.Universe;
 import com.walkfun.db.account.dao.def.AccountDAO;
+import com.walkfun.service.Cache.CacheFacade;
 import com.walkfun.service.account.def.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,103 +28,172 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void checkUserLoginStatus(Integer userId) {
-        if (userId > 0) {
-            UserInfo userInfo = accountDAO.getAccountInfoByID(userId);
-            if (userInfo == null || userInfo.getUserId() != Universe.current().getUserId()) {
+        try {
+            if (userId > 0) {
+                UserInfo userInfo = checkUserExisting(userId, null);
+                if (userInfo == null || userInfo.getUserId() != Universe.current().getUserId()) {
+                    throw new ServerRequestException(ErrorMessageMapper.LOGIN_CHECK_FAIL.toString());
+                }
+                if (!userInfo.getUuid().equalsIgnoreCase(Universe.current().getUuid())) {
+                    throw new ServerRequestException(ErrorMessageMapper.LOGIN_CHECK_FAIL.toString());
+                }
+            } else {
                 throw new ServerRequestException(ErrorMessageMapper.LOGIN_CHECK_FAIL.toString());
             }
-            if (!userInfo.getDeviceId().equalsIgnoreCase(Universe.current().getDeviceId())) {
-                throw new ServerRequestException(ErrorMessageMapper.LOGIN_CHECK_FAIL.toString());
-            }
-        } else {
-            throw new ServerRequestException(ErrorMessageMapper.LOGIN_CHECK_FAIL.toString());
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
         }
     }
 
-    private UserInfo checkUserExisting(Integer userId) {
-        UserInfo userInfo = accountDAO.getAccountInfoByID(userId);
+    private UserInfo checkUserExisting(final Integer userId, final Date lastUpdateTime) {
+        String key = "user.id." + userId.toString();
+        UserInfo userInfo = CacheFacade.USER.get(key, new Callable<UserInfo>() {
+            @Override
+            public UserInfo execute() {
+                UserInfo userInfo = accountDAO.getAccountInfoByID(userId, null);
+                return userInfo;
+            }
+        });
+
         if (userInfo == null || userInfo.getUserId() == null) {
             throw new ServerRequestException(ErrorMessageMapper.USER_NOT_FOUND.toString());
         }
+
+        if (lastUpdateTime != null) {
+            if (userInfo.getUpdateTime().before(lastUpdateTime)) {
+                return null;
+            }
+        }
+
         return userInfo;
     }
 
     @Override
     public UserInfo getAccountInfo(String userEmail, String password) {
-        UserInfo userInfo = accountDAO.getAccountInfo(userEmail, password);
-        if (userInfo == null || userInfo.getUserId() == null) {
-            throw new ServerRequestException(ErrorMessageMapper.USER_NOT_FOUND.toString());
+        try {
+            UserInfo userInfo = accountDAO.getAccountInfo(userEmail, password);
+            if (userInfo == null || userInfo.getUserId() == null) {
+                throw new ServerRequestException(ErrorMessageMapper.USER_NOT_FOUND.toString());
+            }
+            return userInfo;
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
         }
-        return userInfo;
     }
 
     @Override
     @Transactional
     public UserInfo createAccountInfo(UserBase userBase) {
-        UserInfo userInfo = accountDAO.getAccountInfoByMail(userBase.getUserName());
-        if (userInfo != null && userInfo.getUserId() != null) {
-            throw new ServerRequestException(ErrorMessageMapper.USER_ALREADY_EXISTS.toString());
+        try {
+            UserInfo userInfo = accountDAO.getAccountInfoByName(userBase.getUserName());
+            if (userInfo != null && userInfo.getUserId() != null) {
+                throw new ServerRequestException(ErrorMessageMapper.USER_ALREADY_EXISTS.toString());
+            }
+            return accountDAO.createAccountInfo(userBase);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
         }
-        return accountDAO.createAccountInfo(userBase);
-    }
-
-    @Override
-    public UserInfo getAccountInfoByID(Integer userId) {
-        return checkUserExisting(userId);
-    }
-
-    @Override
-    public List<UserFriend> getUserFriends(Integer userId, Date lastUpdateTime) {
-        checkUserExisting(userId);
-        return accountDAO.getUserFriends(userId, lastUpdateTime);
     }
 
     @Override
     @Transactional
     public void updateAccountInfo(UserInfo userInfo) {
-        checkUserExisting(userInfo.getUserId());
-        accountDAO.updateAccountInfo(userInfo);
+        try {
+            String key = "user.id." + userInfo.getUserId().toString();
+            checkUserExisting(userInfo.getUserId(), null);
+            accountDAO.updateAccountInfo(userInfo);
+            CacheFacade.USER.evict(key);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
     }
 
     @Override
     @Transactional
     public void updateAccountBase(UserBase userBase) {
-        checkUserExisting(userBase.getUserId());
-        accountDAO.updateAccountBase(userBase);
+        try {
+            String key = "user.id." + userBase.getUserId().toString();
+            checkUserExisting(userBase.getUserId(), null);
+            accountDAO.updateAccountBase(userBase);
+            CacheFacade.USER.evict(key);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
     }
 
     @Override
     @Transactional
-    public void createUserFriendInvite(UserFriend userFriend) {
-        //check user existing
-        checkUserExisting(userFriend.getUserId());
-        checkUserExisting(userFriend.getFriendId());
-        //check friendship existing
-        UserFriend userFriendCheck = accountDAO.getUserFriend(userFriend.getUserId(), userFriend.getFriendId());
-        if (userFriendCheck != null && userFriendCheck.getFriendStatus() != null) {
-            throw new ServerRequestException(ErrorMessageMapper.FRIENDSHIP_EXISTS.toString());
+    public void createOrUpdateUserFriend(UserFriend userFriend) {
+        try {
+            checkUserExisting(userFriend.getUserId(), null);
+            checkUserExisting(userFriend.getFriendId(), null);
+            accountDAO.createOrUpdateUserFriend(userFriend);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
         }
-        accountDAO.createUserFriendInvite(userFriend);
+    }
+
+    @Override
+    public List<UserFriend> getUserFollows(Integer userId, Date lastUpdateTime) {
+        try {
+            return accountDAO.getUserFollows(userId, lastUpdateTime);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public List<UserFriend> getUserFans(Integer userId, Date lastUpdateTime) {
+        try {
+            return accountDAO.getUserFans(userId, lastUpdateTime);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
     }
 
     @Override
     @Transactional
-    public void updateUserFriendStatus(UserFriend userFriend) {
-        UserFriend userFriendCheck = accountDAO.getUserFriend(userFriend.getUserId(), userFriend.getFriendId());
-        if (userFriendCheck == null || userFriendCheck.getFriendStatus() == null) {
-            throw new ServerRequestException(ErrorMessageMapper.FRIENDSHIP_NOT_EXISTS.toString());
+    public void createUserAction(UserAction userAction) {
+        try {
+            accountDAO.createUserAction(userAction);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
         }
-        //check friendship status is ok to set
-        if (userFriendCheck.getFriendStatus() > userFriend.getFriendStatus()) {
-            throw new ServerRequestException(ErrorMessageMapper.FRIEND_STATUS_ERROR.toString());
-        }
-        accountDAO.updateUserFriendStatus(userFriend);
     }
 
     @Override
-    public List<UserInfo> getUserFollowerInformation(Integer userId, Integer pageNo) {
-        Integer from = pageNo == null ? 0 : pageNo * 10;
-        Integer pageSize = 10;
-        return accountDAO.getUserFollowerInformation(userId, from, pageSize);
+    public List<UserAction> getNewlyUserAction(Integer userId) {
+        try {
+            return accountDAO.getNewlyUserAction(userId);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public List<SearchUserInfo> searchAccountInfoByName(String nickName) {
+        try {
+            return accountDAO.searchAccountInfoByName(nickName);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public List<FriendSortInfo> getFriendSort(Integer userId, Date lastUpdateTime) {
+        try {
+            return accountDAO.getFriendSort(userId, lastUpdateTime);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public UserInfo getAccountInfoByID(Integer userId, Date lastUpdateTime) {
+        try {
+            return checkUserExisting(userId, lastUpdateTime);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
     }
 }

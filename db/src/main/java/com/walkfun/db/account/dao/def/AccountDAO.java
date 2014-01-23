@@ -15,27 +15,29 @@ import java.util.List;
  */
 public interface AccountDAO {
 
-    public UserInfo getAccountInfo(String userEmail, String password);
+    public UserInfo getAccountInfo(String userName, String password);
 
-    public UserInfo getAccountInfoByMail(String userEmail);
+    public UserInfo getAccountInfoByName(String userName);
 
-    public UserInfo getAccountInfoByID(Integer userId);
+    public UserInfo getAccountInfoByID(Integer userId, Date lastUpdateTime);
 
     public void updateAccountInfo(UserInfo userInfo);
 
     public void updateAccountBase(UserBase userBase);
 
-    public void updateAccountPowerInfo(Integer userId, double remainingPower);
-
     public UserInfo createAccountInfo(UserBase userBase);
 
-    public List<UserFriend> getUserFriends(Integer userId, Date lastUpdateTime);
+    public void createOrUpdateUserFriend(UserFriend userFriend);
 
-    public UserFriend getUserFriend(Integer userId, Integer friendId);
+    public List<UserFriend> getUserFollows(Integer userId, Date lastUpdateTime);
 
-    public void createUserFriendInvite(UserFriend userFriend);
+    public List<UserFriend> getUserFans(Integer userId, Date lastUpdateTime);
 
-    public void updateUserFriendStatus(UserFriend userFriend);
+    public void createUserAction(UserAction userAction);
 
-    public List<UserInfo> getUserFollowerInformation(Integer userId, Integer from, Integer pageSize);
+    public List<UserAction> getNewlyUserAction(Integer userId);
+
+    public List<SearchUserInfo> searchAccountInfoByName(String nickName);
+
+    public List<FriendSortInfo> getFriendSort(Integer userId, Date lastUpdateTime);
 }

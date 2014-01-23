@@ -15,30 +15,35 @@ import java.util.List;
  */
 public interface AccountMapper {
 
-    public UserInfo getAccountInfo(@Param("userEmail") String userEmail,
-                                   @Param("password") String password);
+    public UserInfo getAccountInfoByID(@Param("userId") Integer userId, @Param("lastUpdateTime") Date lastUpdateTime);
 
-    public int createBase(@Param("baseEntity") UserBase userBase);
+    public UserInfo getAccountInfo(@Param("userName") String userName, @Param("password") String password);
 
-    public void createDetail(@Param("detailEntity") UserInfo accountInfo);
+    public UserInfo getAccountInfoByName(@Param("userName") String userName);
 
-    public UserInfo getAccountInfoByID(@Param("userId") Integer userId);
+    public int createAccountBase(@Param("baseEntity") UserBase userBase);
 
-    public List<UserFriend> getUserFriends(@Param("userId") Integer userId, @Param("lastUpdateTime") Date lastUpdateTime);
+    public void updateAccountBase(@Param("baseEntity") UserBase userBase);
 
-    public void createUserFriend(@Param("entity") UserFriend userFriend);
+    public void createAccountDetail(@Param("detailEntity") UserInfo accountInfo);
 
-    public void updateUserFriend(@Param("entity") UserFriend userFriend);
+    public void updateAccountDetail(@Param("detailEntity") UserInfo userInfo);
 
-    public void updateAccountInfo(@Param("entity") UserInfo userInfo);
+    public UserFriend getFriendById(@Param("userId") Integer userId, @Param("friendId") Integer friendId);
 
-    public void updateAccountBase(@Param("entity") UserBase userBase);
+    public void createOrUpdateUserFriend(@Param("entity") UserFriend userFriend);
 
-    public UserInfo getAccountInfoByMail(@Param("userEmail") String userEmail);
+    public List<UserFriend> getUserFollows(@Param("userId") Integer userId, @Param("lastUpdateTime") Date lastUpdateTime);
 
-    public UserFriend getUserFriend(@Param("userId") Integer userId, @Param("friendId") Integer friendId);
+    public List<UserFriend> getUserFans(@Param("userId") Integer userId, @Param("lastUpdateTime") Date lastUpdateTime);
 
-    public void updateAccountPowerInfo(@Param("userId") Integer userId, @Param("remainingPower") double remainingPower);
+    public void createUserAction(@Param("entity") UserAction userAction);
 
-    public List<UserInfo> getUserFollowerInformation(@Param("userId") Integer userId,@Param("from") Integer from, @Param("pageSize") Integer pageSize);
+    public List<UserAction> getNewlyUserAction(@Param("userId") Integer userId);
+
+    public void updateUserActionSyncTime(@Param("userId") Integer userId);
+
+    public List<SearchUserInfo> searchAccountInfoByName(@Param("nickName") String nickName);
+
+    public List<FriendSortInfo> getFriendSort(@Param("userId") Integer userId, @Param("lastUpdateTime") Date lastUpdateTime);
 }

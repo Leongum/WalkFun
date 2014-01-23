@@ -2,12 +2,12 @@ package com.walkfun.entity.enums;
 
 /**
  * Created with IntelliJ IDEA.
- * User: LeonLu
- * Date: 5/31/13
- * Time: 11:29 AM
+ * User: p
+ * Date: 14-1-23
+ * Time: 下午9:57
  * To change this template use File | Settings | File Templates.
  */
-public enum FriendStatus {
+public enum FriendStatusEnum {
 
     ONLYFOLLOWED,
 

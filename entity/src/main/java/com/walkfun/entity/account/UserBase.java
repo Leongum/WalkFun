@@ -18,6 +18,7 @@ import java.util.Date;
 public class UserBase {
 
     private Integer userId;
+    private String uuid;
     private String deviceId;
     private String userName;
     private String password;
@@ -26,12 +27,13 @@ public class UserBase {
     private Integer age;
     private Double weight;
     private Double height;
-    private Date createTime;
+    private String platformInfo;
     private Date updateTime;
 
     public UserBase initUserBase(UserInfo userInfo) {
         UserBase userBase = new UserBase();
         userBase.setUserId(userInfo.getUserId());
+        userBase.setUuid(userInfo.getUuid());
         userBase.setDeviceId(userInfo.getDeviceId());
         userBase.setUserName(userInfo.getUserName());
         userBase.setNickName(userInfo.getNickName());
@@ -40,6 +42,7 @@ public class UserBase {
         userBase.setAge(userInfo.getAge());
         userBase.setHeight(userInfo.getHeight());
         userBase.setWeight(userInfo.getWeight());
+        userBase.setPlatformInfo(userInfo.getPlatformInfo());
         return  userBase;
     }
 
@@ -49,6 +52,14 @@ public class UserBase {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getDeviceId() {
@@ -115,14 +126,12 @@ public class UserBase {
         this.height = height;
     }
 
-    @JsonSerialize(using = CustomDateSerializer.class)
-    public Date getCreateTime() {
-        return createTime;
+    public String getPlatformInfo() {
+        return platformInfo;
     }
 
-    @JsonDeserialize(using = CustomDateDeserializer.class)
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setPlatformInfo(String platformInfo) {
+        this.platformInfo = platformInfo;
     }
 
     @JsonSerialize(using = CustomDateSerializer.class)

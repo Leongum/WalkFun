@@ -9,7 +9,7 @@
             overflowToDisk="false"
             memoryStoreEvictionPolicy="LRU"/>
 
-    <cache name="PLAN"
+    <cache name="USER"
            maxElementsInMemory="1000"
            eternal="false"
            overflowToDisk="false"

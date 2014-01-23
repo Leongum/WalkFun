@@ -20,54 +20,80 @@ import java.util.List;
 @Produces({MediaType.APPLICATION_JSON})
 public interface AccountRestDef extends RestDef {
 
+    //登录， 用户根据用户名和密码登录
     @GET
-    @Path("/{" + PARAM_USER_EMAIL + "}/{" + PARAM_PASSWORD + "}")
+    @Path("/login/{" + PARAM_USER_EMAIL + "}/{" + PARAM_PASSWORD + "}")
     UserInfo getAccountInfo(
             @PathParam(PARAM_USER_EMAIL) String userEmail,
             @PathParam(PARAM_PASSWORD) String password);
 
+    //根据用户ID和最后更新日期获取最新用户信息
     @GET
-    @Path("/{" + PARAM_USER_ID + "}")
+    @Path("/get/{" + PARAM_USER_ID + "}")
     UserInfo getAccountInfoByID(
             @PathParam(PARAM_USER_ID) String userId,
+            @QueryParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime,
             @QueryParam(PARAM_CHECK_USER_UUID) String checkUuid);
 
+    //创建新用户
     @POST
-    @Path("/")
+    @Path("/create/")
     UserInfo createAccountInfo(UserBase userBase);
 
+    //更新用户基本信息
     @PUT
-    @Path("/{" + PARAM_USER_ID + "}")
+    @Path("/update/base/{" + PARAM_USER_ID + "}")
     void updateAccountBase(@PathParam(PARAM_USER_ID) String userId,
                            UserBase userBase);
 
+    //更新用户所有信息
     @PUT
-    @Path("/additional/{" + PARAM_USER_ID + "}")
-    UserInfo updateAccountAdditional(@PathParam(PARAM_USER_ID) String userId,
-                                     UserInfo userInfo);
+    @Path("/update/detail/{" + PARAM_USER_ID + "}")
+    void updateAccountInfo(@PathParam(PARAM_USER_ID) String userId,
+                               UserInfo userInfo);
 
+    //创建或者更新好友关系
+    @POST
+    @Path("/friends/create/{" + PARAM_USER_ID + "}")
+    void createOrUpdateUserFriend(@PathParam(PARAM_USER_ID) String userId,
+                                  UserFriend userFriend);
+
+    //获取我的关注
     @GET
-    @Path("/friends/{" + PARAM_USER_ID + "}")
-    List<UserFriend> getUserFriends(
+    @Path("/friends/get/follows/{" + PARAM_USER_ID + "}")
+    List<UserFriend> getUserFollows(
             @PathParam(PARAM_USER_ID) String userId,
             @QueryParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
 
-
-    @POST
-    @Path("/friends/{" + PARAM_USER_ID + "}")
-    void createUserFriendInvite(@PathParam(PARAM_USER_ID) String userId,
-                                UserFriend userFriend);
-
-
-    @PUT
-    @Path("/friends/{" + PARAM_USER_ID + "}")
-    void updateUserFriendStatus(@PathParam(PARAM_USER_ID) String userId,
-                                UserFriend userFriend);
-
+    //获取我的粉丝
     @GET
-    @Path("/follower/{" + PARAM_USER_ID + "}")
-    List<UserInfo> getUserFollowerInformation(
+    @Path("/friends/get/fans/{" + PARAM_USER_ID + "}")
+    List<UserFriend> getUserFans(
             @PathParam(PARAM_USER_ID) String userId,
-            @QueryParam(PARAM_PAGE_NUMBER) String pageNo);
+            @QueryParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
 
+    //创建用户动作
+    @POST
+    @Path("/action/create/{" + PARAM_USER_ID + "}")
+    void createUserAction(@PathParam(PARAM_USER_ID) String userId,
+                          UserAction userAction);
+
+    //获取最新的用户动作
+    @GET
+    @Path("/action/get/{" + PARAM_USER_ID + "}")
+    List<UserAction> getNewlyUserAction(
+            @PathParam(PARAM_USER_ID) String userId);
+
+    //根据用户的昵称，搜索用户
+    @GET
+    @Path("/search/get/{" + PARAM_NICK_NAME + "}")
+    List<SearchUserInfo> searchAccountInfoByName(
+            @PathParam(PARAM_NICK_NAME) String nickName);
+
+    //根据lastupdatetime获取最新好友更新之后的状态
+    @GET
+    @Path("/friendsort/get/{" + PARAM_USER_ID + "}")
+    List<FriendSortInfo> getFriendSort(
+            @PathParam(PARAM_USER_ID) String userId,
+            @QueryParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
 }

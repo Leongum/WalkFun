@@ -14,23 +14,29 @@ import java.util.List;
  */
 public interface AccountService {
 
-    UserInfo getAccountInfo(String userEmail, String password);
+    public void checkUserLoginStatus(Integer userId);
 
-    UserInfo createAccountInfo(UserBase userBase);
+    public UserInfo getAccountInfo(String userName, String password);
 
-    void checkUserLoginStatus(Integer userId);
+    public UserInfo getAccountInfoByID(Integer userId, Date lastUpdateTime);
 
-    UserInfo getAccountInfoByID(Integer userId);
+    public void updateAccountInfo(UserInfo userInfo);
 
-    List<UserFriend> getUserFriends(Integer userId, Date lastUpdateTime);
+    public void updateAccountBase(UserBase userBase);
 
-    void updateAccountInfo(UserInfo userInfo);
+    public UserInfo createAccountInfo(UserBase userBase);
 
-    void updateAccountBase(UserBase userBase);
+    public void createOrUpdateUserFriend(UserFriend userFriend);
 
-    void createUserFriendInvite(UserFriend userFriend);
+    public List<UserFriend> getUserFollows(Integer userId, Date lastUpdateTime);
 
-    void updateUserFriendStatus(UserFriend userFriend);
+    public List<UserFriend> getUserFans(Integer userId, Date lastUpdateTime);
 
-    List<UserInfo> getUserFollowerInformation(Integer userId, Integer pageNo);
+    public void createUserAction(UserAction userAction);
+
+    public List<UserAction> getNewlyUserAction(Integer userId);
+
+    public List<SearchUserInfo> searchAccountInfoByName(String nickName);
+
+    public List<FriendSortInfo> getFriendSort(Integer userId, Date lastUpdateTime);
 }

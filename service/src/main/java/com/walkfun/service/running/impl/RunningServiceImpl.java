@@ -43,7 +43,7 @@ public class RunningServiceImpl implements RunningService {
     @Override
     @Transactional
     public void createRunningHistory(Integer userId, List<RunningHistory> runningHistoryList) {
-        UserInfo userInfo = accountService.getAccountInfoByID(userId);
+        UserInfo userInfo = accountService.getAccountInfoByID(userId, null);
         for (RunningHistory runningHistory : runningHistoryList) {
             runningDAO.createRunningHistory(runningHistory);
             //need add user info

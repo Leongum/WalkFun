@@ -16,7 +16,7 @@ import net.sf.ehcache.*;
  * To change this template use File | Settings | File Templates.
  */
 public enum CacheFacade implements Cache {
-    PLAN;
+    USER;
 
     private Ehcache internal = CacheManager.getInstance().getCache(this.name());
 

@@ -17,6 +17,7 @@ import java.util.Date;
 public class UserInfo extends UserBase {
 
     private Integer userId;
+    private Integer picId;
     private Integer userTitleId;
     private String userTitle;
     private Double level;
@@ -44,6 +45,7 @@ public class UserInfo extends UserBase {
 
     public UserInfo(UserBase userBase) {
         this.setUserId(userBase.getUserId());
+        this.setUuid(userBase.getUuid());
         this.setDeviceId(userBase.getDeviceId());
         this.setUserName(userBase.getUserName());
         this.setNickName(userBase.getNickName());
@@ -52,6 +54,7 @@ public class UserInfo extends UserBase {
         this.setAge(userBase.getAge());
         this.setHeight(userBase.getHeight());
         this.setWeight(userBase.getWeight());
+        this.setPlatformInfo(userBase.getPlatformInfo());
         this.totalDistance = 0d;
         this.totalCarlorie = 0d;
         this.totalSteps = 0d;
@@ -69,6 +72,14 @@ public class UserInfo extends UserBase {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Integer getPicId() {
+        return picId;
+    }
+
+    public void setPicId(Integer picId) {
+        this.picId = picId;
     }
 
     public Integer getUserTitleId() {

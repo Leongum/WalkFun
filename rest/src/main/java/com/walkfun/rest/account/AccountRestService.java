@@ -5,8 +5,6 @@ import com.walkfun.entity.account.*;
 import com.walkfun.service.account.def.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,85 +23,96 @@ public class AccountRestService implements AccountRestDef {
 
     @Override
     public UserInfo getAccountInfo(String userEmail, String password) {
-        CommonUtils.newMethodCall("AccountRestService.getAccountInfo");
+        CommonUtils.newMethodCall("User Login");
         UserInfo userInfo = accountService.getAccountInfo(userEmail, password);
         userInfo.setDeviceId(UUID.randomUUID().toString());
         UserBase userBase = new UserBase();
         userBase = userBase.initUserBase(userInfo);
         accountService.updateAccountBase(userBase);
-        return  userInfo;
+        return userInfo;
     }
 
     @Override
-    public UserInfo getAccountInfoByID(String userId, String checkUuid) {
-        CommonUtils.newMethodCall("AccountRestService.getAccountInfoByID");
+    public UserInfo getAccountInfoByID(String userId, String lastUpdateTime, String checkUuid) {
+        CommonUtils.newMethodCall("Get User Info");
         if (checkUuid != null && checkUuid.equalsIgnoreCase("true")) {
             accountService.checkUserLoginStatus(CommonUtils.parseIntegerToNull(userId));
         }
-        UserInfo userInfo =  accountService.getAccountInfoByID(CommonUtils.parseIntegerToNull(userId));
-        return  userInfo;
+        UserInfo userInfo = accountService.getAccountInfoByID(CommonUtils.parseIntegerToNull(userId),
+                CommonUtils.parseDateDefaultToNull(lastUpdateTime));
+        return userInfo;
     }
 
     @Override
     public UserInfo createAccountInfo(UserBase userBase) {
-        CommonUtils.newMethodCall("AccountRestService.createAccountInfo");
-        userBase.setDeviceId(UUID.randomUUID().toString());
+        CommonUtils.newMethodCall("Create User");
+        userBase.setUuid(UUID.randomUUID().toString());
         UserInfo userInfo = accountService.createAccountInfo(userBase);
-        return  userInfo;
+        return userInfo;
     }
 
     @Override
     public void updateAccountBase(String userId, UserBase userBase) {
-        CommonUtils.newMethodCall("AccountRestService.updateAccountBase");
+        CommonUtils.newMethodCall("Update User");
         accountService.checkUserLoginStatus(CommonUtils.parseIntegerToNull(userId));
         userBase.setUserId(CommonUtils.parseIntegerToNull(userId));
         accountService.updateAccountBase(userBase);
     }
 
     @Override
-    public UserInfo updateAccountAdditional(String userId, UserInfo userInfo) {
-        CommonUtils.newMethodCall("AccountRestService.updateAccountAdditional");
-        Integer userIdInt = CommonUtils.parseIntegerToNull(userId);
-        accountService.checkUserLoginStatus(userIdInt);
-        UserInfo userInfoBase = accountService.getAccountInfoByID(userIdInt);
-        userInfoBase.setWeight(userInfo.getWeight());
-        userInfoBase.setHeight(userInfo.getHeight());
-        userInfoBase.setAge(userInfo.getAge());
-        if (userInfo.getSex() != null && !userInfo.getSex().equalsIgnoreCase(userInfoBase.getSex())) {
-            userInfoBase.setSex(userInfo.getSex());
-            UserBase userBase = new UserBase();
-            userBase = userBase.initUserBase(userInfoBase);
-            accountService.updateAccountBase(userBase);
-        }
-        accountService.updateAccountInfo(userInfoBase);
-        return  userInfoBase;
+    public void updateAccountInfo(String userId, UserInfo userInfo) {
+        CommonUtils.newMethodCall("Update User");
+        accountService.checkUserLoginStatus(CommonUtils.parseIntegerToNull(userId));
+        userInfo.setUserId(CommonUtils.parseIntegerToNull(userId));
+        accountService.updateAccountInfo(userInfo);
     }
 
     @Override
-    public List<UserFriend> getUserFriends(String userId,String lastUpdateTime) {
-        CommonUtils.newMethodCall("AccountRestService.getUserFriends");
-        return accountService.getUserFriends(CommonUtils.parseIntegerToNull(userId),CommonUtils.parseDateDefaultToNull(lastUpdateTime));
-    }
-
-    @Override
-    public void createUserFriendInvite(String userId, UserFriend userFriend) {
-        CommonUtils.newMethodCall("AccountRestService.createUserFriendInvite");
+    public void createOrUpdateUserFriend(String userId, UserFriend userFriend) {
+        CommonUtils.newMethodCall("Create/Update Friend");
         accountService.checkUserLoginStatus(CommonUtils.parseIntegerToNull(userId));
         userFriend.setUserId(CommonUtils.parseIntegerToNull(userId));
-        accountService.createUserFriendInvite(userFriend);
+        accountService.createOrUpdateUserFriend(userFriend);
     }
 
     @Override
-    public void updateUserFriendStatus(String userId, UserFriend userFriend) {
-        CommonUtils.newMethodCall("AccountRestService.updateUserFriendStatus");
+    public List<UserFriend> getUserFollows(String userId, String lastUpdateTime) {
+        CommonUtils.newMethodCall("Get User Follows");
+        return accountService.getUserFollows(CommonUtils.parseIntegerToNull(userId),
+                CommonUtils.parseDateDefaultToNull(lastUpdateTime));
+    }
+
+    @Override
+    public List<UserFriend> getUserFans(String userId, String lastUpdateTime) {
+        CommonUtils.newMethodCall("Get User Fans");
+        return accountService.getUserFans(CommonUtils.parseIntegerToNull(userId),
+                CommonUtils.parseDateDefaultToNull(lastUpdateTime));
+    }
+
+    @Override
+    public void createUserAction(String userId, UserAction userAction) {
+        CommonUtils.newMethodCall("Create User Action");
         accountService.checkUserLoginStatus(CommonUtils.parseIntegerToNull(userId));
-        userFriend.setUserId(CommonUtils.parseIntegerToNull(userId));
-        accountService.updateUserFriendStatus(userFriend);
+        userAction.setActionFromId(CommonUtils.parseIntegerToNull(userId));
+        accountService.createUserAction(userAction);
     }
 
     @Override
-    public List<UserInfo> getUserFollowerInformation(String userId, String pageNo) {
-        CommonUtils.newMethodCall("AccountRestService.getUserFollowerInformation");
-        return accountService.getUserFollowerInformation(CommonUtils.parseIntegerToNull(userId),CommonUtils.parseIntegerToNull(pageNo));
+    public List<UserAction> getNewlyUserAction(String userId) {
+        CommonUtils.newMethodCall("Get User Actions");
+        return accountService.getNewlyUserAction(CommonUtils.parseIntegerToNull(userId));
+    }
+
+    @Override
+    public List<SearchUserInfo> searchAccountInfoByName(String nickName) {
+        CommonUtils.newMethodCall("Search User");
+        return accountService.searchAccountInfoByName(nickName);
+    }
+
+    @Override
+    public List<FriendSortInfo> getFriendSort(String userId, String lastUpdateTime) {
+        CommonUtils.newMethodCall("Update friend sort Info");
+        return accountService.getFriendSort(CommonUtils.parseIntegerToNull(userId),
+                CommonUtils.parseDateDefaultToNull(lastUpdateTime));
     }
 }

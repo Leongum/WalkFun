@@ -3,8 +3,10 @@
 
 <mapper namespace="com.walkfun.db.account.dao.impl.AccountMapper">
 
+    <!--user and user detail DB-->
     <resultMap id="accountInfo" type="com.walkfun.entity.account.UserInfo">
         <id column="USER_ID" property="userId"/>
+        <result column="UUID" property="uuid"/>
         <result column="DEVICE_ID" property="deviceId"/>
         <result column="USER_NAME" property="userName"/>
         <result column="NICK_NAME" property="nickName"/>
@@ -12,8 +14,7 @@
         <result column="AGE" property="age"/>
         <result column="WEIGHT" property="weight"/>
         <result column="HEIGHT" property="height"/>
-        <!--<result column="CREATE_TIME" property="createTime"/>-->
-        <!--<result column="UPDATE_TIME" property="updateTime"/>-->
+        <result column="PIC_ID" property="picId"/>
         <result column="USER_TITLE_ID" property="userTitleId"/>
         <result column="USER_TITLE" property="userTitle"/>
         <result column="LEVEL" property="level"/>
@@ -36,6 +37,199 @@
         <result column="UPDATE_TIME" property="updateTime"/>
     </resultMap>
 
+    <sql id="accountInfoTable">
+        U.USER_ID,
+        U.UUID,
+        U.DEVICE_ID,
+        U.USER_NAME,
+        U.NICK_NAME,
+        U.SEX,
+        U.AGE,
+        U.WEIGHT,
+        U.HEIGHT,
+        UD.PIC_ID
+        UD.USER_TITLE_ID,
+        UD.USER_TITLE,
+        UD.LEVEL,
+        UD.SCORES,
+        UD.EXPERIENCE,
+        UD.TOTAL_DISTANCE,
+        UD.TOTAL_CARLORIE,
+        UD.TOTAL_STEPS,
+        UD.TOTAL_WALKING_TIMES,
+        UD.TOTAL_ACTIVE_TIMES,
+        UD.AVG_SPEED,
+        UD.LAST_ACTIVE_TIME,
+        UD.LAST_WALKING_TIME,
+        UD.LAST_WALKING_STEPS,
+        UD.LAST_WALKING_DISTANCE,
+        UD.LAST_WALKING_POINT,
+        UD.LAST_WALKING_ADDRESS,
+        UD.CURRENT_COMBO,
+        UD.MAX_COMBO,
+        UD.UPDATE_TIME
+    </sql>
+
+    <select id="getAccountInfoByID" resultMap="accountInfo">
+        SELECT
+        <include refid="accountInfoTable"/>
+        FROM USER AS U
+        INNER JOIN USER_DETAIL AS UD
+        ON U.USER_ID = UD.USER_ID
+        WHERE U.USER_ID = #{userId}
+        <if test="lastUpdateTime != null">
+        <![CDATA[
+        AND UD.UPDATE_TIME > #{lastUpdateTime}
+        ]]>
+        </if>
+    </select>
+
+    <select id="getAccountInfo" resultMap="accountInfo">
+        SELECT
+        <include refid="accountInfoTable"/>
+        FROM USER AS U
+        INNER JOIN USER_DETAIL AS UD
+        ON U.USER_ID = UD.USER_ID
+        WHERE U.USER_NAME = #{userName}
+        AND U.USER_PASSWORD = #{password}
+    </select>
+
+    <select id="getAccountInfoByName" resultMap="accountInfo">
+        SELECT
+        <include refid="accountInfoTable"/>
+        FROM USER AS U
+        INNER JOIN USER_DETAIL AS UD
+        ON U.USER_ID = UD.USER_ID
+        WHERE U.USER_NAME = #{userName}
+    </select>
+
+    <insert id="createAccountBase" parameterType="com.walkfun.entity.account.UserBase" useGeneratedKeys="true"
+            keyProperty="baseEntity.userId">
+        INSERT INTO USER
+        (
+            UUID,
+            DEVICE_ID,
+            USER_NAME,
+            USER_PASSWORD,
+            NICK_NAME,
+            SEX,
+            AGE,
+            WEIGHT,
+            HEIGHT,
+            CREATE_TIME,
+            UPDATE_TIME
+        )
+        VALUES
+        (
+            #{baseEntity.uuid},
+            #{baseEntity.deviceId},
+            #{baseEntity.userName},
+            #{baseEntity.password},
+            #{baseEntity.nickName},
+            #{baseEntity.sex},
+            #{baseEntity.age},
+            #{baseEntity.weight},
+            #{baseEntity.height},
+            now(),
+            now()
+        )
+    </insert>
+
+    <update id="updateAccountBase" parameterType="com.walkfun.entity.account.UserBase">
+        UPDATE USER
+        SET
+        UUID = #{baseEntity.uuid},
+        SEX = #{baseEntity.sex},
+        AGE = #{baseEntity.age},
+        WEIGHT = #{baseEntity.weight},
+        HEIGHT = #{baseEntity.height},
+        UPDATE_TIME = now()
+        WHERE USER_ID = #{baseEntity.userId}
+        AND USER_EMAIL = #{baseEntity.userName}
+    </update>
+
+    <insert id="createAccountDetail" parameterType="com.walkfun.entity.account.UserInfo">
+        INSERT INTO USER_DETAIL
+        (
+            USER_ID,
+            PIC_ID,
+            USER_TITLE_ID,
+            USER_TITLE,
+            LEVEL,
+            SCORES,
+            EXPERIENCE,
+            TOTAL_DISTANCE,
+            TOTAL_CARLORIE,
+            TOTAL_STEPS,
+            TOTAL_WALKING_TIMES,
+            TOTAL_ACTIVE_TIMES,
+            AVG_SPEED,
+            LAST_ACTIVE_TIME,
+            LAST_WALKING_TIME,
+            LAST_WALKING_STEPS,
+            LAST_WALKING_DISTANCE,
+            LAST_WALKING_POINT,
+            LAST_WALKING_ADDRESS,
+            CURRENT_COMBO,
+            MAX_COMBO,
+            UPDATE_TIME
+        )
+        VALUES
+        (
+          #{detailEntity.userId},
+          #{detailEntity.picId},
+          #{detailEntity.userTitleId},
+          #{detailEntity.userTitle},
+          #{detailEntity.level},
+          #{detailEntity.scores},
+          #{detailEntity.experience},
+          #{detailEntity.totalDistance},
+          #{detailEntity.totalCarlorie},
+          #{detailEntity.totalSteps},
+          #{detailEntity.totalWalkingTimes},
+          #{detailEntity.totalActiveTimes},
+          #{detailEntity.avgSpeed},
+          #{detailEntity.lastActiveTime},
+          #{detailEntity.lastWalkingTime},
+          #{detailEntity.lastWalkingSteps},
+          #{detailEntity.lastWalkingDistance},
+          #{detailEntity.lastWalkingPoint},
+          #{detailEntity.lastWalkingAddress},
+          #{detailEntity.currentCombo},
+          #{detailEntity.maxCombo},
+          now()
+        );
+    </insert>
+
+    <update id="updateAccountDetail" parameterType="com.walkfun.entity.account.UserInfo">
+        UPDATE USER_DETAIL
+        SET
+            PIC_ID = #{detailEntity.picId},
+            USER_TITLE_ID = #{detailEntity.userTitleId},
+            USER_TITLE = #{detailEntity.userTitle},
+            LEVEL = #{detailEntity.level},
+            SCORES = #{detailEntity.scores},
+            EXPERIENCE = #{detailEntity.experience},
+            TOTAL_DISTANCE = #{detailEntity.totalDistance},
+            TOTAL_CARLORIE = #{detailEntity.totalCarlorie},
+            TOTAL_STEPS = #{detailEntity.totalSteps},
+            TOTAL_WALKING_TIMES = #{detailEntity.totalWalkingTimes},
+            TOTAL_ACTIVE_TIMES = #{detailEntity.totalActiveTimes},
+            AVG_SPEED = #{detailEntity.avgSpeed},
+            LAST_ACTIVE_TIME = #{detailEntity.lastActiveTime},
+            LAST_WALKING_TIME = #{detailEntity.lastWalkingTime},
+            LAST_WALKING_STEPS = #{detailEntity.lastWalkingSteps},
+            LAST_WALKING_DISTANCE = #{detailEntity.lastWalkingDistance},
+            LAST_WALKING_POINT = #{detailEntity.lastWalkingPoint},
+            LAST_WALKING_ADDRESS = #{detailEntity.lastWalkingAddress},
+            CURRENT_COMBO = #{detailEntity.currentCombo},
+            MAX_COMBO = #{detailEntity.maxCombo},
+            UPDATE_TIME = now()
+        WHERE USER_ID = #{entity.userId}
+    </update>
+
+    <!--user friend DB-->
+
     <resultMap id="userFriendInfo" type="com.walkfun.entity.account.UserFriend">
         <id column="USER_ID" property="userId"/>
         <result column="FRIEND_ID" property="friendId"/>
@@ -45,170 +239,30 @@
         <result column="UPDATE_TIME" property="updateTime"/>
     </resultMap>
 
-    //todo::
-
-    <sql id="accountInfoTable">
-        U.USER_ID,
-        U.USER_EMAIL,
-        U.NICK_NAME,
-        U.SEX,
-        U.UUID,
-        UD.SCORES,
-        UD.LEVEL,
-        UD.SCORES,
-        UD.EXPERIENCE,
-        UD.MAX_POWER,
-        UD.REMAINING_POWER,
-        UD.ENDURANCE,
-        UD.SPIRIT,
-        UD.RAPIDLY,
-        UD.RECOVER_SPEED,
-        UD.WEIGHT,
-        UD.HEIGHT,
-        UD.AGE,
-        UD.TOTAL_DISTANCE,
-        UD.AVG_SPEED,
-        UD.SPEND_CARLORIE,
-        UD.TOTAL_RUN_TIMES
-    </sql>
-
     <sql id="userFriendInfoTable">
-        U.USER_EMAIL,
-        U.NICK_NAME,
-        U.SEX,
-        U.UUID,
         UF.USER_ID,
         UF.FRIEND_ID,
         UF.FRIEND_STATUS,
+        UF.FRIEND_EACH,
         UF.ADD_TIME,
         UF.UPDATE_TIME
-        UL.LAST_LOCATION_CONTENT,
-        UL.LAST_LOCATION_POINT,
-        UL.LAST_ACTIVE_TIME
     </sql>
 
-    <sql id="userFriend">
-        USER_ID,
-        FRIEND_ID,
-        FRIEND_STATUS,
-        ADD_TIME,
-        UPDATE_TIME
-    </sql>
-
-    <sql id="userLocationTable">
-        U.USER_ID,
-        U.USER_EMAIL,
-        U.NICK_NAME,
-        U.UUID,
-        U.SEX,
-        UL.LAST_LOCATION_CONTENT,
-        UL.LAST_LOCATION_POINT,
-        UL.LAST_ACTIVE_TIME
-    </sql>
-
-    <select id="getAccountInfo" resultMap="accountInfo">
-        SELECT
-        <include refid="accountInfoTable"/>
-        FROM USER AS U
-        INNER JOIN USER_DETAIL AS UD
-        ON U.USER_ID = UD.USER_ID
-        WHERE U.USER_EMAIL = #{userEmail}
-        AND U.USER_PASSWORD = #{password}
-    </select>
-
-    <select id="getAccountInfoByMail" resultMap="accountInfo">
-        SELECT
-        <include refid="accountInfoTable"/>
-        FROM USER AS U
-        INNER JOIN USER_DETAIL AS UD
-        ON U.USER_ID = UD.USER_ID
-        WHERE U.USER_EMAIL = #{userEmail}
-    </select>
-
-    <insert id="createBase" parameterType="com.walkfun.entity.account.UserBase" useGeneratedKeys="true"
-            keyProperty="baseEntity.userId">
-        INSERT INTO USER
-        (
-            USER_EMAIL,
-            USER_PASSWORD,
-            SEX,
-            UUID,
-            NICK_NAME
-        )
-        VALUES
-        (
-            #{baseEntity.userEmail},
-            #{baseEntity.password},
-            #{baseEntity.sex},
-            #{baseEntity.uuid},
-            #{baseEntity.nickName}
-        )
-    </insert>
-
-    <insert id="createDetail" parameterType="com.walkfun.entity.account.UserInfo">
-        INSERT INTO USER_DETAIL
-        (
-          USER_ID,
-          LEVEL,
-          SCORES,
-          EXPERIENCE,
-          MAX_POWER,
-          REMAINING_POWER,
-          ENDURANCE,
-          SPIRIT,
-          RAPIDLY,
-          RECOVER_SPEED
-        )
-        VALUES
-        (
-          #{detailEntity.userId},
-          #{detailEntity.level},
-          #{detailEntity.scores},
-          #{detailEntity.experience},
-          #{detailEntity.maxPower},
-          #{detailEntity.remainingPower},
-          #{detailEntity.endurance},
-          #{detailEntity.spirit},
-          #{detailEntity.rapidly},
-          #{detailEntity.recoverSpeed}
-        );
-    </insert>
-
-    <select id="getAccountInfoByID" resultMap="accountInfo">
-        SELECT
-        <include refid="accountInfoTable"/>
-        FROM USER AS U
-        INNER JOIN USER_DETAIL AS UD
-        ON U.USER_ID = UD.USER_ID
-        WHERE U.USER_ID = #{userId}
-    </select>
-
-    <select id="getUserFriends" resultMap="userFriendInfo">
+    <select id="getFriendById" resultMap="userFriendInfo">
         SELECT
         <include refid="userFriendInfoTable"/>
-        FROM USER_FRIEND AS UF
-        INNER JOIN USER AS U
-        ON UF.FRIEND_ID = U.USER_ID
-        LEFT JOIN USER_LOCATION AS UL
-        ON UF.FRIEND_ID = UL.USER_ID
+        FROM FRIENDSHIP AS UF
         WHERE UF.USER_ID = #{userId}
-        AND UPDATE_TIME > #{lastUpdateTime}
+        AND UF.FRIEND_ID = #{friendId}
     </select>
 
-    <select id="getUserFriend" resultMap="userFriendInfo">
-        SELECT
-        <include refid="userFriend"/>
-        FROM USER_FRIEND
-        WHERE USER_ID = #{userId}
-        AND FRIEND_ID = #{friendId}
-    </select>
-
-    <insert id="createUserFriend" parameterType="com.walkfun.entity.account.UserFriend">
-        INSERT INTO USER_FRIEND
+    <insert id="createOrUpdateUserFriend" parameterType="com.walkfun.entity.account.UserFriend">
+        INSERT INTO FRIENDSHIP
         (
             USER_ID,
             FRIEND_ID,
             FRIEND_STATUS,
+            FRIEND_EACH,
             ADD_TIME,
             UPDATE_TIME
         )
@@ -217,115 +271,156 @@
             #{entity.userId},
             #{entity.friendId},
             #{entity.friendStatus},
-            #{entity.addTime},
-            #{entity.updateTime}
+            #{entity.friendEach},
+            now(),
+            now()
         )
+        ON DUPLICATE KEY
+        UPDATE
+            FRIEND_STATUS=#{entity.friendStatus},
+            FRIEND_EACH= #{entity.friendEach},
+            UPDATE_TIME= now();
     </insert>
 
-    <update id="updateUserFriend" parameterType="com.walkfun.entity.account.UserFriend">
-         UPDATE USER_FRIEND
-         SET
-             FRIEND_STATUS = #{entity.friendStatus},
-             UPDATE_TIME = #{entity.updateTime}
-         WHERE USER_ID = #{entity.userId} AND FRIEND_ID = #{entity.friendId}
-    </update>
-
-    <update id="updateAccountInfo" parameterType="com.walkfun.entity.account.UserInfo">
-        UPDATE USER_DETAIL
-        SET
-            LEVEL = #{entity.level},
-            SCORES = #{entity.scores},
-            EXPERIENCE = #{entity.experience},
-            MAX_POWER = #{entity.maxPower},
-            REMAINING_POWER = #{entity.remainingPower},
-            ENDURANCE = #{entity.endurance},
-            SPIRIT = #{entity.spirit},
-            RAPIDLY = #{entity.rapidly},
-            RECOVER_SPEED = #{entity.recoverSpeed},
-            WEIGHT = #{entity.weight},
-            HEIGHT = #{entity.height},
-            AGE = #{entity.age},
-            TOTAL_DISTANCE = #{entity.totalDistance},
-            AVG_SPEED = #{entity.avgSpeed},
-            SPEND_CARLORIE = #{entity.spendCarlorie},
-            TOTAL_RUN_TIMES = #{entity.totalRunTimes}
-        WHERE USER_ID = #{entity.userId}
-    </update>
-
-    <update id="updateAccountPowerInfo">
-        UPDATE USER_DETAIL
-        SET
-            REMAINING_POWER = #{remainingPower}
-        WHERE USER_ID = #{userId}
-    </update>
-
-    <update id="updateAccountBase" parameterType="com.walkfun.entity.account.UserBase">
-        UPDATE USER
-        SET
-            <if test="entity.password != null"><![CDATA[
-            USER_PASSWORD = #{entity.password},
-            ]]></if>
-            SEX = #{entity.sex},
-            UUID = #{entity.uuid},
-            NICK_NAME = #{entity.nickName}
-        WHERE USER_ID = #{entity.userId}
-        AND USER_EMAIL = #{entity.userEmail}
-    </update>
-
-    <select id="getUserLocation" resultMap="userLocation">
+    <select id="getUserFollows" resultMap="userFriendInfo">
         SELECT
-        <include refid="userLocationTable"/>
-        FROM USER AS U
-        LEFT JOIN USER_LOCATION AS UL
-        ON U.USER_ID = UL.USER_ID
-        WHERE U.USER_ID = #{userId}
+        <include refid="userFriendInfoTable"/>
+        FROM FRIENDSHIP AS UF
+        WHERE UF.USER_ID = #{userId}
+        AND UPDATE_TIME > #{lastUpdateTime}
     </select>
 
-    <select id="getUserLocations" resultMap="userLocation">
+    <select id="getUserFans" resultMap="userFriendInfo">
         SELECT
-        <include refid="userLocationTable"/>
-        FROM USER AS U
-        LEFT JOIN USER_LOCATION AS UL
-        ON U.USER_ID = UL.USER_ID
+        <include refid="userFriendInfoTable"/>
+        FROM FRIENDSHIP AS UF
+        WHERE FRIEND_ID = #{userId}
+        AND UPDATE_TIME > #{lastUpdateTime}
     </select>
 
-    <insert id="createUserLocation" parameterType="com.walkfun.entity.account.UserLocation">
-        INSERT INTO USER_LOCATION
+    <!--user action DB-->
+
+    <resultMap id="userActionInfo" type="com.walkfun.entity.account.UserAction">
+        <id column="ACTION_FROM_ID" property="actionFromId"/>
+        <result column="ACTION_FROM_NAME" property="actionFromName"/>
+        <result column="ACTION_TO_ID" property="actionToId"/>
+        <result column="ACTION_TO_NAME" property="actionToName"/>
+        <result column="ACTION_ID" property="actionId"/>
+        <result column="ACTION_NAME" property="actionName"/>
+        <result column="UPDATE_TIME" property="updateTime"/>
+    </resultMap>
+
+    <sql id="userActionInfoTable">
+        ACTION_FROM_ID,
+        ACTION_FROM_NAME,
+        ACTION_TO_ID,
+        ACTION_TO_NAME,
+        ACTION_ID,
+        ACTION_NAME,
+        UPDATE_TIME,
+    </sql>
+
+    <insert id="createUserAction" parameterType="com.walkfun.entity.account.UserAction">
+        INSERT INTO ACTION
         (
-            USER_ID,
-            LAST_LOCATION_CONTENT,
-            LAST_LOCATION_POINT,
-            LAST_ACTIVE_TIME
+            ACTION_FROM_ID,
+            ACTION_FROM_NAME,
+            ACTION_TO_ID,
+            ACTION_TO_NAME,
+            ACTION_ID,
+            ACTION_NAME,
+            UPDATE_TIME
         )
         VALUES
         (
-            #{entity.userId},
-            #{entity.lastLocationContent},
-            #{entity.lastLocationPoint},
-            #{entity.lastActiveTime}
-        )
+            #{entity.actionFromId},
+            #{entity.actionFromName},
+            #{entity.actionToId},
+            #{entity.actionToName},
+            #{entity.actionId},
+            #{entity.actionName},
+            now()
+        );
     </insert>
 
-    <update id="updateUserLocation" parameterType="com.walkfun.entity.account.UserLocation">
-         UPDATE USER_LOCATION
+    <select id="getNewlyUserAction" resultMap="userActionInfo">
+        SELECT
+        <include refid="userActionInfoTable"/>
+        FROM ACTION AS A
+        INNER JOIN USER_LAST_SYNC AS ULS
+        ON A.ACTION_TO_ID = ULS.USER_ID
+        WHERE A.ACTION_TO_ID = #{userId}
+        A.UPDATE_TIME > ULS.ACTION_SYNC_TIME
+    </select>
+
+    <update id="updateUserActionSyncTime">
+         UPDATE USER_LAST_SYNC
          SET
-            LAST_LOCATION_CONTENT = #{entity.lastLocationContent},
-            LAST_LOCATION_POINT = #{entity.lastLocationPoint},
-            LAST_ACTIVE_TIME = #{entity.lastActiveTime}
-         WHERE USER_ID = #{entity.userId}
+             ACTION_SYNC_TIME = now()
+         WHERE USER_ID = #{userId}
     </update>
 
-    <select id="getUserFollowerInformation" resultMap="accountInfo">
+    <!--for user search -->
+    <resultMap id="searchAccountInfo" type="com.walkfun.entity.account.SearchUserInfo">
+        <id column="USER_ID" property="userId"/>
+        <result column="NICK_NAME" property="nickName"/>
+        <result column="SEX" property="sex"/>
+        <result column="USER_TITLE" property="userTitle"/>
+        <result column="LEVEL" property="level"/>
+        <result column="LAST_ACTIVE_TIME" property="lastActiveTime"/>
+    </resultMap>
+
+    <sql id="searchAccountTable">
+        U.USER_ID,
+        U.NICK_NAME,
+        U.SEX,
+        UD.USER_TITLE,
+        UD.LEVEL,
+        UD.LAST_ACTIVE_TIME
+    </sql>
+
+    <select id="searchAccountInfoByName" resultMap="searchAccountInfo">
         SELECT
-        <include refid="accountInfoTable"/>
-        FROM PLAN_USER_FOLLOW AS PUF
-        INNER JOIN USER AS U
-        ON PUF.FOLLOWER_USER_ID = U.USER_ID
+        <include refid="searchAccountTable"/>
+        FROM USER AS U
         INNER JOIN USER_DETAIL AS UD
         ON U.USER_ID = UD.USER_ID
-        WHERE PUF.USER_ID = #{userId} AND PUF.STATUS = 0
-        ORDER BY PUF.ADD_TIME DESC
-        LIMIT #{from},#{pageSize}
+        WHERE U.NICK_NAME like CONCAT('%',${nickName},'%')
+        LIMIT 10
+    </select>
+
+    <!--for friend sort-->
+    <resultMap id="friendSortInfo" type="com.walkfun.entity.account.FriendSortInfo">
+        <id column="USER_ID" property="friendId"/>
+        <result column="NICK_NAME" property="friendName"/>
+        <result column="SEX" property="sex"/>
+        <result column="USER_TITLE" property="userTitle"/>
+        <result column="LEVEL" property="level"/>
+        <result column="TOTAL_DISTANCE" property="totalDistance"/>
+        <result column="LAST_ACTIVE_TIME" property="lastActiveTime"/>
+    </resultMap>
+
+    <sql id="friendSortTable">
+        U.USER_ID,
+        U.NICK_NAME,
+        U.SEX,
+        UD.USER_TITLE,
+        UD.LEVEL,
+        UD.TOTAL_DISTANCE
+        UD.LAST_ACTIVE_TIME
+    </sql>
+
+    <select id="getFriendSort" resultMap="friendSortInfo">
+        SELECT
+        <include refid="friendSortTable"/>
+        FROM FRIENDSHIP AS UF
+        INNER JOIN USER AS U
+        ON UF.USER_ID = U.USER_ID
+        INNER JOIN USER_DETAILS AS UD
+        ON U.USER_ID = UD.USER_ID
+        WHERE UF.USER_ID = #{userId}
+        AND FRIEND_STATUS = 0
+        AND UPDATE_TIME > #{lastUpdateTime}
     </select>
 
 </mapper>

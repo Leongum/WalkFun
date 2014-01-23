@@ -28,7 +28,7 @@ public class TaskJobs {
     public static List<String> cityList = new ArrayList<String>();
 
     public void pm25SyncJob() {
-        pmInfos = weatherService.getPM25Object();
-        cityList = weatherService.getPMCityObject();
+        //pmInfos = weatherService.getPM25Object();
+        //cityList = weatherService.getPMCityObject();
     }
 }

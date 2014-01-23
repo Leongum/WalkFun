@@ -20,20 +20,10 @@ import javax.ws.rs.ext.Provider;
 public class RestExceptionMapper implements ExceptionMapper {
 
     public class InvalidRequestMessage {
-        private String errorcode;
         private String errormessage;
 
         public InvalidRequestMessage(String errormessage) {
-            this.errorcode = CommonUtils.leftPadInt(ErrorMessageMapper.valueOf(errormessage).ordinal());
-            this.errormessage = ErrorMessageMapper.valueOf(errormessage).toString();
-        }
-
-        public String getErrorcode() {
-            return errorcode;
-        }
-
-        public void setErrorcode(String errorcode) {
-            this.errorcode = errorcode;
+            this.errormessage = errormessage;
         }
 
         public String getErrormessage() {

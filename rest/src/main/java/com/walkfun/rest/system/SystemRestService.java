@@ -23,7 +23,7 @@ public class SystemRestService implements SystemRestDef{
 
     @Override
     public VersionControl getVersionControl(String platform) {
-        CommonUtils.newMethodCall("SystemRestService.getVersionControl");
+        CommonUtils.newMethodCall("Get Version");
         VersionControl versionControl = commonService.getVersionForRest(platform);
         versionControl.setSystemTime(Universe.current().getSystemTime());
         return versionControl;
@@ -31,26 +31,22 @@ public class SystemRestService implements SystemRestDef{
 
     @Override
     public List<SystemMessage> getSystemMessage(String lastUpdateTime) {
-        CommonUtils.newMethodCall("SystemRestService.getSystemMessage");
         return commonService.getSystemMessageForRest(CommonUtils.parseDateDefaultToNull(lastUpdateTime));
     }
 
     @Override
     public List<RecommendApp> getRecommendApp(String lastUpdateTime) {
-        CommonUtils.newMethodCall("SystemRestService.getRecommendApp");
         return commonService.getRecommendAppForRest(CommonUtils.parseDateDefaultToNull(lastUpdateTime));
     }
 
     @Override
     public void createFeedbackInfo(Feedback feedback) {
-        CommonUtils.newMethodCall("SystemRestService.createFeedbackInfo");
         feedback.setCommitTime(new Date());
         commonService.createFeedback(feedback);
     }
 
     @Override
     public void createDownLoadInfo(DownloadStatistics statistics) {
-        CommonUtils.newMethodCall("SystemRestService.createDownLoadInfo");
         statistics.setDownloadTime(new Date());
         commonService.createDownLoadInfo(statistics);
     }

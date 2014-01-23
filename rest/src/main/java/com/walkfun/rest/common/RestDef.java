@@ -11,6 +11,7 @@ public interface RestDef {
     static final String PARAM_USER_EMAIL = "userEmail";
     static final String PARAM_PASSWORD = "password";
     static final String PARAM_USER_ID = "userId";
+    static final String PARAM_NICK_NAME = "nickName";
     static final String PARAM_CHECK_USER_UUID = "checkUuid";
     static final String PARAM_PLATFORM = "platform";
     static final String PARAM_LAST_UPDATE_TIME = "lastUpdateTime";

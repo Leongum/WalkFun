@@ -1,7 +1,7 @@
 package com.walkfun.db.account.dao.impl;
 
 import com.walkfun.db.account.dao.def.AccountDAO;
-import com.walkfun.entity.enums.FriendStatus;
+import com.walkfun.entity.enums.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.walkfun.entity.account.*;
@@ -22,23 +22,31 @@ public class AccountDAOImpl implements AccountDAO {
     private AccountMapper accountMapper;
 
     @Override
-    public UserInfo getAccountInfo(String userEmail, String password) {
-        return accountMapper.getAccountInfo(userEmail, password);
+    public UserInfo getAccountInfo(String userName, String password) {
+        return accountMapper.getAccountInfo(userName, password);
     }
 
     @Override
-    public UserInfo getAccountInfoByMail(String userEmail) {
-        return accountMapper.getAccountInfoByMail(userEmail);
+    public UserInfo getAccountInfoByName(String userName) {
+        return accountMapper.getAccountInfoByName(userName);
     }
 
     @Override
-    public UserInfo getAccountInfoByID(Integer userId) {
-        return accountMapper.getAccountInfoByID(userId);
+    public UserInfo getAccountInfoByID(Integer userId, Date lastUpdateTime) {
+        return accountMapper.getAccountInfoByID(userId, lastUpdateTime);
+    }
+
+    @Override
+    public UserInfo createAccountInfo(UserBase userBase) {
+        accountMapper.createAccountBase(userBase);
+        UserInfo accountInfo = new UserInfo(userBase);
+        accountMapper.createAccountDetail(accountInfo);
+        return accountInfo;
     }
 
     @Override
     public void updateAccountInfo(UserInfo userInfo) {
-        accountMapper.updateAccountInfo(userInfo);
+        accountMapper.updateAccountDetail(userInfo);
     }
 
     @Override
@@ -47,55 +55,62 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
-    public void updateAccountPowerInfo(Integer userId, double remainingPower) {
-        accountMapper.updateAccountPowerInfo(userId, remainingPower);
+    public void createOrUpdateUserFriend(UserFriend userFriend) {
+        UserFriend friendFollow = accountMapper.getFriendById(userFriend.getFriendId(), userFriend.getUserId());
+        if (friendFollow == null) {
+            userFriend.setFriendEach(FriendStatusEnum.ONLYFOLLOWED.ordinal());
+        } else {
+            if (userFriend.getFriendStatus() == FollowStatusEnum.FOLLOWED.ordinal()) {
+                if (friendFollow.getFriendStatus() == FollowStatusEnum.FOLLOWED.ordinal()) {
+                    friendFollow.setFriendEach(FriendStatusEnum.FOLLOWEACHOTHER.ordinal());
+                    userFriend.setFriendEach(FriendStatusEnum.FOLLOWEACHOTHER.ordinal());
+                } else if (friendFollow.getFriendStatus() == FollowStatusEnum.DELETED.ordinal()) {
+                    friendFollow.setFriendEach(null);
+                    userFriend.setFriendEach(FriendStatusEnum.ONLYFOLLOWED.ordinal());
+                }
+            } else if (userFriend.getFriendStatus() == FollowStatusEnum.DELETED.ordinal()) {
+                if (friendFollow.getFriendStatus() == FollowStatusEnum.FOLLOWED.ordinal()) {
+                    friendFollow.setFriendEach(FriendStatusEnum.ONLYFOLLOWED.ordinal());
+                    userFriend.setFriendEach(null);
+                } else if (friendFollow.getFriendStatus() == FollowStatusEnum.DELETED.ordinal()) {
+                    friendFollow.setFriendEach(null);
+                    userFriend.setFriendEach(null);
+                }
+            }
+        }
+        accountMapper.createOrUpdateUserFriend(userFriend);
+        accountMapper.createOrUpdateUserFriend(friendFollow);
+        //todo:: send message to client.
     }
 
     @Override
-    public UserInfo createAccountInfo(UserBase userBase) {
-        accountMapper.createBase(userBase);
-        UserInfo accountInfo = new UserInfo(userBase);
-        accountMapper.createDetail(accountInfo);
-        return accountInfo;
+    public List<UserFriend> getUserFollows(Integer userId, Date lastUpdateTime) {
+        return accountMapper.getUserFollows(userId, lastUpdateTime);
     }
 
     @Override
-    public List<UserFriend> getUserFriends(Integer userId, Date lastUpdateTime) {
-        return accountMapper.getUserFriends(userId, lastUpdateTime);
+    public List<UserFriend> getUserFans(Integer userId, Date lastUpdateTime) {
+        return accountMapper.getUserFans(userId, lastUpdateTime);
     }
 
     @Override
-    public UserFriend getUserFriend(Integer userId, Integer friendId) {
-        return accountMapper.getUserFriend(userId, friendId);
+    public void createUserAction(UserAction userAction) {
+        accountMapper.createUserAction(userAction);
+        //todo:: send message to client.
     }
 
     @Override
-    public void createUserFriendInvite(UserFriend userFriend) {
-        userFriend.setFriendStatus(FriendStatus.ONLYFOLLOWED.ordinal());
-        accountMapper.createUserFriend(userFriend);
-        UserFriend userFriendInvited = new UserFriend();
-        userFriendInvited.setUserId(userFriend.getFriendId());
-        userFriendInvited.setFriendId(userFriend.getUserId());
-        userFriendInvited.setFriendStatus(FriendStatus.ONLYFOLLOWED.ordinal());
-        userFriendInvited.setAddTime(userFriend.getAddTime());
-        userFriendInvited.setUpdateTime(userFriend.getUpdateTime());
-        accountMapper.createUserFriend(userFriendInvited);
+    public List<UserAction> getNewlyUserAction(Integer userId) {
+        return accountMapper.getNewlyUserAction(userId);
     }
 
     @Override
-    public void updateUserFriendStatus(UserFriend userFriend) {
-        accountMapper.updateUserFriend(userFriend);
-        UserFriend userFriendStatus = new UserFriend();
-        userFriendStatus.setUserId(userFriend.getFriendId());
-        userFriendStatus.setFriendId(userFriend.getUserId());
-        userFriendStatus.setFriendStatus(userFriend.getFriendStatus());
-        userFriendStatus.setAddTime(userFriend.getAddTime());
-        userFriendStatus.setUpdateTime(userFriend.getUpdateTime());
-        accountMapper.updateUserFriend(userFriendStatus);
+    public List<SearchUserInfo> searchAccountInfoByName(String nickName) {
+        return accountMapper.searchAccountInfoByName(nickName);
     }
 
     @Override
-    public List<UserInfo> getUserFollowerInformation(Integer userId, Integer from, Integer pageSize) {
-        return accountMapper.getUserFollowerInformation(userId, from, pageSize);
+    public List<FriendSortInfo> getFriendSort(Integer userId, Date lastUpdateTime) {
+        return accountMapper.getFriendSort(userId, lastUpdateTime);
     }
 }

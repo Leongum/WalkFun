@@ -13,13 +13,13 @@ public class Universe {
     private static ThreadLocal<Universe> current = new ThreadLocal<Universe>();
 
     private int userId;
-    private String deviceId;
+    private String uuid;
     private Date systemTime;
 
     private Universe() {
         //set default value for userId and deviceId.
         userId = -1;
-        deviceId = "X";
+        uuid = "X";
         systemTime = new Date();
     }
 
@@ -46,12 +46,12 @@ public class Universe {
         return userId;
     }
 
-    public String getDeviceId() {
-        return deviceId;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public Date getSystemTime() {
