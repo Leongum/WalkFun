@@ -75,6 +75,8 @@ public class AccountServiceImpl implements AccountService {
             if (userInfo == null || userInfo.getUserId() == null) {
                 throw new ServerRequestException(ErrorMessageMapper.USER_NOT_FOUND.toString());
             }
+            String key = "user.id." + userInfo.getUserId().toString();
+            CacheFacade.USER.evict(key);
             return userInfo;
         } catch (Exception ex) {
             throw new ServerRequestException(ex.getMessage());
@@ -89,7 +91,8 @@ public class AccountServiceImpl implements AccountService {
             if (userInfo != null && userInfo.getUserId() != null) {
                 throw new ServerRequestException(ErrorMessageMapper.USER_ALREADY_EXISTS.toString());
             }
-            return accountDAO.createAccountInfo(userBase);
+            Integer userId = accountDAO.createAccountInfo(userBase);
+            return checkUserExisting(userId, null);
         } catch (Exception ex) {
             throw new ServerRequestException(ex.getMessage());
         }

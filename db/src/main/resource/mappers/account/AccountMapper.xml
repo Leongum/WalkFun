@@ -14,6 +14,7 @@
         <result column="AGE" property="age"/>
         <result column="WEIGHT" property="weight"/>
         <result column="HEIGHT" property="height"/>
+        <result column="PLATFORM_INFO" property="platformInfo"/>
         <result column="PIC_ID" property="picId"/>
         <result column="USER_TITLE_ID" property="userTitleId"/>
         <result column="USER_TITLE" property="userTitle"/>
@@ -47,7 +48,8 @@
         U.AGE,
         U.WEIGHT,
         U.HEIGHT,
-        UD.PIC_ID
+        U.PLATFORM_INFO,
+        UD.PIC_ID,
         UD.USER_TITLE_ID,
         UD.USER_TITLE,
         UD.LEVEL,
@@ -73,7 +75,7 @@
     <select id="getAccountInfoByID" resultMap="accountInfo">
         SELECT
         <include refid="accountInfoTable"/>
-        FROM USER AS U
+        FROM USER_BASE AS U
         INNER JOIN USER_DETAIL AS UD
         ON U.USER_ID = UD.USER_ID
         WHERE U.USER_ID = #{userId}
@@ -87,7 +89,7 @@
     <select id="getAccountInfo" resultMap="accountInfo">
         SELECT
         <include refid="accountInfoTable"/>
-        FROM USER AS U
+        FROM USER_BASE AS U
         INNER JOIN USER_DETAIL AS UD
         ON U.USER_ID = UD.USER_ID
         WHERE U.USER_NAME = #{userName}
@@ -97,7 +99,7 @@
     <select id="getAccountInfoByName" resultMap="accountInfo">
         SELECT
         <include refid="accountInfoTable"/>
-        FROM USER AS U
+        FROM USER_BASE AS U
         INNER JOIN USER_DETAIL AS UD
         ON U.USER_ID = UD.USER_ID
         WHERE U.USER_NAME = #{userName}
@@ -105,7 +107,7 @@
 
     <insert id="createAccountBase" parameterType="com.walkfun.entity.account.UserBase" useGeneratedKeys="true"
             keyProperty="baseEntity.userId">
-        INSERT INTO USER
+        INSERT INTO USER_BASE
         (
             UUID,
             DEVICE_ID,
@@ -116,6 +118,7 @@
             AGE,
             WEIGHT,
             HEIGHT,
+            PLATFORM_INFO,
             CREATE_TIME,
             UPDATE_TIME
         )
@@ -130,22 +133,28 @@
             #{baseEntity.age},
             #{baseEntity.weight},
             #{baseEntity.height},
+            #{baseEntity.platformInfo},
             now(),
             now()
         )
     </insert>
 
     <update id="updateAccountBase" parameterType="com.walkfun.entity.account.UserBase">
-        UPDATE USER
+        UPDATE USER_BASE
         SET
+        <if test="baseEntity.uuid != null">
+        <![CDATA[
         UUID = #{baseEntity.uuid},
+        ]]>
+        </if>
+        DEVICE_ID = #{baseEntity.deviceId},
         SEX = #{baseEntity.sex},
         AGE = #{baseEntity.age},
         WEIGHT = #{baseEntity.weight},
         HEIGHT = #{baseEntity.height},
+        PLATFORM_INFO = #{baseEntity.platformInfo},
         UPDATE_TIME = now()
         WHERE USER_ID = #{baseEntity.userId}
-        AND USER_EMAIL = #{baseEntity.userName}
     </update>
 
     <insert id="createAccountDetail" parameterType="com.walkfun.entity.account.UserInfo">
@@ -225,7 +234,7 @@
             CURRENT_COMBO = #{detailEntity.currentCombo},
             MAX_COMBO = #{detailEntity.maxCombo},
             UPDATE_TIME = now()
-        WHERE USER_ID = #{entity.userId}
+        WHERE USER_ID = #{detailEntity.userId}
     </update>
 
     <!--user friend DB-->
@@ -287,7 +296,9 @@
         <include refid="userFriendInfoTable"/>
         FROM FRIENDSHIP AS UF
         WHERE UF.USER_ID = #{userId}
+        <if test="lastUpdateTime != null"><![CDATA[
         AND UPDATE_TIME > #{lastUpdateTime}
+        ]]></if>
     </select>
 
     <select id="getUserFans" resultMap="userFriendInfo">
@@ -295,7 +306,9 @@
         <include refid="userFriendInfoTable"/>
         FROM FRIENDSHIP AS UF
         WHERE FRIEND_ID = #{userId}
+        <if test="lastUpdateTime != null"><![CDATA[
         AND UPDATE_TIME > #{lastUpdateTime}
+        ]]></if>
     </select>
 
     <!--user action DB-->
@@ -317,7 +330,7 @@
         ACTION_TO_NAME,
         ACTION_ID,
         ACTION_NAME,
-        UPDATE_TIME,
+        UPDATE_TIME
     </sql>
 
     <insert id="createUserAction" parameterType="com.walkfun.entity.account.UserAction">
@@ -350,7 +363,7 @@
         INNER JOIN USER_LAST_SYNC AS ULS
         ON A.ACTION_TO_ID = ULS.USER_ID
         WHERE A.ACTION_TO_ID = #{userId}
-        A.UPDATE_TIME > ULS.ACTION_SYNC_TIME
+        AND A.UPDATE_TIME > ULS.ACTION_SYNC_TIME
     </select>
 
     <update id="updateUserActionSyncTime">
@@ -382,7 +395,7 @@
     <select id="searchAccountInfoByName" resultMap="searchAccountInfo">
         SELECT
         <include refid="searchAccountTable"/>
-        FROM USER AS U
+        FROM USER_BASE AS U
         INNER JOIN USER_DETAIL AS UD
         ON U.USER_ID = UD.USER_ID
         WHERE U.NICK_NAME like CONCAT('%',${nickName},'%')
@@ -414,9 +427,9 @@
         SELECT
         <include refid="friendSortTable"/>
         FROM FRIENDSHIP AS UF
-        INNER JOIN USER AS U
+        INNER JOIN USER_BASE AS U
         ON UF.USER_ID = U.USER_ID
-        INNER JOIN USER_DETAILS AS UD
+        INNER JOIN USER_DETAIL AS UD
         ON U.USER_ID = UD.USER_ID
         WHERE UF.USER_ID = #{userId}
         AND FRIEND_STATUS = 0

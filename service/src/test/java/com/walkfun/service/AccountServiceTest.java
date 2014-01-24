@@ -26,12 +26,6 @@ public class AccountServiceTest extends com.walkfun.service.TestBase {
 
     @Test
     public void testCreateAccount() {
-        UserBase userBase = new UserBase();
-        userBase.setUserName("test@test.test");
-        userBase.setPassword("testfortest");
-        userBase.setNickName("testAccount");
-        UserInfo accountInfo = accountDAO.createAccountInfo(userBase);
-        Assert.assertNotNull(accountInfo.getUserId());
     }
 
 }

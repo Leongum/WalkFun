@@ -25,7 +25,7 @@ public class AccountRestService implements AccountRestDef {
     public UserInfo getAccountInfo(String userEmail, String password) {
         CommonUtils.newMethodCall("User Login");
         UserInfo userInfo = accountService.getAccountInfo(userEmail, password);
-        userInfo.setDeviceId(UUID.randomUUID().toString());
+        userInfo.setUuid(UUID.randomUUID().toString());
         UserBase userBase = new UserBase();
         userBase = userBase.initUserBase(userInfo);
         accountService.updateAccountBase(userBase);

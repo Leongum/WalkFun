@@ -28,8 +28,8 @@ public class Mission {
     private double levelLimited;
     private BigInteger missionTimeLimited;
     private double missionDistanceLimited;
-    private Date missionFromTimeLimited;
-    private Date missionToTimeLimited;
+    private double missionFromTimeLimited;
+    private double missionToTimeLimited;
     private double cycleTime;
     private double suggestionMaxSpeed;
     private double suggestionMinSpeed;
@@ -116,24 +116,20 @@ public class Mission {
         this.missionDistanceLimited = missionDistanceLimited;
     }
 
-    @JsonSerialize(using = CustomDateSerializer.class)
-    public Date getMissionFromTimeLimited() {
-        return missionFromTimeLimited;
-    }
-
-    @JsonDeserialize(using = CustomDateDeserializer.class)
-    public void setMissionFromTimeLimited(Date missionFromTimeLimited) {
-        this.missionFromTimeLimited = missionFromTimeLimited;
-    }
-
-    @JsonSerialize(using = CustomDateSerializer.class)
-    public Date getMissionToTimeLimited() {
+    public double getMissionToTimeLimited() {
         return missionToTimeLimited;
     }
 
-    @JsonDeserialize(using = CustomDateDeserializer.class)
-    public void setMissionToTimeLimited(Date missionToTimeLimited) {
+    public void setMissionToTimeLimited(double missionToTimeLimited) {
         this.missionToTimeLimited = missionToTimeLimited;
+    }
+
+    public double getMissionFromTimeLimited() {
+        return missionFromTimeLimited;
+    }
+
+    public void setMissionFromTimeLimited(double missionFromTimeLimited) {
+        this.missionFromTimeLimited = missionFromTimeLimited;
     }
 
     public double getCycleTime() {

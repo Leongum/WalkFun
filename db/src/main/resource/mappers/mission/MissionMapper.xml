@@ -26,7 +26,7 @@
         MISSION_ID,
         MISSION_TYPE_ID,
         MISSION_NAME,
-        MISSION_CONTENT,
+        MISSION_DESCRIPTION,
         SCORES,
         EXPERIENCE,
         MISSION_FLAG,
@@ -51,7 +51,7 @@
         AND MISSION_ID = #{missionId}
         ]]></if>
         <if test="lastUpdateTime != null"><![CDATA[
-        AND LAST_UPDATE_TIME > #{lastUpdateTime}
+        AND UPDATE_TIME > #{lastUpdateTime}
         ]]></if>
     </select>
 </mapper>

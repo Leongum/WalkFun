@@ -55,6 +55,11 @@ public class UserInfo extends UserBase {
         this.setHeight(userBase.getHeight());
         this.setWeight(userBase.getWeight());
         this.setPlatformInfo(userBase.getPlatformInfo());
+        this.userTitleId = 0;
+        this.userTitle = "新手上路";
+        this.level = 0d;
+        this.scores = 0d;
+        this.experience = 0d;
         this.totalDistance = 0d;
         this.totalCarlorie = 0d;
         this.totalSteps = 0d;

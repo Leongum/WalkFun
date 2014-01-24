@@ -94,6 +94,7 @@ public class MissionHistory {
         return lastRunTime;
     }
 
+    @JsonDeserialize(using = CustomDateDeserializer.class)
     public void setLastRunTime(Date lastRunTime) {
         this.lastRunTime = lastRunTime;
     }

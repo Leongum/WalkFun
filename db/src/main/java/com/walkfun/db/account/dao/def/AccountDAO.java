@@ -25,7 +25,7 @@ public interface AccountDAO {
 
     public void updateAccountBase(UserBase userBase);
 
-    public UserInfo createAccountInfo(UserBase userBase);
+    public Integer createAccountInfo(UserBase userBase);
 
     public void createOrUpdateUserFriend(UserFriend userFriend);
 

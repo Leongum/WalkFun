@@ -37,11 +37,9 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
-    public UserInfo createAccountInfo(UserBase userBase) {
+    public Integer createAccountInfo(UserBase userBase) {
         accountMapper.createAccountBase(userBase);
-        UserInfo accountInfo = new UserInfo(userBase);
-        accountMapper.createAccountDetail(accountInfo);
-        return accountInfo;
+        return userBase.getUserId();
     }
 
     @Override
@@ -79,7 +77,9 @@ public class AccountDAOImpl implements AccountDAO {
             }
         }
         accountMapper.createOrUpdateUserFriend(userFriend);
-        accountMapper.createOrUpdateUserFriend(friendFollow);
+        if(friendFollow != null){
+            accountMapper.createOrUpdateUserFriend(friendFollow);
+        }
         //todo:: send message to client.
     }
 
@@ -101,7 +101,9 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public List<UserAction> getNewlyUserAction(Integer userId) {
-        return accountMapper.getNewlyUserAction(userId);
+        List<UserAction> userActionList = accountMapper.getNewlyUserAction(userId);
+        accountMapper.updateUserActionSyncTime(userId);
+        return  userActionList;
     }
 
     @Override

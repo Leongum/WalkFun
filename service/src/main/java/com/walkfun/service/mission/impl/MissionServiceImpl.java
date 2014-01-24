@@ -1,5 +1,6 @@
 package com.walkfun.service.mission.impl;
 
+import com.walkfun.common.exception.ServerRequestException;
 import com.walkfun.db.mission.dao.def.MissionDAO;
 import com.walkfun.entity.mission.*;
 import com.walkfun.service.backend.BackendJobCache;
@@ -26,23 +27,31 @@ public class MissionServiceImpl implements MissionService {
     @Override
     @Transactional
     public List<Mission> getMissionsForRest(Integer missionId, Date lastUpdateTime) {
-        if (missionId == null) {
-            if (lastUpdateTime.before(BackendJobCache.missionFirstTime)) {
-                return BackendJobCache.allMissions;
+        try {
+            if (missionId == null) {
+                if (lastUpdateTime.before(BackendJobCache.missionFirstTime)) {
+                    return BackendJobCache.allMissions;
+                }
+                if (lastUpdateTime.after(BackendJobCache.missionLastTime)) {
+                    return new ArrayList<Mission>();
+                }
             }
-            if (lastUpdateTime.after(BackendJobCache.missionLastTime)) {
-                return new ArrayList<Mission>();
-            }
+            return getMissions(missionId, lastUpdateTime);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
         }
-        return getMissions(missionId, lastUpdateTime);
     }
 
     @Override
     public List<Mission> getMissions(Integer missionId, Date lastUpdateTime) {
-        List<Mission> missionList = new ArrayList<Mission>();
+        try {
+            List<Mission> missionList = new ArrayList<Mission>();
 
-        missionList = missionDAO.getMissions(missionId, lastUpdateTime);
+            missionList = missionDAO.getMissions(missionId, lastUpdateTime);
 
-        return missionList;
+            return missionList;
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
     }
 }

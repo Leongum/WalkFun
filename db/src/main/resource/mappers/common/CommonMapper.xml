@@ -7,14 +7,14 @@
     <resultMap id="versionControl" type="com.walkfun.entity.common.VersionControl">
         <id column="PLATFORM" property="platform"/>
         <result column="VERSION" property="version"/>
-        <result column="SUB_VERSION" property="subVersion"/>
+        <result column="SUBVERSION" property="subVersion"/>
         <result column="DESCRIPTION" property="description"/>
     </resultMap>
 
     <sql id="versionControlTable">
         VC.PLATFORM,
         VC.VERSION,
-        VC.SUB_VERSION,
+        VC.SUBVERSION,
         VC.DESCRIPTION
     </sql>
 
@@ -89,7 +89,7 @@
     </sql>
 
     <insert id="createDownLoadInfo" parameterType="com.walkfun.entity.common.DownloadStatistics">
-        INSERT INTO STATISTICS
+        INSERT INTO DOWNLOAD_STATICS
         (
             PLATFORM,
             DOWNLOAD_TIME,

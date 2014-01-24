@@ -43,7 +43,7 @@ public class UserBase {
         userBase.setHeight(userInfo.getHeight());
         userBase.setWeight(userInfo.getWeight());
         userBase.setPlatformInfo(userInfo.getPlatformInfo());
-        return  userBase;
+        return userBase;
     }
 
     public Integer getUserId() {
@@ -95,7 +95,7 @@ public class UserBase {
     }
 
     public String getSex() {
-        return sex;
+        return sex == null ? "男" : sex;
     }
 
     public void setSex(String sex) {
@@ -103,7 +103,7 @@ public class UserBase {
     }
 
     public Integer getAge() {
-        return age;
+        return age == null ? 25 : age;
     }
 
     public void setAge(Integer age) {
@@ -111,7 +111,7 @@ public class UserBase {
     }
 
     public Double getWeight() {
-        return weight;
+        return weight == null ? 60d : weight;
     }
 
     public void setWeight(Double weight) {
@@ -119,7 +119,7 @@ public class UserBase {
     }
 
     public Double getHeight() {
-        return height;
+        return height == null ? 175d : height;
     }
 
     public void setHeight(Double height) {

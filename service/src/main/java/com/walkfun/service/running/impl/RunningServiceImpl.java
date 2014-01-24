@@ -1,5 +1,6 @@
 package com.walkfun.service.running.impl;
 
+import com.walkfun.common.exception.ServerRequestException;
 import com.walkfun.db.running.dao.def.RunningDAO;
 import com.walkfun.entity.running.*;
 import com.walkfun.service.running.def.RunningService;
@@ -23,32 +24,52 @@ public class RunningServiceImpl implements RunningService {
 
     @Override
     public List<RunningHistory> getRunningHistoriesByDate(Integer userId, Date lastUpdateTime) {
-        return runningDAO.getRunningHistoriesByDate(userId, lastUpdateTime);
+        try {
+            return runningDAO.getRunningHistoriesByDate(userId, lastUpdateTime);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
     }
 
     @Override
     @Transactional
     public void createRunningHistory(List<RunningHistory> runningHistoryList) {
-        for (RunningHistory runningHistory : runningHistoryList) {
-            runningDAO.createRunningHistory(runningHistory);
+        try {
+            for (RunningHistory runningHistory : runningHistoryList) {
+                runningDAO.createRunningHistory(runningHistory);
+            }
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
         }
     }
 
     @Override
     public List<MissionHistory> getMissionHistoriesByDate(Integer userId, Date lastUpdateTime) {
-        return runningDAO.getMissionHistoriesByDate(userId, lastUpdateTime);
+        try {
+            return runningDAO.getMissionHistoriesByDate(userId, lastUpdateTime);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
     }
 
     @Override
     public List<MissionHistory> getUsingMissionHistories(Integer userId) {
-        return runningDAO.getUsingMissionHistories(userId);
+        try {
+            return runningDAO.getUsingMissionHistories(userId);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
     }
 
     @Override
     @Transactional
     public void createOrUpdateMissionHistory(List<MissionHistory> missionHistories) {
-        for (MissionHistory missionHistory : missionHistories) {
-            runningDAO.createOrUpdateMissionHistory(missionHistory);
+        try {
+            for (MissionHistory missionHistory : missionHistories) {
+                runningDAO.createOrUpdateMissionHistory(missionHistory);
+            }
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
         }
     }
 }

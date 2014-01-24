@@ -1,5 +1,10 @@
 package com.walkfun.entity.common;
 
+import com.walkfun.common.lib.CustomDateDeserializer;
+import com.walkfun.common.lib.CustomDateSerializer;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 import java.util.Date;
 
 /**
@@ -25,10 +30,12 @@ public class DownloadStatistics {
         this.platform = platform;
     }
 
+    @JsonSerialize(using = CustomDateSerializer.class)
     public Date getDownloadTime() {
         return downloadTime;
     }
 
+    @JsonDeserialize(using = CustomDateDeserializer.class)
     public void setDownloadTime(Date downloadTime) {
         this.downloadTime = downloadTime;
     }
