@@ -1,6 +1,6 @@
 package com.walkfun.service.running.def;
 
-import com.walkfun.entity.running.RunningHistory;
+import com.walkfun.entity.running.*;
 
 import java.util.Date;
 import java.util.List;
@@ -14,10 +14,14 @@ import java.util.List;
  */
 public interface RunningService {
 
-    List<RunningHistory> getRunningHistories(Integer userId, Integer missionId);
+    public List<RunningHistory> getRunningHistoriesByDate(Integer userId, Date lastUpdateTime);
 
-    List<RunningHistory> getRunningHistoriesByDate(Integer userId, Date lastUpdateTime, int startSize, int pageSize);
+    public void createRunningHistory(List<RunningHistory> runningHistory);
 
-    void createRunningHistory(Integer userId, List<RunningHistory> runningHistoryList);
+    public List<MissionHistory> getMissionHistoriesByDate(Integer userId, Date lastUpdateTime);
+
+    public List<MissionHistory> getUsingMissionHistories(Integer userId);
+
+    public void createOrUpdateMissionHistory(List<MissionHistory> runningHistory);
 
 }

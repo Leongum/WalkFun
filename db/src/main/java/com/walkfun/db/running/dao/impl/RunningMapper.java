@@ -1,6 +1,6 @@
 package com.walkfun.db.running.dao.impl;
 
-import com.walkfun.entity.running.RunningHistory;
+import com.walkfun.entity.running.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
@@ -17,9 +17,16 @@ public interface RunningMapper {
 
     public RunningHistory getRunningHistoryByUuid(@Param("runUuid") String runUuid);
 
-    public List<RunningHistory> getRunningHistories(@Param("userId") Integer userId, @Param("missionId") Integer missionId);
+    public List<RunningHistory> getRunningHistoriesByDate(@Param("userId") Integer userId,
+                                                          @Param("lastUpdateTime") Date lastUpdateTime);
 
     public void createRunningHistory(@Param("entity") RunningHistory runningHistory);
 
-    public List<RunningHistory> getRunningHistoriesByDate(@Param("userId") Integer userId, @Param("lastUpdateTime") Date lastUpdateTime, @Param("startSize") int startSize, @Param("pageSize") int pageSize);
+    public List<MissionHistory> getMissionHistoriesByDate(@Param("userId") Integer userId,
+                                                          @Param("lastUpdateTime") Date lastUpdateTime);
+
+    public List<MissionHistory> getUsingMissionHistories(@Param("userId") Integer userId);
+
+    public void createOrUpdateMissionHistory(@Param("entity") MissionHistory missionHistory);
+
 }

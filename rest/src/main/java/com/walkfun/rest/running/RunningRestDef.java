@@ -20,17 +20,31 @@ import java.util.List;
 public interface RunningRestDef extends RestDef {
 
     @GET
-    @Path("/history/{" + PARAM_USER_ID + "}")
+    @Path("/history/get/{" + PARAM_USER_ID + "}")
     List<RunningHistory> getRunningHistories(
             @PathParam(PARAM_USER_ID) String userId,
-            @QueryParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime,
-            @QueryParam(PARAM_PAGE_NUMBER) int pageNo,
-            @QueryParam(PARAM_PAGE_SIZE) int pageSize);
+            @QueryParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
 
 
     @POST
-    @Path("/history/{" + PARAM_USER_ID + "}")
+    @Path("/history/post/{" + PARAM_USER_ID + "}")
     void createRunningHistory( @PathParam(PARAM_USER_ID) String userId,
                             List<RunningHistory> runningHistoryList);
 
+
+    @GET
+    @Path("/history/mission/get/{" + PARAM_USER_ID + "}")
+    List<MissionHistory> getMissionHistoriesByDate(
+            @PathParam(PARAM_USER_ID) String userId,
+            @QueryParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
+
+    @GET
+    @Path("/history/mission/using/get/{" + PARAM_USER_ID + "}")
+    List<MissionHistory> getUsingMissionHistories(
+            @PathParam(PARAM_USER_ID) String userId);
+
+    @POST
+    @Path("/history/mission/put/{" + PARAM_USER_ID + "}")
+    void createOrUpdateMissionHistory( @PathParam(PARAM_USER_ID) String userId,
+                               List<MissionHistory> missionHistoryList);
 }

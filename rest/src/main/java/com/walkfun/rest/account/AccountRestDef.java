@@ -37,7 +37,7 @@ public interface AccountRestDef extends RestDef {
 
     //创建新用户
     @POST
-    @Path("/create/")
+    @Path("/create")
     UserInfo createAccountInfo(UserBase userBase);
 
     //更新用户基本信息

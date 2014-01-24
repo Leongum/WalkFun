@@ -20,26 +20,26 @@ import java.util.List;
 public interface SystemRestDef extends RestDef {
 
     @GET
-    @Path("/version/{" + PARAM_PLATFORM + "}")
+    @Path("/version/get/{" + PARAM_PLATFORM + "}")
     VersionControl getVersionControl(
             @PathParam(PARAM_PLATFORM) String platform);
 
     @GET
-    @Path("/message/{" + PARAM_LAST_UPDATE_TIME + "}")
+    @Path("/message/get/{" + PARAM_LAST_UPDATE_TIME + "}")
     List<SystemMessage> getSystemMessage(
             @PathParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
 
     @GET
-    @Path("/recommend/{" + PARAM_LAST_UPDATE_TIME + "}")
+    @Path("/recommend/get/{" + PARAM_LAST_UPDATE_TIME + "}")
     List<RecommendApp> getRecommendApp(
             @PathParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
 
     @POST
-    @Path("/feedback")
+    @Path("/feedback/post")
     void createFeedbackInfo(Feedback feedback);
 
     @POST
-    @Path("/download")
+    @Path("/download/post")
     void createDownLoadInfo(DownloadStatistics statistics);
 
     @GET

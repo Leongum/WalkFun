@@ -20,7 +20,7 @@ import java.util.List;
 public interface MissionRestDef extends RestDef {
 
     @GET
-    @Path("/mission")
+    @Path("/mission/get")
     List<Mission> getMissions(
             @QueryParam(PARAM_MISSION_ID) String missionId,
             @QueryParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);

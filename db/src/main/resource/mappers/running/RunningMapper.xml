@@ -2,34 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.walkfun.db.running.dao.impl.RunningMapper">
+
+    <!--run history DB-->
     <resultMap id="runningHistoryInfo" type="com.walkfun.entity.running.RunningHistory">
         <id column="USER_ID" property="userId"/>
         <result column="RUN_UUID" property="runUuid"/>
         <result column="MISSION_ID" property="missionId"/>
         <result column="MISSION_TYPE_ID" property="missionTypeId"/>
         <result column="MISSION_ROUTE" property="missionRoute"/>
-        <result column="WAVE_FORM" property="waveForm"/>
+        <result column="SPEED_LIST" property="speedList"/>
         <result column="MISSION_START_TIME" property="missionStartTime"/>
         <result column="MISSION_END_TIME" property="missionEndTime"/>
         <result column="MISSION_DATE" property="missionDate"/>
         <result column="SPEND_CARLORIE" property="spendCarlorie"/>
+        <result column="STEPS" property="steps"/>
         <result column="DURATION" property="duration"/>
         <result column="AVG_SPEED" property="avgSpeed"/>
-        <result column="STEPS" property="steps"/>
         <result column="DISTANCE" property="distance"/>
-        <result column="OFFER_USERS" property="offerUsers"/>
         <result column="MISSION_GRADE" property="missionGrade"/>
         <result column="SCORES" property="scores"/>
         <result column="EXPERIENCE" property="experience"/>
         <result column="EXTRA_EXPERIENCE" property="extraExperience"/>
         <result column="COMMENT" property="comment"/>
-        <result column="COMMIT_TIME" property="commitTime"/>
-        <result column="UUID" property="uuid"/>
-        <result column="GRADE" property="grade"/>
         <result column="VALID" property="valid"/>
-        <result column="PLAN_RUN_UUID" property="planRunUuid"/>
+        <result column="MISSION_UUID" property="missionUuid"/>
         <result column="SEQUENCE" property="sequence"/>
-        <result column="SPEED_LIST" property="speedList"/>
+        <result column="COMMIT_TIME" property="commitTime"/>
     </resultMap>
 
     <sql id="runningHistoryTable">
@@ -38,40 +36,25 @@
         MISSION_ID,
         MISSION_TYPE_ID,
         MISSION_ROUTE,
-        WAVE_FORM,
+        SPEED_LIST,
         MISSION_START_TIME,
         MISSION_END_TIME,
         MISSION_DATE,
         SPEND_CARLORIE,
+        STEPS,
         DURATION,
         AVG_SPEED,
-        STEPS,
         DISTANCE,
-        OFFER_USERS,
         MISSION_GRADE,
         SCORES,
         EXPERIENCE,
         EXTRA_EXPERIENCE,
         COMMENT,
-        COMMIT_TIME,
-        UUID,
-        GRADE,
         VALID,
-        PLAN_RUN_UUID,
+        MISSION_UUID,
         SEQUENCE,
-        SPEED_LIST
+        COMMIT_TIME
     </sql>
-
-
-    <select id="getRunningHistories" resultMap="runningHistoryInfo">
-        SELECT
-        <include refid="runningHistoryTable"/>
-        FROM USER_RUNNING_HISTORY
-        WHERE USER_ID = #{userId}
-        <if test="missionId != null"><![CDATA[
-        AND MISSION_ID = #{missionId}
-        ]]></if>
-    </select>
 
     <select id="getRunningHistoryByUuid" resultMap="runningHistoryInfo">
         SELECT
@@ -87,7 +70,7 @@
         WHERE USER_ID = #{userId}
         AND COMMIT_TIME > #{lastUpdateTime}
         ORDER BY MISSION_DATE DESC
-        LIMIT #{startSize}, #{pageSize}
+        LIMIT 50
     </select>
 
     <insert id="createRunningHistory" parameterType="com.walkfun.entity.running.RunningHistory">
@@ -98,28 +81,24 @@
             MISSION_ID,
             MISSION_TYPE_ID,
             MISSION_ROUTE,
-            WAVE_FORM,
+            SPEED_LIST,
             MISSION_START_TIME,
             MISSION_END_TIME,
             MISSION_DATE,
             SPEND_CARLORIE,
+            STEPS,
             DURATION,
             AVG_SPEED,
-            STEPS,
             DISTANCE,
-            OFFER_USERS,
             MISSION_GRADE,
             SCORES,
             EXPERIENCE,
             EXTRA_EXPERIENCE,
             COMMENT,
-            COMMIT_TIME,
-            UUID,
-            GRADE,
             VALID,
-            PLAN_RUN_UUID,
+            MISSION_UUID,
             SEQUENCE,
-            SPEED_LIST
+            COMMIT_TIME
         )
         VALUES
         (
@@ -128,28 +107,116 @@
             #{entity.missionId},
             #{entity.missionTypeId},
             #{entity.missionRoute},
-            #{entity.waveForm},
+            #{entity.speedList},
             #{entity.missionStartTime},
             #{entity.missionEndTime},
             #{entity.missionDate},
             #{entity.spendCarlorie},
+            #{entity.steps},
             #{entity.duration},
             #{entity.avgSpeed},
-            #{entity.steps},
             #{entity.distance},
-            #{entity.offerUsers},
             #{entity.missionGrade},
             #{entity.scores},
             #{entity.experience},
             #{entity.extraExperience},
             #{entity.comment},
-            #{entity.commitTime},
-            #{entity.uuid},
-            #{entity.grade},
             #{entity.valid},
-            #{entity.planRunUuid},
+            #{entity.missionUuid},
             #{entity.sequence},
-            #{entity.speedList}
+            now()
         )
     </insert>
+
+    <!--mission history DB-->
+    <resultMap id="missionHistoryInfo" type="com.walkfun.entity.running.MissionHistory">
+        <id column="MISSION_UUID" property="missionUuid"/>
+        <result column="USER_ID" property="userId"/>
+        <result column="USER_NAME" property="userName"/>
+        <result column="MISSION_ID" property="missionId"/>
+        <result column="MISSION_NAME" property="missionName"/>
+        <result column="START_TIME" property="startTime"/>
+        <result column="END_TIME" property="endTime"/>
+        <result column="LAST_RUN_TIME" property="lastRunTime"/>
+        <result column="HISTORY_STATUS" property="historyStatus"/>
+        <result column="CURRENT_COMBO" property="currentCombo"/>
+        <result column="TOTAL_ACTIVE_TIMES" property="totalActiveTimes"/>
+        <result column="UPDATE_TIME" property="updateTime"/>
+    </resultMap>
+
+    <sql id="missionHistoryTable">
+        MISSION_UUID,
+        USER_ID,
+        USER_NAME,
+        MISSION_ID,
+        MISSION_NAME,
+        START_TIME,
+        END_TIME,
+        LAST_RUN_TIME,
+        HISTORY_STATUS,
+        CURRENT_COMBO,
+        TOTAL_ACTIVE_TIMES,
+        UPDATE_TIME
+    </sql>
+
+    <select id="getMissionHistoriesByDate" resultMap="missionHistoryInfo">
+        SELECT
+        <include refid="missionHistoryTable"/>
+        FROM USER_MISSION_HISTORY
+        WHERE USER_ID = #{userId}
+        AND UPDATE_TIME > #{lastUpdateTime}
+        ORDER BY UPDATE_TIME DESC
+        LIMIT 50
+    </select>
+
+    <select id="getUsingMissionHistories" resultMap="missionHistoryInfo">
+        SELECT
+        <include refid="missionHistoryTable"/>
+        FROM USER_MISSION_HISTORY
+        WHERE USER_ID = #{userId}
+        AND HISTORY_STATUS = 0
+        ORDER BY LAST_RUN_TIME DESC
+    </select>
+
+    <insert id="createOrUpdateMissionHistory" parameterType="com.walkfun.entity.running.MissionHistory">
+        INSERT INTO USER_MISSION_HISTORY
+        (
+            MISSION_UUID,
+            USER_ID,
+            USER_NAME,
+            MISSION_ID,
+            MISSION_NAME,
+            START_TIME,
+            END_TIME,
+            LAST_RUN_TIME,
+            HISTORY_STATUS,
+            CURRENT_COMBO,
+            TOTAL_ACTIVE_TIMES,
+            UPDATE_TIME
+        )
+        VALUES
+        (
+            #{entity.missionUuid},
+            #{entity.userId},
+            #{entity.userName},
+            #{entity.missionId},
+            #{entity.missionName},
+            #{entity.startTime},
+            #{entity.endTime},
+            #{entity.lastRunTime},
+            #{entity.historyStatus},
+            #{entity.currentCombo},
+            #{entity.totalActiveTimes},
+            now()
+        )
+        ON DUPLICATE KEY
+        UPDATE
+            END_TIME = #{entity.endTime},
+            LAST_RUN_TIME = #{entity.lastRunTime},
+            HISTORY_STATUS = #{entity.historyStatus},
+            CURRENT_COMBO = #{entity.currentCombo} ,
+            TOTAL_ACTIVE_TIMES = #{entity.totalActiveTimes},
+            UPDATE_TIME = now();
+    </insert>
+
 </mapper>

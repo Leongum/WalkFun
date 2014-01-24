@@ -24,7 +24,7 @@ public class MissionHistory {
     private Date startTime;
     private Date endTime;
     private Date lastRunTime;
-    private Integer histroyStatus;
+    private Integer historyStatus;
     private Integer currentCombo;
     private Integer totalActiveTimes;
     private Date updateTime;
@@ -98,12 +98,12 @@ public class MissionHistory {
         this.lastRunTime = lastRunTime;
     }
 
-    public Integer getHistroyStatus() {
-        return histroyStatus;
+    public Integer getHistoryStatus() {
+        return historyStatus;
     }
 
-    public void setHistroyStatus(Integer histroyStatus) {
-        this.histroyStatus = histroyStatus;
+    public void setHistoryStatus(Integer historyStatus) {
+        this.historyStatus = historyStatus;
     }
 
     public Integer getCurrentCombo() {

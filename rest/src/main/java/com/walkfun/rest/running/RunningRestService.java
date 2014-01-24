@@ -1,12 +1,11 @@
 package com.walkfun.rest.running;
 
 import com.walkfun.common.lib.CommonUtils;
-import com.walkfun.entity.running.RunningHistory;
+import com.walkfun.entity.running.*;
 import com.walkfun.service.account.def.AccountService;
 import com.walkfun.service.running.def.RunningService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,33 +24,47 @@ public class RunningRestService implements RunningRestDef {
     private AccountService accountService;
 
     @Override
-    public List<RunningHistory> getRunningHistories(String userId, String lastUpdateTime, int pageNo, int pageSize) {
-        CommonUtils.newMethodCall("RunningRestService.getRunningHistories");
-        if (pageNo <= 0)
-            pageNo = defaultPageNo;
-        if (pageSize <= 0)
-            pageSize = defaultPageSize;
-        int startSize = Math.max((pageNo - 1), 0) * pageSize;
-
+    public List<RunningHistory> getRunningHistories(String userId, String lastUpdateTime) {
+        CommonUtils.newMethodCall("Fetch running history");
         return runningService.getRunningHistoriesByDate(CommonUtils.parseIntegerToNull(userId),
-                CommonUtils.parseDateDefaultToNull(lastUpdateTime), startSize, pageSize);
+                CommonUtils.parseDateDefaultToNull(lastUpdateTime));
     }
 
     @Override
     public void createRunningHistory(String userId, List<RunningHistory> runningHistoryList) {
-        CommonUtils.newMethodCall("RunningRestService.createRunningHistory");
+        CommonUtils.newMethodCall("Create Running History");
         accountService.checkUserLoginStatus(CommonUtils.parseIntegerToNull(userId));
         for (RunningHistory runningHistory : runningHistoryList) {
             runningHistory.setUserId(CommonUtils.parseIntegerToNull(userId));
-            if(runningHistory.getCommitTime() == null){
-                runningHistory.setCommitTime(new Date());
-            }
             if (runningHistory.getValid() != 1) {
                 runningHistory.setExperience(0);
                 runningHistory.setScores(0);
                 runningHistory.setExtraExperience(0);
             }
         }
-        runningService.createRunningHistory(CommonUtils.parseIntegerToNull(userId), runningHistoryList);
+        runningService.createRunningHistory(runningHistoryList);
+    }
+
+    @Override
+    public List<MissionHistory> getMissionHistoriesByDate(String userId,String lastUpdateTime) {
+        CommonUtils.newMethodCall("Fetch Mission history");
+        return runningService.getMissionHistoriesByDate(CommonUtils.parseIntegerToNull(userId),
+                CommonUtils.parseDateDefaultToNull(lastUpdateTime));
+    }
+
+    @Override
+    public List<MissionHistory> getUsingMissionHistories(String userId) {
+        CommonUtils.newMethodCall("Fetch Using Mission history");
+        return runningService.getUsingMissionHistories(CommonUtils.parseIntegerToNull(userId));
+    }
+
+    @Override
+    public void createOrUpdateMissionHistory(String userId, List<MissionHistory> missionHistoryList) {
+        CommonUtils.newMethodCall("Create Mission History");
+        accountService.checkUserLoginStatus(CommonUtils.parseIntegerToNull(userId));
+        for (MissionHistory runningHistory : missionHistoryList) {
+            runningHistory.setUserId(CommonUtils.parseIntegerToNull(userId));
+        }
+        runningService.createOrUpdateMissionHistory(missionHistoryList);
     }
 }

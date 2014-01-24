@@ -14,10 +14,14 @@ import java.util.List;
  */
 public interface RunningDAO {
 
-    public List<RunningHistory> getRunningHistories(Integer userId, Integer missionId);
-
-    public List<RunningHistory> getRunningHistoriesByDate(Integer userId, Date lastUpdateTime, int startSize, int pageSize);
+    public List<RunningHistory> getRunningHistoriesByDate(Integer userId, Date lastUpdateTime);
 
     public void createRunningHistory(RunningHistory runningHistory);
+
+    public List<MissionHistory> getMissionHistoriesByDate(Integer userId, Date lastUpdateTime);
+
+    public List<MissionHistory> getUsingMissionHistories(Integer userId);
+
+    public void createOrUpdateMissionHistory(MissionHistory missionHistory);
 
 }
