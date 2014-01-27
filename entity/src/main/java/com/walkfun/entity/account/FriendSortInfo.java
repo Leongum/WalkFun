@@ -22,6 +22,7 @@ public class FriendSortInfo {
     private Double level;
     private String userTitle;
     private Double totalDistance;
+    private Integer friendStatus;
     private Date lastActiveTime;
 
     public Integer getFriendId() {
@@ -80,5 +81,13 @@ public class FriendSortInfo {
     @JsonDeserialize(using = CustomDateDeserializer.class)
     public void setLastActiveTime(Date lastActiveTime) {
         this.lastActiveTime = lastActiveTime;
+    }
+
+    public Integer getFriendStatus() {
+        return friendStatus;
+    }
+
+    public void setFriendStatus(Integer friendStatus) {
+        this.friendStatus = friendStatus;
     }
 }

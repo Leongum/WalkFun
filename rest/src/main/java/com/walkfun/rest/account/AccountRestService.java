@@ -33,11 +33,8 @@ public class AccountRestService implements AccountRestDef {
     }
 
     @Override
-    public UserInfo getAccountInfoByID(String userId, String lastUpdateTime, String checkUuid) {
+    public UserInfo getAccountInfoByID(String userId, String lastUpdateTime) {
         CommonUtils.newMethodCall("Get User Info");
-        if (checkUuid != null && checkUuid.equalsIgnoreCase("true")) {
-            accountService.checkUserLoginStatus(CommonUtils.parseIntegerToNull(userId));
-        }
         UserInfo userInfo = accountService.getAccountInfoByID(CommonUtils.parseIntegerToNull(userId),
                 CommonUtils.parseDateDefaultToNull(lastUpdateTime));
         return userInfo;

@@ -22,9 +22,9 @@ public interface AccountRestDef extends RestDef {
 
     //登录， 用户根据用户名和密码登录
     @GET
-    @Path("/login/{" + PARAM_USER_EMAIL + "}/{" + PARAM_PASSWORD + "}")
+    @Path("/login/{" + PARAM_USER_NAME + "}/{" + PARAM_PASSWORD + "}")
     UserInfo getAccountInfo(
-            @PathParam(PARAM_USER_EMAIL) String userEmail,
+            @PathParam(PARAM_USER_NAME) String userName,
             @PathParam(PARAM_PASSWORD) String password);
 
     //根据用户ID和最后更新日期获取最新用户信息
@@ -32,8 +32,7 @@ public interface AccountRestDef extends RestDef {
     @Path("/get/{" + PARAM_USER_ID + "}")
     UserInfo getAccountInfoByID(
             @PathParam(PARAM_USER_ID) String userId,
-            @QueryParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime,
-            @QueryParam(PARAM_CHECK_USER_UUID) String checkUuid);
+            @QueryParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
 
     //创建新用户
     @POST

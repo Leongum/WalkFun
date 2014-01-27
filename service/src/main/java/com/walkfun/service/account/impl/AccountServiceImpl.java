@@ -194,6 +194,9 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public UserInfo getAccountInfoByID(Integer userId, Date lastUpdateTime) {
         try {
+            if(userId == Universe.current().getUserId()){
+                checkUserLoginStatus(userId);
+            }
             return checkUserExisting(userId, lastUpdateTime);
         } catch (Exception ex) {
             throw new ServerRequestException(ex.getMessage());

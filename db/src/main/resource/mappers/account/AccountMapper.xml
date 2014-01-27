@@ -410,6 +410,7 @@
         <result column="USER_TITLE" property="userTitle"/>
         <result column="LEVEL" property="level"/>
         <result column="TOTAL_DISTANCE" property="totalDistance"/>
+        <result column="FRIEND_STATUS" property="friendStatus"/>
         <result column="LAST_ACTIVE_TIME" property="lastActiveTime"/>
     </resultMap>
 
@@ -419,7 +420,8 @@
         U.SEX,
         UD.USER_TITLE,
         UD.LEVEL,
-        UD.TOTAL_DISTANCE
+        UD.TOTAL_DISTANCE,
+        UD.FRIEND_STATUS,
         UD.LAST_ACTIVE_TIME
     </sql>
 
@@ -432,7 +434,6 @@
         INNER JOIN USER_DETAIL AS UD
         ON U.USER_ID = UD.USER_ID
         WHERE UF.USER_ID = #{userId}
-        AND FRIEND_STATUS = 0
         AND UPDATE_TIME > #{lastUpdateTime}
     </select>
 
