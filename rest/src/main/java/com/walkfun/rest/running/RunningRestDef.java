@@ -31,6 +31,11 @@ public interface RunningRestDef extends RestDef {
     void createRunningHistory( @PathParam(PARAM_USER_ID) String userId,
                             List<RunningHistory> runningHistoryList);
 
+    @GET
+    @Path("/history/simple/get/{" + PARAM_USER_ID + "}")
+    List<SimpleRunningHistory> getSimpleRunningHistories(
+            @PathParam(PARAM_USER_ID) String userId);
+
 
     @GET
     @Path("/history/mission/get/{" + PARAM_USER_ID + "}")

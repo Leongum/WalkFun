@@ -27,6 +27,7 @@
         <result column="VALID" property="valid"/>
         <result column="MISSION_UUID" property="missionUuid"/>
         <result column="SEQUENCE" property="sequence"/>
+        <result column="PROP_GET" property="propGet"/>
         <result column="COMMIT_TIME" property="commitTime"/>
     </resultMap>
 
@@ -53,6 +54,7 @@
         VALID,
         MISSION_UUID,
         SEQUENCE,
+        PROP_GET,
         COMMIT_TIME
     </sql>
 
@@ -98,6 +100,7 @@
             VALID,
             MISSION_UUID,
             SEQUENCE,
+            PROP_GET,
             COMMIT_TIME
         )
         VALUES
@@ -124,9 +127,44 @@
             #{entity.valid},
             #{entity.missionUuid},
             #{entity.sequence},
+            #{entity.propGet},
             now()
         )
     </insert>
+
+     <!--simple running history for user-->
+    <resultMap id="simpleRunningHistoryInfo" type="com.walkfun.entity.running.SimpleRunningHistory">
+        <id column="USER_ID" property="userId"/>
+        <result column="SPEND_CARLORIE" property="spendCarlorie"/>
+        <result column="STEPS" property="steps"/>
+        <result column="DURATION" property="duration"/>
+        <result column="AVG_SPEED" property="avgSpeed"/>
+        <result column="DISTANCE" property="distance"/>
+        <result column="MISSION_GRADE" property="missionGrade"/>
+        <result column="PROP_GET" property="propGet"/>
+        <result column="COMMIT_TIME" property="commitTime"/>
+    </resultMap>
+
+    <sql id="simpleRunningHistoryTable">
+        USER_ID,
+        SPEND_CARLORIE,
+        STEPS,
+        DURATION,
+        AVG_SPEED,
+        DISTANCE,
+        MISSION_GRADE,
+        PROP_GET,
+        COMMIT_TIME
+    </sql>
+
+    <select id="getSimpleRunningHistoriesByDate" resultMap="simpleRunningHistoryInfo">
+        SELECT
+        <include refid="simpleRunningHistoryTable"/>
+        FROM USER_RUNNING_HISTORY
+        WHERE USER_ID = #{userId}
+        ORDER BY MISSION_DATE DESC
+        LIMIT 3
+    </select>
 
     <!--mission history DB-->
     <resultMap id="missionHistoryInfo" type="com.walkfun.entity.running.MissionHistory">

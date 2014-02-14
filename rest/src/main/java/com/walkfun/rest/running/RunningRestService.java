@@ -46,6 +46,12 @@ public class RunningRestService implements RunningRestDef {
     }
 
     @Override
+    public List<SimpleRunningHistory> getSimpleRunningHistories(String userId) {
+        CommonUtils.newMethodCall("Fetch User Simple History");
+        return runningService.getSimpleRunningHistoriesByDate(CommonUtils.parseIntegerToNull(userId));
+    }
+
+    @Override
     public List<MissionHistory> getMissionHistoriesByDate(String userId,String lastUpdateTime) {
         CommonUtils.newMethodCall("Fetch Mission history");
         return runningService.getMissionHistoriesByDate(CommonUtils.parseIntegerToNull(userId),

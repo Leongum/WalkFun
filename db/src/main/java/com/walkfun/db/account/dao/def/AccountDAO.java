@@ -40,4 +40,8 @@ public interface AccountDAO {
     public List<SearchUserInfo> searchAccountInfoByName(String nickName);
 
     public List<FriendSortInfo> getFriendSort(Integer userId, Date lastUpdateTime);
+
+    public List<UserProp> getUserProps(Integer userId, Date lastUpdateTime);
+
+    public void createOrUpdateUserProp(UserProp userProp);
 }

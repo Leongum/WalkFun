@@ -6,8 +6,10 @@ import com.walkfun.entity.common.RecommendApp;
 import com.walkfun.entity.common.SystemMessage;
 import com.walkfun.entity.common.VersionControl;
 import com.walkfun.entity.mission.Mission;
+import com.walkfun.entity.vproduct.VProduct;
 import com.walkfun.service.common.def.CommonService;
 import com.walkfun.service.mission.def.MissionService;
+import com.walkfun.service.vproduct.def.VProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,9 @@ public class BackendJobCache {
     @Autowired
     private CommonService commonService;
 
+    @Autowired
+    private VProductService vProductService;
+
     public static VersionControl versionControlIOS = new VersionControl();
 
     public static List<Mission> allMissions = new ArrayList<Mission>();
@@ -39,6 +44,8 @@ public class BackendJobCache {
     public static List<SystemMessage> allMessages = new ArrayList<SystemMessage>();
 
     public static List<RecommendApp> allRecommendApp = new ArrayList<RecommendApp>();
+
+    public static List<VProduct> allProducts = new ArrayList<VProduct>();
 
     public static Date missionLastTime = CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00");
 
@@ -51,6 +58,10 @@ public class BackendJobCache {
     public static Date recommendAppLastTime = CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00");
 
     public static Date recommendAppFirstTime = CommonUtils.parseDateDefaultToNull("3001-01-01 00:00:00");
+
+    public static Date productLastTime = CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00");
+
+    public static Date productFirstTime = CommonUtils.parseDateDefaultToNull("3001-01-01 00:00:00");
 
     public void missionServiceJob() {
         allMissions = missionService.getMissions(null, CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00"));
@@ -96,6 +107,18 @@ public class BackendJobCache {
     public void methodCollectorJob() {
         commonService.createMethodCollector(MethodCollector.methods);
         MethodCollector.methods = new HashMap<String, Integer>();
+    }
+
+    public void productServiceJob(){
+        allProducts = vProductService.getVProduct(CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00"));
+        for (VProduct vProduct : allProducts) {
+            if (vProduct.getUpdateTime().after(productLastTime)) {
+                productLastTime = vProduct.getUpdateTime();
+            }
+            if (vProduct.getUpdateTime().before(productFirstTime)) {
+                productFirstTime = vProduct.getUpdateTime();
+            }
+        }
     }
 
 }

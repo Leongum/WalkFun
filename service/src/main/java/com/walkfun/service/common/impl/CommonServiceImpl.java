@@ -52,6 +52,7 @@ public class CommonServiceImpl implements CommonService {
             versionControl.setMessageLastUpdateTime(BackendJobCache.messageLastTime);
             versionControl.setMissionLastUpdateTime(BackendJobCache.missionLastTime);
             versionControl.setRecommendLastUpdateTime(BackendJobCache.recommendAppLastTime);
+            versionControl.setProductLastUpdateTime(BackendJobCache.productLastTime);
             return versionControl;
         } catch (Exception ex) {
             throw new ServerRequestException(ex.getMessage());
@@ -154,6 +155,8 @@ public class CommonServiceImpl implements CommonService {
             backendJobCache.recommendAppServiceJob();
         } else if (jobCache.equalsIgnoreCase("versionServiceJob")) {
             backendJobCache.versionServiceJob();
+        } else if (jobCache.equalsIgnoreCase("productServiceJob")) {
+            backendJobCache.productServiceJob();
         }
     }
 }

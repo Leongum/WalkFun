@@ -112,4 +112,21 @@ public class AccountRestService implements AccountRestDef {
         return accountService.getFriendSort(CommonUtils.parseIntegerToNull(userId),
                 CommonUtils.parseDateDefaultToNull(lastUpdateTime));
     }
+
+    @Override
+    public List<UserProp> getUserProps(String userId, String lastUpdateTime) {
+        CommonUtils.newMethodCall("Get User Props");
+        return accountService.getUserProps(CommonUtils.parseIntegerToNull(userId),
+                CommonUtils.parseDateDefaultToNull(lastUpdateTime));
+    }
+
+    @Override
+    public void createOrUpdateUserProp(String userId, List<UserProp> userProps) {
+        CommonUtils.newMethodCall("Create User Prop");
+        accountService.checkUserLoginStatus(CommonUtils.parseIntegerToNull(userId));
+        for (UserProp userProp : userProps) {
+            userProp.setUserId(CommonUtils.parseIntegerToNull(userId));
+        }
+        accountService.createOrUpdateUserProp(userProps);
+    }
 }

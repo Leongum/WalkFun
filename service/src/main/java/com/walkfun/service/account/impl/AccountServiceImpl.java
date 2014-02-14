@@ -192,9 +192,30 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    public List<UserProp> getUserProps(Integer userId, Date lastUpdateTime) {
+        try {
+            return accountDAO.getUserProps(userId, lastUpdateTime);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
+    }
+
+    @Override
+    @Transactional
+    public void createOrUpdateUserProp(List<UserProp> userProps) {
+        try {
+            for (UserProp userProp : userProps) {
+                accountDAO.createOrUpdateUserProp(userProp);
+            }
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
+    }
+
+    @Override
     public UserInfo getAccountInfoByID(Integer userId, Date lastUpdateTime) {
         try {
-            if(userId == Universe.current().getUserId()){
+            if (userId == Universe.current().getUserId()) {
                 checkUserLoginStatus(userId);
             }
             return checkUserExisting(userId, lastUpdateTime);

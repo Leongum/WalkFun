@@ -95,4 +95,17 @@ public interface AccountRestDef extends RestDef {
     List<FriendSortInfo> getFriendSort(
             @PathParam(PARAM_USER_ID) String userId,
             @QueryParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
+
+    //获取用户道具
+    @GET
+    @Path("/props/get/{" + PARAM_USER_ID + "}")
+    List<UserProp> getUserProps(
+            @PathParam(PARAM_USER_ID) String userId,
+            @QueryParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
+
+    //新增用户道具
+    @POST
+    @Path("/props/create/{" + PARAM_USER_ID + "}")
+    void createOrUpdateUserProp(@PathParam(PARAM_USER_ID) String userId,
+                          List<UserProp> userProps);
 }

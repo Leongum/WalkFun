@@ -52,6 +52,8 @@
 
     <bean id="runningDAO" class="com.walkfun.db.running.dao.impl.RunningDAOImpl"/>
 
+    <bean id="vProductDAO" class="com.walkfun.db.vproduct.dao.impl.VProductDAOImpl"/>
+
     <!-- Mappers-->
     <bean id="baseMapper" class="org.mybatis.spring.support.SqlSessionDaoSupport" abstract="true">
         <property name="sqlSessionFactory" ref="sqlSessionFactory"/>
@@ -71,6 +73,10 @@
 
     <bean id="runningMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" parent="baseMapper">
         <property name="mapperInterface" value="com.walkfun.db.running.dao.impl.RunningMapper"/>
+    </bean>
+
+    <bean id="vProductMapper" class="org.mybatis.spring.mapper.MapperFactoryBean" parent="baseMapper">
+        <property name="mapperInterface" value="com.walkfun.db.vproduct.dao.impl.VProductMapper"/>
     </bean>
 
 </beans>

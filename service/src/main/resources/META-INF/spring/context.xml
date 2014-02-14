@@ -16,6 +16,7 @@
     <bean id="missionService" class="com.walkfun.service.mission.impl.MissionServiceImpl"/>
     <bean id="runningService" class="com.walkfun.service.running.impl.RunningServiceImpl"/>
     <bean id="commonService" class="com.walkfun.service.common.impl.CommonServiceImpl"/>
+    <bean id="vProductService" class="com.walkfun.service.vproduct.impl.VProductServiceImpl"/>
 
     <bean id="backendJobCache" class="com.walkfun.service.backend.BackendJobCache"/>
 
@@ -25,5 +26,6 @@
         <task:scheduled ref="backendJobCache" method="systemMessageServiceJob" fixed-rate="23000000"/>
         <task:scheduled ref="backendJobCache" method="methodCollectorJob" fixed-rate="43200000"/>
         <task:scheduled ref="backendJobCache" method="recommendAppServiceJob" fixed-rate="15000000"/>
+        <task:scheduled ref="backendJobCache" method="productServiceJob" fixed-rate="25000000"/>
     </task:scheduled-tasks>
 </beans>

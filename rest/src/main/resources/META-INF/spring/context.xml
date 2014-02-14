@@ -15,6 +15,7 @@
     <bean id="systemRestService" class="com.walkfun.rest.system.SystemRestService"/>
     <bean id="missionRestService" class="com.walkfun.rest.mission.MissionRestService"/>
     <bean id="runningRestService" class="com.walkfun.rest.running.RunningRestService"/>
+    <bean id="vProductRestService" class="com.walkfun.rest.vproduct.VProductRestService"/>
 
     <bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
     <bean id="txtProvider" class="org.apache.cxf.jaxrs.provider.PrimitiveTextProvider"/>

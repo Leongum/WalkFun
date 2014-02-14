@@ -3,6 +3,7 @@ package com.walkfun.db.running.dao.impl;
 import com.walkfun.db.running.dao.def.RunningDAO;
 import com.walkfun.entity.running.MissionHistory;
 import com.walkfun.entity.running.RunningHistory;
+import com.walkfun.entity.running.SimpleRunningHistory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
@@ -31,6 +32,11 @@ public class RunningDAOImpl implements RunningDAO {
         if (existingHistory == null || existingHistory.getUserId() == null) {
             runningMapper.createRunningHistory(runningHistory);
         }
+    }
+
+    @Override
+    public List<SimpleRunningHistory> getSimpleRunningHistoriesByDate(Integer userId) {
+        return runningMapper.getSimpleRunningHistoriesByDate(userId);
     }
 
     @Override

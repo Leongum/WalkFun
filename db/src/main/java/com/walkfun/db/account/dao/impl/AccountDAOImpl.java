@@ -115,4 +115,14 @@ public class AccountDAOImpl implements AccountDAO {
     public List<FriendSortInfo> getFriendSort(Integer userId, Date lastUpdateTime) {
         return accountMapper.getFriendSort(userId, lastUpdateTime);
     }
+
+    @Override
+    public List<UserProp> getUserProps(Integer userId, Date lastUpdateTime) {
+        return accountMapper.getUserProps(userId,lastUpdateTime);
+    }
+
+    @Override
+    public void createOrUpdateUserProp(UserProp userProp) {
+        accountMapper.createOrUpdateUserProp(userProp);
+    }
 }

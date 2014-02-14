@@ -71,6 +71,7 @@
             <ref bean="systemRestService"/>
             <ref bean="missionRestService"/>
             <ref bean="runningRestService"/>
+            <ref bean="vProductRestService"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <ref bean="jsonProvider"/>

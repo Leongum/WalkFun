@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.walkfun.db.vproduct.dao.impl.VProductMapper">
+
+    <!--virtual product DB-->
+    <resultMap id="virtualProductInfo" type="com.walkfun.entity.vproduct.VProduct">
+        <id column="PRODUCT_ID" property="productId"/>
+        <result column="PRODUCT_NAME" property="productName"/>
+        <result column="PRODUCT_DESCRIPTION" property="productDescription"/>
+        <result column="VIRTUAL_PRICE" property="virtualPrice"/>
+        <result column="DROP_FLAG" property="dropFlag"/>
+        <result column="UPDATE_TIME" property="updateTime"/>
+    </resultMap>
+
+    <sql id="virtualProductTable">
+        PRODUCT_ID,
+        PRODUCT_NAME,
+        PRODUCT_DESCRIPTION,
+        VIRTUAL_PRICE,
+        DROP_FLAG,
+        UPDATE_TIME
+    </sql>
+
+    <select id="getVProductByDate" resultMap="virtualProductInfo">
+        SELECT
+        <include refid="virtualProductTable"/>
+        FROM VIRTUAL_PRODUCT
+        WHERE 1 = 1
+        <if test="lastUpdateTime != null"><![CDATA[
+        AND UPDATE_TIME > #{lastUpdateTime}
+        ]]></if>
+    </select>
+
+     <!--virtual product history DB-->
+    <resultMap id="vProductHistoryInfo" type="com.walkfun.entity.vproduct.VProductHistory">
+        <id column="USER_ID" property="userId"/>
+        <result column="PRODUCT_ID" property="productId"/>
+        <result column="BUY_TIME" property="buyTime"/>
+    </resultMap>
+
+    <insert id="createVProductHistory" parameterType="com.walkfun.entity.vproduct.VProductHistory">
+        INSERT INTO VIRTUAL_PRODUCT_HISTORY
+        (
+            USER_ID,
+            PRODUCT_ID,
+            BUY_TIME
+        )
+        VALUES
+        (
+            #{entity.userId},
+            #{entity.productId},
+            #{entity.buyTime}
+        )
+    </insert>
+
+</mapper>

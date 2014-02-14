@@ -18,6 +18,8 @@ public interface RunningService {
 
     public void createRunningHistory(List<RunningHistory> runningHistory);
 
+    public List<SimpleRunningHistory> getSimpleRunningHistoriesByDate(Integer userId);
+
     public List<MissionHistory> getMissionHistoriesByDate(Integer userId, Date lastUpdateTime);
 
     public List<MissionHistory> getUsingMissionHistories(Integer userId);

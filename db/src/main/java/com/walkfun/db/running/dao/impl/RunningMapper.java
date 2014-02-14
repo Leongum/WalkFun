@@ -22,11 +22,12 @@ public interface RunningMapper {
 
     public void createRunningHistory(@Param("entity") RunningHistory runningHistory);
 
+    public List<SimpleRunningHistory> getSimpleRunningHistoriesByDate(@Param("userId") Integer userId);
+
     public List<MissionHistory> getMissionHistoriesByDate(@Param("userId") Integer userId,
                                                           @Param("lastUpdateTime") Date lastUpdateTime);
 
     public List<MissionHistory> getUsingMissionHistories(@Param("userId") Integer userId);
 
     public void createOrUpdateMissionHistory(@Param("entity") MissionHistory missionHistory);
-
 }

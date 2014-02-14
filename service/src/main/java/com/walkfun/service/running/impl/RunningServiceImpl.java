@@ -44,6 +44,15 @@ public class RunningServiceImpl implements RunningService {
     }
 
     @Override
+    public List<SimpleRunningHistory> getSimpleRunningHistoriesByDate(Integer userId) {
+        try {
+            return runningDAO.getSimpleRunningHistoriesByDate(userId);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
+    }
+
+    @Override
     public List<MissionHistory> getMissionHistoriesByDate(Integer userId, Date lastUpdateTime) {
         try {
             return runningDAO.getMissionHistoriesByDate(userId, lastUpdateTime);

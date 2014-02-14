@@ -20,21 +20,18 @@ public class UserInfo extends UserBase {
     private Integer picId;
     private Integer userTitleId;
     private String userTitle;
+    private String userFatDesc;
     private Double level;
-    private Double scores;
+    private Double goldCoin;
     private Double experience;
+    private Double health;
+    private Double fatness;
     private Double totalDistance;
     private Double totalCarlorie;
     private Double totalSteps;
     private Double totalWalkingTimes;
     private Double totalActiveTimes;
     private Double avgSpeed;
-    private Date lastActiveTime;
-    private Double lastWalkingTime;
-    private Double lastWalkingSteps;
-    private Double lastWalkingDistance;
-    private String lastWalkingPoint;
-    private String lastWalkingAddress;
     private Integer currentCombo;
     private Integer maxCombo;
     private Date updateTime;
@@ -58,8 +55,10 @@ public class UserInfo extends UserBase {
         this.userTitleId = 0;
         this.userTitle = "新手上路";
         this.level = 0d;
-        this.scores = 0d;
+        this.goldCoin = 0d;
         this.experience = 0d;
+        this.health = 0d;
+        this.fatness = 0d;
         this.totalDistance = 0d;
         this.totalCarlorie = 0d;
         this.totalSteps = 0d;
@@ -111,12 +110,12 @@ public class UserInfo extends UserBase {
         this.level = level;
     }
 
-    public Double getScores() {
-        return scores;
+    public Double getGoldCoin() {
+        return goldCoin;
     }
 
-    public void setScores(Double scores) {
-        this.scores = scores;
+    public void setGoldCoin(Double goldCoin) {
+        this.goldCoin = goldCoin;
     }
 
     public Double getExperience() {
@@ -175,56 +174,6 @@ public class UserInfo extends UserBase {
         this.avgSpeed = avgSpeed;
     }
 
-    @JsonSerialize(using = CustomDateSerializer.class)
-    public Date getLastActiveTime() {
-        return lastActiveTime;
-    }
-
-    @JsonDeserialize(using = CustomDateDeserializer.class)
-    public void setLastActiveTime(Date lastActiveTime) {
-        this.lastActiveTime = lastActiveTime;
-    }
-
-    public Double getLastWalkingTime() {
-        return lastWalkingTime;
-    }
-
-    public void setLastWalkingTime(Double lastWalkingTime) {
-        this.lastWalkingTime = lastWalkingTime;
-    }
-
-    public Double getLastWalkingSteps() {
-        return lastWalkingSteps;
-    }
-
-    public void setLastWalkingSteps(Double lastWalkingSteps) {
-        this.lastWalkingSteps = lastWalkingSteps;
-    }
-
-    public Double getLastWalkingDistance() {
-        return lastWalkingDistance;
-    }
-
-    public void setLastWalkingDistance(Double lastWalkingDistance) {
-        this.lastWalkingDistance = lastWalkingDistance;
-    }
-
-    public String getLastWalkingPoint() {
-        return lastWalkingPoint;
-    }
-
-    public void setLastWalkingPoint(String lastWalkingPoint) {
-        this.lastWalkingPoint = lastWalkingPoint;
-    }
-
-    public String getLastWalkingAddress() {
-        return lastWalkingAddress;
-    }
-
-    public void setLastWalkingAddress(String lastWalkingAddress) {
-        this.lastWalkingAddress = lastWalkingAddress;
-    }
-
     public Integer getCurrentCombo() {
         return currentCombo;
     }
@@ -249,5 +198,29 @@ public class UserInfo extends UserBase {
     @JsonDeserialize(using = CustomDateDeserializer.class)
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getUserFatDesc() {
+        return userFatDesc;
+    }
+
+    public void setUserFatDesc(String userFatDesc) {
+        this.userFatDesc = userFatDesc;
+    }
+
+    public Double getHealth() {
+        return health;
+    }
+
+    public void setHealth(Double health) {
+        this.health = health;
+    }
+
+    public Double getFatness() {
+        return fatness;
+    }
+
+    public void setFatness(Double fatness) {
+        this.fatness = fatness;
     }
 }

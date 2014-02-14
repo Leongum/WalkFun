@@ -18,10 +18,11 @@ public interface RunningDAO {
 
     public void createRunningHistory(RunningHistory runningHistory);
 
+    public List<SimpleRunningHistory> getSimpleRunningHistoriesByDate(Integer userId);
+
     public List<MissionHistory> getMissionHistoriesByDate(Integer userId, Date lastUpdateTime);
 
     public List<MissionHistory> getUsingMissionHistories(Integer userId);
 
     public void createOrUpdateMissionHistory(MissionHistory missionHistory);
-
 }

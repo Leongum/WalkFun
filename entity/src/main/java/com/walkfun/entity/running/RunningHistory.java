@@ -38,6 +38,7 @@ public class RunningHistory {
     private Integer valid;
     private String missionUuid;
     private Integer sequence;
+    private String propGet;
     private Date commitTime;
 
     public Integer getUserId() {
@@ -230,5 +231,13 @@ public class RunningHistory {
 
     public void setMissionUuid(String missionUuid) {
         this.missionUuid = missionUuid;
+    }
+
+    public String getPropGet() {
+        return propGet;
+    }
+
+    public void setPropGet(String propGet) {
+        this.propGet = propGet;
     }
 }

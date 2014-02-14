@@ -18,21 +18,18 @@
         <result column="PIC_ID" property="picId"/>
         <result column="USER_TITLE_ID" property="userTitleId"/>
         <result column="USER_TITLE" property="userTitle"/>
+        <result column="USER_FAT_DESC" property="userFatDesc"/>
         <result column="LEVEL" property="level"/>
-        <result column="SCORES" property="scores"/>
+        <result column="GOLD_COIN" property="goldCoin"/>
         <result column="EXPERIENCE" property="experience"/>
+        <result column="HEALTH" property="health"/>
+        <result column="FATNESS" property="fatness"/>
         <result column="TOTAL_DISTANCE" property="totalDistance"/>
         <result column="TOTAL_CARLORIE" property="totalCarlorie"/>
         <result column="TOTAL_STEPS" property="totalSteps"/>
         <result column="TOTAL_WALKING_TIMES" property="totalWalkingTimes"/>
         <result column="TOTAL_ACTIVE_TIMES" property="totalActiveTimes"/>
         <result column="AVG_SPEED" property="avgSpeed"/>
-        <result column="LAST_ACTIVE_TIME" property="lastActiveTime"/>
-        <result column="LAST_WALKING_TIME" property="lastWalkingTime"/>
-        <result column="LAST_WALKING_STEPS" property="lastWalkingSteps"/>
-        <result column="LAST_WALKING_DISTANCE" property="lastWalkingDistance"/>
-        <result column="LAST_WALKING_POINT" property="lastWalkingPoint"/>
-        <result column="LAST_WALKING_ADDRESS" property="lastWalkingAddress"/>
         <result column="CURRENT_COMBO" property="currentCombo"/>
         <result column="MAX_COMBO" property="maxCombo"/>
         <result column="UPDATE_TIME" property="updateTime"/>
@@ -52,21 +49,18 @@
         UD.PIC_ID,
         UD.USER_TITLE_ID,
         UD.USER_TITLE,
+        UD.USER_FAT_DESC,
         UD.LEVEL,
-        UD.SCORES,
+        UD.GOLD_COIN,
         UD.EXPERIENCE,
+        UD.HEALTH,
+        UD.FATNESS,
         UD.TOTAL_DISTANCE,
         UD.TOTAL_CARLORIE,
         UD.TOTAL_STEPS,
         UD.TOTAL_WALKING_TIMES,
         UD.TOTAL_ACTIVE_TIMES,
         UD.AVG_SPEED,
-        UD.LAST_ACTIVE_TIME,
-        UD.LAST_WALKING_TIME,
-        UD.LAST_WALKING_STEPS,
-        UD.LAST_WALKING_DISTANCE,
-        UD.LAST_WALKING_POINT,
-        UD.LAST_WALKING_ADDRESS,
         UD.CURRENT_COMBO,
         UD.MAX_COMBO,
         UD.UPDATE_TIME
@@ -164,21 +158,18 @@
             PIC_ID,
             USER_TITLE_ID,
             USER_TITLE,
+            USER_FAT_DESC,
             LEVEL,
-            SCORES,
+            GOLD_COIN,
             EXPERIENCE,
+            HEALTH,
+            FATNESS,
             TOTAL_DISTANCE,
             TOTAL_CARLORIE,
             TOTAL_STEPS,
             TOTAL_WALKING_TIMES,
             TOTAL_ACTIVE_TIMES,
             AVG_SPEED,
-            LAST_ACTIVE_TIME,
-            LAST_WALKING_TIME,
-            LAST_WALKING_STEPS,
-            LAST_WALKING_DISTANCE,
-            LAST_WALKING_POINT,
-            LAST_WALKING_ADDRESS,
             CURRENT_COMBO,
             MAX_COMBO,
             UPDATE_TIME
@@ -189,8 +180,11 @@
           #{detailEntity.picId},
           #{detailEntity.userTitleId},
           #{detailEntity.userTitle},
+          #{detailEntity.userFatDesc},
           #{detailEntity.level},
-          #{detailEntity.scores},
+          #{detailEntity.goldCoin},
+          #{detailEntity.health},
+          #{detailEntity.fatness},
           #{detailEntity.experience},
           #{detailEntity.totalDistance},
           #{detailEntity.totalCarlorie},
@@ -198,12 +192,6 @@
           #{detailEntity.totalWalkingTimes},
           #{detailEntity.totalActiveTimes},
           #{detailEntity.avgSpeed},
-          #{detailEntity.lastActiveTime},
-          #{detailEntity.lastWalkingTime},
-          #{detailEntity.lastWalkingSteps},
-          #{detailEntity.lastWalkingDistance},
-          #{detailEntity.lastWalkingPoint},
-          #{detailEntity.lastWalkingAddress},
           #{detailEntity.currentCombo},
           #{detailEntity.maxCombo},
           now()
@@ -216,21 +204,18 @@
             PIC_ID = #{detailEntity.picId},
             USER_TITLE_ID = #{detailEntity.userTitleId},
             USER_TITLE = #{detailEntity.userTitle},
+            USER_FAT_DESC = #{detailEntity.userFatDesc},
             LEVEL = #{detailEntity.level},
-            SCORES = #{detailEntity.scores},
+            GOLD_COIN = #{detailEntity.goldCoin},
             EXPERIENCE = #{detailEntity.experience},
+            HEALTH = #{detailEntity.health},
+            FATNESS = #{detailEntity.fatness},
             TOTAL_DISTANCE = #{detailEntity.totalDistance},
             TOTAL_CARLORIE = #{detailEntity.totalCarlorie},
             TOTAL_STEPS = #{detailEntity.totalSteps},
             TOTAL_WALKING_TIMES = #{detailEntity.totalWalkingTimes},
             TOTAL_ACTIVE_TIMES = #{detailEntity.totalActiveTimes},
             AVG_SPEED = #{detailEntity.avgSpeed},
-            LAST_ACTIVE_TIME = #{detailEntity.lastActiveTime},
-            LAST_WALKING_TIME = #{detailEntity.lastWalkingTime},
-            LAST_WALKING_STEPS = #{detailEntity.lastWalkingSteps},
-            LAST_WALKING_DISTANCE = #{detailEntity.lastWalkingDistance},
-            LAST_WALKING_POINT = #{detailEntity.lastWalkingPoint},
-            LAST_WALKING_ADDRESS = #{detailEntity.lastWalkingAddress},
             CURRENT_COMBO = #{detailEntity.currentCombo},
             MAX_COMBO = #{detailEntity.maxCombo},
             UPDATE_TIME = now()
@@ -437,4 +422,57 @@
         AND UPDATE_TIME > #{lastUpdateTime}
     </select>
 
+
+    <!--user prop DB-->
+
+    <resultMap id="userPropInfo" type="com.walkfun.entity.account.UserProp">
+        <id column="USER_ID" property="userId"/>
+        <result column="PRODUCT_ID" property="productId"/>
+        <result column="PRODUCT_NAME" property="productName"/>
+        <result column="OWN_NUMBER" property="ownNumber"/>
+        <result column="UPDATE_TIME" property="updateTime"/>
+    </resultMap>
+
+    <sql id="userPropInfoTable">
+        UP.USER_ID,
+        UP.PRODUCT_ID,
+        UP.PRODUCT_NAME,
+        UP.OWN_NUMBER,
+        UP.UPDATE_TIME
+    </sql>
+
+    <select id="getUserProps" resultMap="userPropInfo">
+        SELECT
+        <include refid="userPropInfoTable"/>
+        FROM USER_PROP AS UP
+        WHERE UP.USER_ID = #{userId}
+        <if test="lastUpdateTime != null">
+            <![CDATA[
+        AND UP.UPDATE_TIME > #{lastUpdateTime}
+            ]]>
+        </if>
+    </select>
+
+    <insert id="createOrUpdateUserProp" parameterType="com.walkfun.entity.account.UserProp">
+        INSERT INTO USER_PROP
+        (
+            USER_ID,
+            PRODUCT_ID,
+            PRODUCT_NAME,
+            OWN_NUMBER,
+            UPDATE_TIME
+        )
+        VALUES
+        (
+            #{entity.userId},
+            #{entity.productId},
+            #{entity.productName},
+            #{entity.ownNumber},
+            now()
+        )
+        ON DUPLICATE KEY
+        UPDATE
+            OWN_NUMBER=#{entity.ownNumber},
+            UPDATE_TIME= now();
+    </insert>
 </mapper>
