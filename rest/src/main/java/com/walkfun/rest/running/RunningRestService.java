@@ -38,7 +38,7 @@ public class RunningRestService implements RunningRestDef {
             runningHistory.setUserId(CommonUtils.parseIntegerToNull(userId));
             if (runningHistory.getValid() != 1) {
                 runningHistory.setExperience(0);
-                runningHistory.setScores(0);
+                runningHistory.setGoldCoin(0);
                 runningHistory.setExtraExperience(0);
             }
         }

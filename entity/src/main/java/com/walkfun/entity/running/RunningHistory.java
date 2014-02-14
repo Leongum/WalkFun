@@ -31,7 +31,7 @@ public class RunningHistory {
     private Integer steps;
     private double distance;
     private Integer missionGrade;
-    private double scores;
+    private double goldCoin;
     private double experience;
     private double extraExperience;
     private String comment;
@@ -143,12 +143,12 @@ public class RunningHistory {
         this.distance = distance;
     }
 
-    public double getScores() {
-        return scores;
+    public double getGoldCoin() {
+        return goldCoin;
     }
 
-    public void setScores(double scores) {
-        this.scores = scores;
+    public void setGoldCoin(double goldCoin) {
+        this.goldCoin = goldCoin;
     }
 
     public double getExperience() {

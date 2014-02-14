@@ -20,7 +20,7 @@
         <result column="AVG_SPEED" property="avgSpeed"/>
         <result column="DISTANCE" property="distance"/>
         <result column="MISSION_GRADE" property="missionGrade"/>
-        <result column="SCORES" property="scores"/>
+        <result column="GOLD_COIN" property="goldCoin"/>
         <result column="EXPERIENCE" property="experience"/>
         <result column="EXTRA_EXPERIENCE" property="extraExperience"/>
         <result column="COMMENT" property="comment"/>
@@ -47,7 +47,7 @@
         AVG_SPEED,
         DISTANCE,
         MISSION_GRADE,
-        SCORES,
+        GOLD_COIN,
         EXPERIENCE,
         EXTRA_EXPERIENCE,
         COMMENT,
@@ -93,7 +93,7 @@
             AVG_SPEED,
             DISTANCE,
             MISSION_GRADE,
-            SCORES,
+            GOLD_COIN,
             EXPERIENCE,
             EXTRA_EXPERIENCE,
             COMMENT,
@@ -120,7 +120,7 @@
             #{entity.avgSpeed},
             #{entity.distance},
             #{entity.missionGrade},
-            #{entity.scores},
+            #{entity.goldCoin},
             #{entity.experience},
             #{entity.extraExperience},
             #{entity.comment},
