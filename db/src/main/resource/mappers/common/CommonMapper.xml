@@ -47,90 +47,6 @@
         WHERE UPDATE_TIME > #{lastUpdateTime}
     </select>
 
-    <!-- Feedback -->
-    <sql id="feedbackTable">
-        DEVICE_ID,
-        USER_ID,
-        SUGGESTION,
-        COMMIT_TIME,
-        CONTACT
-    </sql>
-
-    <insert id="createFeedback" parameterType="com.walkfun.entity.common.Feedback">
-        INSERT INTO FEEDBACK
-        (
-            DEVICE_ID,
-            USER_ID,
-            SUGGESTION,
-            COMMIT_TIME,
-            CONTACT
-        )
-        VALUES
-        (
-            #{entity.deviceId},
-            #{entity.userId},
-            #{entity.suggestion},
-            #{entity.commitTime},
-            #{entity.contact}
-        )
-    </insert>
-
-    <!-- down Load info -->
-    <resultMap id="downloadStatisticsInfo" type="com.walkfun.entity.common.DownloadStatistics">
-        <id column="PLATFORM" property="platform"/>
-        <result column="DOWNLOAD_TIME" property="downloadTime"/>
-        <result column="VERSION" property="version"/>
-    </resultMap>
-
-    <sql id="downloadStatisticsTable">
-        PLATFORM,
-        DOWNLOAD_TIME,
-        VERSION
-    </sql>
-
-    <insert id="createDownLoadInfo" parameterType="com.walkfun.entity.common.DownloadStatistics">
-        INSERT INTO DOWNLOAD_STATICS
-        (
-            PLATFORM,
-            DOWNLOAD_TIME,
-            VERSION
-        )
-        VALUES
-        (
-            #{entity.platform},
-            #{entity.downloadTime},
-            #{entity.version}
-        )
-    </insert>
-
-    <!-- Method Collector -->
-    <resultMap id="methodCollectorInfo" type="com.walkfun.entity.common.MethodCollector">
-        <id column="METHOD_NAME" property="methodName"/>
-        <result column="METHOD_TIMES" property="methodTimes"/>
-        <result column="USE_DATE" property="useDate"/>
-    </resultMap>
-
-    <sql id="methodCollectorTable">
-        METHOD_NAME,
-        METHOD_TIMES,
-        USE_DATE
-    </sql>
-
-    <insert id="createMethodCollector" parameterType="com.walkfun.entity.common.MethodCollector">
-        INSERT INTO METHOD_COLLECTOR
-        (
-            METHOD_NAME,
-            METHOD_TIMES,
-            USE_DATE
-        )
-        VALUES
-        (
-            #{entity.methodName},
-            #{entity.methodTimes},
-            #{entity.useDate}
-        )
-    </insert>
-
     <!-- Recommend App -->
     <resultMap id="recommendAppInfo" type="com.walkfun.entity.common.RecommendApp">
         <id column="APP_ID" property="appId"/>
@@ -163,6 +79,39 @@
         AND UPDATE_TIME > #{lastUpdateTime}
         ]]></if>
         ORDER BY SEQUENCE ASC
+    </select>
+
+    <!-- Action Define -->
+    <resultMap id="actionDefineInfo" type="com.walkfun.entity.common.ActionDefination">
+        <id column="ACTION_ID" property="actionId"/>
+        <result column="ACTION_TYPE" property="actionType"/>
+        <result column="ACTION_NAME" property="actionName"/>
+        <result column="ACTION_DESCRIPTION" property="actionDescription"/>
+        <result column="ACTION_ATTRIBUTE" property="actionAttribute"/>
+        <result column="ACTION_RULE" property="actionRule"/>
+        <result column="TRIGGER_PROBABILITY" property="triggerProbability"/>
+        <result column="UPDATE_TIME" property="updateTime"/>
+    </resultMap>
+
+    <sql id="actionDefineTable">
+        ACTION_ID,
+        ACTION_TYPE,
+        ACTION_NAME,
+        ACTION_DESCRIPTION,
+        ACTION_ATTRIBUTE,
+        ACTION_RULE,
+        TRIGGER_PROBABILITY,
+        UPDATE_TIME
+    </sql>
+
+    <select id="getActionDefine" resultMap="actionDefineInfo">
+        SELECT
+        <include refid="actionDefineTable"/>
+        FROM ACTION_DEFINE
+        WHERE 1 = 1
+        <if test="lastUpdateTime != null"><![CDATA[
+        AND UPDATE_TIME > #{lastUpdateTime}
+        ]]></if>
     </select>
 
 </mapper>

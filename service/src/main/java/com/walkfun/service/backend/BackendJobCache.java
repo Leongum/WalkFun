@@ -1,10 +1,7 @@
 package com.walkfun.service.backend;
 
 import com.walkfun.common.lib.CommonUtils;
-import com.walkfun.common.lib.MethodCollector;
-import com.walkfun.entity.common.RecommendApp;
-import com.walkfun.entity.common.SystemMessage;
-import com.walkfun.entity.common.VersionControl;
+import com.walkfun.entity.common.*;
 import com.walkfun.entity.mission.Mission;
 import com.walkfun.entity.vproduct.VProduct;
 import com.walkfun.service.common.def.CommonService;
@@ -15,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -45,6 +41,8 @@ public class BackendJobCache {
 
     public static List<RecommendApp> allRecommendApp = new ArrayList<RecommendApp>();
 
+    public static List<ActionDefination> allActionDefine = new ArrayList<ActionDefination>();
+
     public static List<VProduct> allProducts = new ArrayList<VProduct>();
 
     public static Date missionLastTime = CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00");
@@ -58,6 +56,10 @@ public class BackendJobCache {
     public static Date recommendAppLastTime = CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00");
 
     public static Date recommendAppFirstTime = CommonUtils.parseDateDefaultToNull("3001-01-01 00:00:00");
+
+    public static Date actionDefineLastTime = CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00");
+
+    public static Date actionDefineFirstTime = CommonUtils.parseDateDefaultToNull("3001-01-01 00:00:00");
 
     public static Date productLastTime = CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00");
 
@@ -100,13 +102,20 @@ public class BackendJobCache {
         }
     }
 
-    public void versionServiceJob() {
-        versionControlIOS = commonService.getVersionControl("ios");
+    public void actionDefineServiceJob() {
+        allActionDefine = commonService.getActionDefine(CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00"));
+        for (ActionDefination actionDefination : allActionDefine) {
+            if (actionDefination.getUpdateTime().after(actionDefineLastTime)) {
+                actionDefineLastTime = actionDefination.getUpdateTime();
+            }
+            if (actionDefination.getUpdateTime().before(actionDefineFirstTime)) {
+                actionDefineFirstTime = actionDefination.getUpdateTime();
+            }
+        }
     }
 
-    public void methodCollectorJob() {
-        commonService.createMethodCollector(MethodCollector.methods);
-        MethodCollector.methods = new HashMap<String, Integer>();
+    public void versionServiceJob() {
+        versionControlIOS = commonService.getVersionControl("ios");
     }
 
     public void productServiceJob(){

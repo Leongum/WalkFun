@@ -34,6 +34,7 @@ public class UserInfo extends UserBase {
     private Double avgSpeed;
     private Integer currentCombo;
     private Integer maxCombo;
+    private String propHaving;
     private Date updateTime;
 
     public UserInfo() {
@@ -222,5 +223,13 @@ public class UserInfo extends UserBase {
 
     public void setFatness(Double fatness) {
         this.fatness = fatness;
+    }
+
+    public String getPropHaving() {
+        return propHaving;
+    }
+
+    public void setPropHaving(String propHaving) {
+        this.propHaving = propHaving;
     }
 }

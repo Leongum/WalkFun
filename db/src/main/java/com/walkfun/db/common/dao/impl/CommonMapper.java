@@ -19,11 +19,7 @@ public interface CommonMapper {
 
     public List<SystemMessage> getSystemMessageInfo( @Param("lastUpdateTime") Date lastUpdateTime);
 
-    public void createFeedback(@Param("entity")Feedback feedback);
-
-    public void createDownLoadInfo(@Param("entity")DownloadStatistics statistics);
-
-    public void createMethodCollector(@Param("entity")MethodCollector methodCollector);
-
     public List<RecommendApp> getRecommendApp(@Param("lastUpdateTime")Date lastUpdateTime);
+
+    public List<ActionDefination> getActionDefine(@Param("lastUpdateTime")Date lastUpdateTime);
 }

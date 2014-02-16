@@ -29,9 +29,7 @@ public interface AccountDAO {
 
     public void createOrUpdateUserFriend(UserFriend userFriend);
 
-    public List<UserFriend> getUserFollows(Integer userId, Date lastUpdateTime);
-
-    public List<UserFriend> getUserFans(Integer userId, Date lastUpdateTime);
+    public List<UserFriend> getUserFriends(Integer userId, Date lastUpdateTime);
 
     public void createUserAction(UserAction userAction);
 

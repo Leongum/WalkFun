@@ -59,15 +59,8 @@ public interface AccountRestDef extends RestDef {
 
     //获取我的关注
     @GET
-    @Path("/friends/get/follows/{" + PARAM_USER_ID + "}")
-    List<UserFriend> getUserFollows(
-            @PathParam(PARAM_USER_ID) String userId,
-            @QueryParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
-
-    //获取我的粉丝
-    @GET
-    @Path("/friends/get/fans/{" + PARAM_USER_ID + "}")
-    List<UserFriend> getUserFans(
+    @Path("/friends/get/{" + PARAM_USER_ID + "}")
+    List<UserFriend> getUserFriends(
             @PathParam(PARAM_USER_ID) String userId,
             @QueryParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
 

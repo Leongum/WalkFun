@@ -25,23 +25,13 @@ public class CommonDAOImpl implements CommonDAO{
     }
 
     @Override
-    public void createFeedback(Feedback feedback) {
-        commonMapper.createFeedback(feedback);
-    }
-
-    @Override
-    public void createDownLoadInfo(DownloadStatistics statistics) {
-        commonMapper.createDownLoadInfo(statistics);
-    }
-
-    @Override
-    public void createMethodCollector(MethodCollector methodCollector) {
-        commonMapper.createMethodCollector(methodCollector);
-    }
-
-    @Override
     public List<RecommendApp> getRecommendApp(Date lastUpdateTime) {
         return commonMapper.getRecommendApp(lastUpdateTime);
+    }
+
+    @Override
+    public List<ActionDefination> getActionDefine(Date lastUpdateTime) {
+        return commonMapper.getActionDefine(lastUpdateTime);
     }
 
     @Override

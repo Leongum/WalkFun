@@ -18,11 +18,7 @@ public interface CommonDAO {
 
     public List<SystemMessage> getSystemMessage(Date lastUpdateTime);
 
-    public void createFeedback(Feedback feedback);
-
-    public void createDownLoadInfo(DownloadStatistics statistics);
-
-    public void createMethodCollector(MethodCollector methodCollector);
-
     public List<RecommendApp> getRecommendApp(Date lastUpdateTime);
+
+    public List<ActionDefination> getActionDefine(Date lastUpdateTime);
 }

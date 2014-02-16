@@ -34,13 +34,10 @@ public interface SystemRestDef extends RestDef {
     List<RecommendApp> getRecommendApp(
             @PathParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
 
-    @POST
-    @Path("/feedback/post")
-    void createFeedbackInfo(Feedback feedback);
-
-    @POST
-    @Path("/download/post")
-    void createDownLoadInfo(DownloadStatistics statistics);
+    @GET
+    @Path("/actionDefine/get/{" + PARAM_LAST_UPDATE_TIME + "}")
+    List<ActionDefination> getActionDefine(
+            @PathParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
 
     @GET
     @Path("/cache/evict/{" + PARAM_CACHE_ID + "}")

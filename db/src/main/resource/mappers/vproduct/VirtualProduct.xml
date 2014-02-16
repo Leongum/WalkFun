@@ -36,6 +36,7 @@
     <resultMap id="vProductHistoryInfo" type="com.walkfun.entity.vproduct.VProductHistory">
         <id column="USER_ID" property="userId"/>
         <result column="PRODUCT_ID" property="productId"/>
+        <result column="NUMBERS" property="numbers"/>
         <result column="BUY_TIME" property="buyTime"/>
     </resultMap>
 
@@ -44,12 +45,14 @@
         (
             USER_ID,
             PRODUCT_ID,
+            NUMBERS,
             BUY_TIME
         )
         VALUES
         (
             #{entity.userId},
             #{entity.productId},
+            #{entity.numbers},
             now()
         )
     </insert>

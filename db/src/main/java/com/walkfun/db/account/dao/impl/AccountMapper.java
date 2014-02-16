@@ -33,9 +33,7 @@ public interface AccountMapper {
 
     public void createOrUpdateUserFriend(@Param("entity") UserFriend userFriend);
 
-    public List<UserFriend> getUserFollows(@Param("userId") Integer userId, @Param("lastUpdateTime") Date lastUpdateTime);
-
-    public List<UserFriend> getUserFans(@Param("userId") Integer userId, @Param("lastUpdateTime") Date lastUpdateTime);
+    public List<UserFriend> getUserFriends(@Param("userId") Integer userId, @Param("lastUpdateTime") Date lastUpdateTime);
 
     public void createUserAction(@Param("entity") UserAction userAction);
 

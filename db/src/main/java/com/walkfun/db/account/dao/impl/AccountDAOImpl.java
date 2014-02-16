@@ -84,13 +84,8 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
-    public List<UserFriend> getUserFollows(Integer userId, Date lastUpdateTime) {
-        return accountMapper.getUserFollows(userId, lastUpdateTime);
-    }
-
-    @Override
-    public List<UserFriend> getUserFans(Integer userId, Date lastUpdateTime) {
-        return accountMapper.getUserFans(userId, lastUpdateTime);
+    public List<UserFriend> getUserFriends(Integer userId, Date lastUpdateTime) {
+        return accountMapper.getUserFriends(userId, lastUpdateTime);
     }
 
     @Override

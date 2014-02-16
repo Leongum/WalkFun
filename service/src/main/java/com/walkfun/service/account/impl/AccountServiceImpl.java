@@ -137,18 +137,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<UserFriend> getUserFollows(Integer userId, Date lastUpdateTime) {
+    public List<UserFriend> getUserFriends(Integer userId, Date lastUpdateTime) {
         try {
-            return accountDAO.getUserFollows(userId, lastUpdateTime);
-        } catch (Exception ex) {
-            throw new ServerRequestException(ex.getMessage());
-        }
-    }
-
-    @Override
-    public List<UserFriend> getUserFans(Integer userId, Date lastUpdateTime) {
-        try {
-            return accountDAO.getUserFans(userId, lastUpdateTime);
+            return accountDAO.getUserFriends(userId, lastUpdateTime);
         } catch (Exception ex) {
             throw new ServerRequestException(ex.getMessage());
         }

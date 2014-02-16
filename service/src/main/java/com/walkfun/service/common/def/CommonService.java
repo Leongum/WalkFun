@@ -22,17 +22,15 @@ public interface CommonService {
 
     List<SystemMessage> getSystemMessageForRest(Date lastUpdateTime);
 
-    void createFeedback(Feedback feedback);
-
-    void createDownLoadInfo(DownloadStatistics statistics);
-
-    void createMethodCollector(Map<String,Integer> methods);
-
     void evictCache(String cacheId);
 
     List<RecommendApp> getRecommendApp(Date lastUpdateTime);
 
     List<RecommendApp> getRecommendAppForRest(Date lastUpdateTime);
+
+    List<ActionDefination> getActionDefine(Date lastUpdateTime);
+
+    List<ActionDefination> getActionDefineForRest(Date lastUpdateTime);
 
     void evictJobCache(String jobCache);
 }

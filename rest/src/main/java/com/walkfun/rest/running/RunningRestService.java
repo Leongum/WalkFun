@@ -25,14 +25,12 @@ public class RunningRestService implements RunningRestDef {
 
     @Override
     public List<RunningHistory> getRunningHistories(String userId, String lastUpdateTime) {
-        CommonUtils.newMethodCall("Fetch running history");
         return runningService.getRunningHistoriesByDate(CommonUtils.parseIntegerToNull(userId),
                 CommonUtils.parseDateDefaultToNull(lastUpdateTime));
     }
 
     @Override
     public void createRunningHistory(String userId, List<RunningHistory> runningHistoryList) {
-        CommonUtils.newMethodCall("Create Running History");
         accountService.checkUserLoginStatus(CommonUtils.parseIntegerToNull(userId));
         for (RunningHistory runningHistory : runningHistoryList) {
             runningHistory.setUserId(CommonUtils.parseIntegerToNull(userId));
@@ -47,26 +45,22 @@ public class RunningRestService implements RunningRestDef {
 
     @Override
     public List<SimpleRunningHistory> getSimpleRunningHistories(String userId) {
-        CommonUtils.newMethodCall("Fetch User Simple History");
         return runningService.getSimpleRunningHistoriesByDate(CommonUtils.parseIntegerToNull(userId));
     }
 
     @Override
     public List<MissionHistory> getMissionHistoriesByDate(String userId,String lastUpdateTime) {
-        CommonUtils.newMethodCall("Fetch Mission history");
         return runningService.getMissionHistoriesByDate(CommonUtils.parseIntegerToNull(userId),
                 CommonUtils.parseDateDefaultToNull(lastUpdateTime));
     }
 
     @Override
     public List<MissionHistory> getUsingMissionHistories(String userId) {
-        CommonUtils.newMethodCall("Fetch Using Mission history");
         return runningService.getUsingMissionHistories(CommonUtils.parseIntegerToNull(userId));
     }
 
     @Override
     public void createOrUpdateMissionHistory(String userId, List<MissionHistory> missionHistoryList) {
-        CommonUtils.newMethodCall("Create Mission History");
         accountService.checkUserLoginStatus(CommonUtils.parseIntegerToNull(userId));
         for (MissionHistory runningHistory : missionHistoryList) {
             runningHistory.setUserId(CommonUtils.parseIntegerToNull(userId));

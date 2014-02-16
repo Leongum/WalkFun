@@ -84,40 +84,6 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public void createFeedback(Feedback feedback) {
-        try {
-            commonDAO.createFeedback(feedback);
-        } catch (Exception ex) {
-            throw new ServerRequestException(ex.getMessage());
-        }
-    }
-
-    @Override
-    public void createDownLoadInfo(DownloadStatistics statistics) {
-        try {
-            commonDAO.createDownLoadInfo(statistics);
-        } catch (Exception ex) {
-            throw new ServerRequestException(ex.getMessage());
-        }
-    }
-
-    @Override
-    public void createMethodCollector(Map<String, Integer> methods) {
-        try {
-            Date now = new Date();
-            for (String key : methods.keySet()) {
-                MethodCollector methodCollector = new MethodCollector();
-                methodCollector.setMethodName(key);
-                methodCollector.setMethodTimes(methods.get(key));
-                methodCollector.setUseDate(now);
-                commonDAO.createMethodCollector(methodCollector);
-            }
-        } catch (Exception ex) {
-            throw new ServerRequestException(ex.getMessage());
-        }
-    }
-
-    @Override
     public void evictCache(String cacheId) {
     }
 
@@ -146,6 +112,30 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
+    public List<ActionDefination> getActionDefine(Date lastUpdateTime) {
+        try {
+            return commonDAO.getActionDefine(lastUpdateTime);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public List<ActionDefination> getActionDefineForRest(Date lastUpdateTime) {
+        try {
+            if (lastUpdateTime.before(BackendJobCache.actionDefineFirstTime)) {
+                return BackendJobCache.allActionDefine;
+            }
+            if (lastUpdateTime.after(BackendJobCache.actionDefineLastTime)) {
+                return new ArrayList<ActionDefination>();
+            }
+            return getActionDefine(lastUpdateTime);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
+    }
+
+    @Override
     public void evictJobCache(String jobCache) {
         if (jobCache.equalsIgnoreCase("missionServiceJob")) {
             backendJobCache.missionServiceJob();
@@ -156,6 +146,8 @@ public class CommonServiceImpl implements CommonService {
         } else if (jobCache.equalsIgnoreCase("versionServiceJob")) {
             backendJobCache.versionServiceJob();
         } else if (jobCache.equalsIgnoreCase("productServiceJob")) {
+            backendJobCache.productServiceJob();
+        }  else if (jobCache.equalsIgnoreCase("actionDefineServiceJob")) {
             backendJobCache.productServiceJob();
         }
     }

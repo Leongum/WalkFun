@@ -18,6 +18,7 @@ public class VProductHistory {
 
     private Integer userId;
     private Integer productId;
+    private Integer numbers;
     private Date buyTime;
 
     public Integer getUserId() {
@@ -34,6 +35,14 @@ public class VProductHistory {
 
     public void setProductId(Integer productId) {
         this.productId = productId;
+    }
+
+    public Integer getNumbers() {
+        return numbers;
+    }
+
+    public void setNumbers(Integer numbers) {
+        this.numbers = numbers;
     }
 
     @JsonSerialize(using = CustomDateSerializer.class)
