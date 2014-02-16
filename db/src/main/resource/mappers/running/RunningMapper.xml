@@ -142,7 +142,7 @@
         <result column="DISTANCE" property="distance"/>
         <result column="MISSION_GRADE" property="missionGrade"/>
         <result column="PROP_GET" property="propGet"/>
-        <result column="COMMIT_TIME" property="commitTime"/>
+        <result column="MISSION_END_TIME" property="missionEndTime"/>
     </resultMap>
 
     <sql id="simpleRunningHistoryTable">
@@ -154,7 +154,7 @@
         DISTANCE,
         MISSION_GRADE,
         PROP_GET,
-        COMMIT_TIME
+        MISSION_END_TIME
     </sql>
 
     <select id="getSimpleRunningHistoriesByDate" resultMap="simpleRunningHistoryInfo">
@@ -162,7 +162,7 @@
         <include refid="simpleRunningHistoryTable"/>
         FROM USER_RUNNING_HISTORY
         WHERE USER_ID = #{userId}
-        ORDER BY MISSION_DATE DESC
+        ORDER BY MISSION_END_TIME DESC
         LIMIT 3
     </select>
 

@@ -25,7 +25,7 @@ public class SimpleRunningHistory {
     private double distance;
     private Integer missionGrade;
     private String propGet;
-    private Date commitTime;
+    private Date missionEndTime;
 
     public Integer getUserId() {
         return userId;
@@ -92,12 +92,12 @@ public class SimpleRunningHistory {
     }
 
     @JsonSerialize(using = CustomDateSerializer.class)
-    public Date getCommitTime() {
-        return commitTime;
+    public Date getMissionEndTime() {
+        return missionEndTime;
     }
 
     @JsonDeserialize(using = CustomDateDeserializer.class)
-    public void setCommitTime(Date commitTime) {
-        this.commitTime = commitTime;
+    public void setMissionEndTime(Date missionEndTime) {
+        this.missionEndTime = missionEndTime;
     }
 }

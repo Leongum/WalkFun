@@ -50,7 +50,7 @@
         (
             #{entity.userId},
             #{entity.productId},
-            #{entity.buyTime}
+            now()
         )
     </insert>
 
