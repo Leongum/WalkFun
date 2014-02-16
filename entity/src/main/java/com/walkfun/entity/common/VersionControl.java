@@ -34,6 +34,8 @@ public class VersionControl {
 
     private Date productLastUpdateTime;
 
+    private Date actionDefineUpdateTime;
+
     public String getPlatform() {
         return platform;
     }
@@ -114,5 +116,15 @@ public class VersionControl {
     @JsonDeserialize(using = CustomDateDeserializer.class)
     public void setProductLastUpdateTime(Date productLastUpdateTime) {
         this.productLastUpdateTime = productLastUpdateTime;
+    }
+
+    @JsonSerialize(using = CustomDateSerializer.class)
+    public Date getActionDefineUpdateTime() {
+        return actionDefineUpdateTime;
+    }
+
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    public void setActionDefineUpdateTime(Date actionDefineUpdateTime) {
+        this.actionDefineUpdateTime = actionDefineUpdateTime;
     }
 }
