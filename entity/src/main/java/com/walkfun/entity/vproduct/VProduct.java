@@ -21,6 +21,7 @@ public class VProduct {
     private String productDescription;
     private Integer virtualPrice;
     private Integer dropFlag;
+    private String picLink;
     private Date updateTime;
 
     public Integer getProductId() {
@@ -71,5 +72,13 @@ public class VProduct {
     @JsonDeserialize(using = CustomDateDeserializer.class)
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getPicLink() {
+        return picLink;
+    }
+
+    public void setPicLink(String picLink) {
+        this.picLink = picLink;
     }
 }

@@ -10,6 +10,7 @@
         <result column="PRODUCT_DESCRIPTION" property="productDescription"/>
         <result column="VIRTUAL_PRICE" property="virtualPrice"/>
         <result column="DROP_FLAG" property="dropFlag"/>
+        <result column="PIC_LINK" property="picLink"/>
         <result column="UPDATE_TIME" property="updateTime"/>
     </resultMap>
 
@@ -19,6 +20,7 @@
         PRODUCT_DESCRIPTION,
         VIRTUAL_PRICE,
         DROP_FLAG,
+        PIC_LINK,
         UPDATE_TIME
     </sql>
 
