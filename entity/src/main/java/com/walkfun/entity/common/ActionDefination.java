@@ -18,11 +18,13 @@ public class ActionDefination {
 
     private Integer actionId;
     private Integer actionType; //0 for run 1 for use
+    private Integer inUsing;
     private String actionName;
     private String actionDescription;
     private String actionAttribute;
     private String actionRule;
     private Double triggerProbability;
+    private String soundLink;
     private Date updateTime;
 
     public Integer getActionId() {
@@ -79,6 +81,22 @@ public class ActionDefination {
 
     public void setTriggerProbability(Double triggerProbability) {
         this.triggerProbability = triggerProbability;
+    }
+
+    public String getSoundLink() {
+        return soundLink;
+    }
+
+    public void setSoundLink(String soundLink) {
+        this.soundLink = soundLink;
+    }
+
+    public Integer getInUsing() {
+        return inUsing;
+    }
+
+    public void setInUsing(Integer inUsing) {
+        this.inUsing = inUsing;
     }
 
     @JsonSerialize(using = CustomDateSerializer.class)
