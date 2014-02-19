@@ -17,5 +17,6 @@ public interface RestDef {
     static final String PARAM_MISSION_ID = "missionId";
     static final String PARAM_CACHE_ID = "cacheId";
 
+    static final String PARAM_PAGE_NO = "pageNo";
     static final String HEADER_PARAM_KEY = "X-CLIENT-KEY";
 }

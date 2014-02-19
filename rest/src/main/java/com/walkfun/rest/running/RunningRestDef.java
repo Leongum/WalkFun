@@ -43,11 +43,6 @@ public interface RunningRestDef extends RestDef {
             @PathParam(PARAM_USER_ID) String userId,
             @QueryParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
 
-    @GET
-    @Path("/history/mission/using/get/{" + PARAM_USER_ID + "}")
-    List<MissionHistory> getUsingMissionHistories(
-            @PathParam(PARAM_USER_ID) String userId);
-
     @POST
     @Path("/history/mission/put/{" + PARAM_USER_ID + "}")
     void createOrUpdateMissionHistory( @PathParam(PARAM_USER_ID) String userId,

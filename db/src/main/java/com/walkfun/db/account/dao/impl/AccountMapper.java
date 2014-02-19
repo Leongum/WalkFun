@@ -43,6 +43,8 @@ public interface AccountMapper {
 
     public List<SearchUserInfo> searchAccountInfoByName(@Param("nickName") String nickName);
 
+    public List<SearchUserInfo> getRecommendFriend();
+
     public List<FriendSortInfo> getFriendSort(@Param("userId") Integer userId, @Param("lastUpdateTime") Date lastUpdateTime);
 
     public List<UserProp> getUserProps(@Param("userId") Integer userId, @Param("lastUpdateTime") Date lastUpdateTime);

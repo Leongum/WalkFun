@@ -27,7 +27,5 @@ public interface RunningMapper {
     public List<MissionHistory> getMissionHistoriesByDate(@Param("userId") Integer userId,
                                                           @Param("lastUpdateTime") Date lastUpdateTime);
 
-    public List<MissionHistory> getUsingMissionHistories(@Param("userId") Integer userId);
-
     public void createOrUpdateMissionHistory(@Param("entity") MissionHistory missionHistory);
 }

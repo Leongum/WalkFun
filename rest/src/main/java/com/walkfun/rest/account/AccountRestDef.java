@@ -64,6 +64,12 @@ public interface AccountRestDef extends RestDef {
             @PathParam(PARAM_USER_ID) String userId,
             @QueryParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
 
+    //获取我的关注
+    @GET
+    @Path("/friends/recommend/{" + PARAM_PAGE_NO + "}")
+    List<SearchUserInfo> getRecommendFriends(
+            @PathParam(PARAM_PAGE_NO) String pageNo);
+
     //创建用户动作
     @POST
     @Path("/action/create/{" + PARAM_USER_ID + "}")

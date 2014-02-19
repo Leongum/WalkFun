@@ -24,4 +24,9 @@ public class MissionRestService implements MissionRestDef {
         return missionService.getMissionsForRest(CommonUtils.parseIntegerToNull(missionId),
                 CommonUtils.parseDateDefaultToNull(lastUpdateTime));
     }
+
+    @Override
+    public Mission getDailyMission(String userId) {
+        return missionService.getDailyMission(CommonUtils.parseIntegerToNull(userId));
+    }
 }

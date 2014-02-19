@@ -40,7 +40,7 @@ public class SystemRestService implements SystemRestDef{
 
     @Override
     public List<ActionDefination> getActionDefine(String lastUpdateTime) {
-        return commonService.getActionDefine(CommonUtils.parseDateDefaultToNull(lastUpdateTime));
+        return commonService.getActionDefineForRest(CommonUtils.parseDateDefaultToNull(lastUpdateTime));
     }
 
     @Override

@@ -31,9 +31,9 @@ public class UserInfo extends UserBase {
     private Double totalSteps;
     private Double totalWalkingTimes;
     private Double totalActiveTimes;
-    private Double avgSpeed;
     private Integer currentCombo;
     private Integer maxCombo;
+    private Integer missionCombo;
     private String propHaving;
     private Date updateTime;
 
@@ -65,9 +65,9 @@ public class UserInfo extends UserBase {
         this.totalSteps = 0d;
         this.totalWalkingTimes = 0d;
         this.totalActiveTimes = 0d;
-        this.avgSpeed = 0d;
         this.currentCombo = 0;
         this.maxCombo = 0;
+        this.missionCombo = 0;
         this.updateTime = new Date();
     }
 
@@ -167,14 +167,6 @@ public class UserInfo extends UserBase {
         this.totalActiveTimes = totalActiveTimes;
     }
 
-    public Double getAvgSpeed() {
-        return avgSpeed;
-    }
-
-    public void setAvgSpeed(Double avgSpeed) {
-        this.avgSpeed = avgSpeed;
-    }
-
     public Integer getCurrentCombo() {
         return currentCombo;
     }
@@ -231,5 +223,13 @@ public class UserInfo extends UserBase {
 
     public void setPropHaving(String propHaving) {
         this.propHaving = propHaving;
+    }
+
+    public Integer getMissionCombo() {
+        return missionCombo;
+    }
+
+    public void setMissionCombo(Integer missionCombo) {
+        this.missionCombo = missionCombo;
     }
 }

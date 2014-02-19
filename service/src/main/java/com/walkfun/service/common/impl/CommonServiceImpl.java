@@ -150,6 +150,8 @@ public class CommonServiceImpl implements CommonService {
             backendJobCache.productServiceJob();
         }  else if (jobCache.equalsIgnoreCase("actionDefineServiceJob")) {
             backendJobCache.productServiceJob();
+        }  else if (jobCache.equalsIgnoreCase("recommendUserServiceJob")) {
+            backendJobCache.recommendUserServiceJob();
         }
     }
 }

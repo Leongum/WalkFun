@@ -10,7 +10,6 @@
         <result column="MISSION_ID" property="missionId"/>
         <result column="MISSION_TYPE_ID" property="missionTypeId"/>
         <result column="MISSION_ROUTE" property="missionRoute"/>
-        <result column="SPEED_LIST" property="speedList"/>
         <result column="MISSION_START_TIME" property="missionStartTime"/>
         <result column="MISSION_END_TIME" property="missionEndTime"/>
         <result column="MISSION_DATE" property="missionDate"/>
@@ -21,6 +20,7 @@
         <result column="DISTANCE" property="distance"/>
         <result column="MISSION_GRADE" property="missionGrade"/>
         <result column="GOLD_COIN" property="goldCoin"/>
+        <result column="EXTRA_GOLD_COIN" property="extraGoldCoin"/>
         <result column="EXPERIENCE" property="experience"/>
         <result column="EXTRA_EXPERIENCE" property="extraExperience"/>
         <result column="COMMENT" property="comment"/>
@@ -37,7 +37,6 @@
         MISSION_ID,
         MISSION_TYPE_ID,
         MISSION_ROUTE,
-        SPEED_LIST,
         MISSION_START_TIME,
         MISSION_END_TIME,
         MISSION_DATE,
@@ -48,6 +47,7 @@
         DISTANCE,
         MISSION_GRADE,
         GOLD_COIN,
+        EXTRA_GOLD_COIN,
         EXPERIENCE,
         EXTRA_EXPERIENCE,
         COMMENT,
@@ -83,7 +83,6 @@
             MISSION_ID,
             MISSION_TYPE_ID,
             MISSION_ROUTE,
-            SPEED_LIST,
             MISSION_START_TIME,
             MISSION_END_TIME,
             MISSION_DATE,
@@ -94,6 +93,7 @@
             DISTANCE,
             MISSION_GRADE,
             GOLD_COIN,
+            EXTRA_GOLD_COIN,
             EXPERIENCE,
             EXTRA_EXPERIENCE,
             COMMENT,
@@ -110,7 +110,6 @@
             #{entity.missionId},
             #{entity.missionTypeId},
             #{entity.missionRoute},
-            #{entity.speedList},
             #{entity.missionStartTime},
             #{entity.missionEndTime},
             #{entity.missionDate},
@@ -121,6 +120,7 @@
             #{entity.distance},
             #{entity.missionGrade},
             #{entity.goldCoin},
+            #{entity.extraGoldCoin},
             #{entity.experience},
             #{entity.extraExperience},
             #{entity.comment},
@@ -172,13 +172,12 @@
         <result column="USER_ID" property="userId"/>
         <result column="USER_NAME" property="userName"/>
         <result column="MISSION_ID" property="missionId"/>
+        <result column="MISSION_TYPE_ID" property="missionTypeId"/>
         <result column="MISSION_NAME" property="missionName"/>
         <result column="START_TIME" property="startTime"/>
         <result column="END_TIME" property="endTime"/>
-        <result column="LAST_RUN_TIME" property="lastRunTime"/>
-        <result column="HISTORY_STATUS" property="historyStatus"/>
-        <result column="CURRENT_COMBO" property="currentCombo"/>
-        <result column="TOTAL_ACTIVE_TIMES" property="totalActiveTimes"/>
+        <result column="MISSION_STATUS" property="missionStatus"/>
+        <result column="MISSION_STATUS_COMMENT" property="missionStatusComment"/>
         <result column="UPDATE_TIME" property="updateTime"/>
     </resultMap>
 
@@ -187,13 +186,12 @@
         USER_ID,
         USER_NAME,
         MISSION_ID,
+        MISSION_TYPE_ID,
         MISSION_NAME,
         START_TIME,
         END_TIME,
-        LAST_RUN_TIME,
-        HISTORY_STATUS,
-        CURRENT_COMBO,
-        TOTAL_ACTIVE_TIMES,
+        MISSION_STATUS,
+        MISSION_STATUS_COMMENT,
         UPDATE_TIME
     </sql>
 
@@ -207,15 +205,6 @@
         LIMIT 50
     </select>
 
-    <select id="getUsingMissionHistories" resultMap="missionHistoryInfo">
-        SELECT
-        <include refid="missionHistoryTable"/>
-        FROM USER_MISSION_HISTORY
-        WHERE USER_ID = #{userId}
-        AND HISTORY_STATUS = 0
-        ORDER BY LAST_RUN_TIME DESC
-    </select>
-
     <insert id="createOrUpdateMissionHistory" parameterType="com.walkfun.entity.running.MissionHistory">
         INSERT INTO USER_MISSION_HISTORY
         (
@@ -223,13 +212,12 @@
             USER_ID,
             USER_NAME,
             MISSION_ID,
+            MISSION_TYPE_ID,
             MISSION_NAME,
             START_TIME,
             END_TIME,
-            LAST_RUN_TIME,
-            HISTORY_STATUS,
-            CURRENT_COMBO,
-            TOTAL_ACTIVE_TIMES,
+            MISSION_STATUS,
+            MISSION_STATUS_COMMENT,
             UPDATE_TIME
         )
         VALUES
@@ -238,22 +226,18 @@
             #{entity.userId},
             #{entity.userName},
             #{entity.missionId},
+            #{entity.missionTypeId},
             #{entity.missionName},
             #{entity.startTime},
             #{entity.endTime},
-            #{entity.lastRunTime},
-            #{entity.historyStatus},
-            #{entity.currentCombo},
-            #{entity.totalActiveTimes},
+            #{entity.missionStatus},
+            #{entity.missionStatusComment},
             now()
         )
         ON DUPLICATE KEY
         UPDATE
-            END_TIME = #{entity.endTime},
-            LAST_RUN_TIME = #{entity.lastRunTime},
-            HISTORY_STATUS = #{entity.historyStatus},
-            CURRENT_COMBO = #{entity.currentCombo} ,
-            TOTAL_ACTIVE_TIMES = #{entity.totalActiveTimes},
+            MISSION_STATUS = #{entity.missionStatus},
+            MISSION_STATUS_COMMENT = #{entity.missionStatusComment},
             UPDATE_TIME = now();
     </insert>
 

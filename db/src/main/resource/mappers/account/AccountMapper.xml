@@ -29,9 +29,9 @@
         <result column="TOTAL_STEPS" property="totalSteps"/>
         <result column="TOTAL_WALKING_TIMES" property="totalWalkingTimes"/>
         <result column="TOTAL_ACTIVE_TIMES" property="totalActiveTimes"/>
-        <result column="AVG_SPEED" property="avgSpeed"/>
         <result column="CURRENT_COMBO" property="currentCombo"/>
         <result column="MAX_COMBO" property="maxCombo"/>
+        <result column="MISSION_COMBO" property="missionCombo"/>
         <result column="PROP_HAVING" property="propHaving"/>
         <result column="UPDATE_TIME" property="updateTime"/>
     </resultMap>
@@ -61,9 +61,9 @@
         UD.TOTAL_STEPS,
         UD.TOTAL_WALKING_TIMES,
         UD.TOTAL_ACTIVE_TIMES,
-        UD.AVG_SPEED,
         UD.CURRENT_COMBO,
         UD.MAX_COMBO,
+        UD.MISSION_COMBO,
         UD.PROP_HAVING,
         UD.UPDATE_TIME
     </sql>
@@ -171,9 +171,9 @@
             TOTAL_STEPS,
             TOTAL_WALKING_TIMES,
             TOTAL_ACTIVE_TIMES,
-            AVG_SPEED,
             CURRENT_COMBO,
             MAX_COMBO,
+            MISSION_COMBO,
             UPDATE_TIME
         )
         VALUES
@@ -193,9 +193,9 @@
           #{detailEntity.totalSteps},
           #{detailEntity.totalWalkingTimes},
           #{detailEntity.totalActiveTimes},
-          #{detailEntity.avgSpeed},
           #{detailEntity.currentCombo},
           #{detailEntity.maxCombo},
+          #{detailEntity.missionCombo},
           now()
         );
     </insert>
@@ -217,9 +217,9 @@
             TOTAL_STEPS = #{detailEntity.totalSteps},
             TOTAL_WALKING_TIMES = #{detailEntity.totalWalkingTimes},
             TOTAL_ACTIVE_TIMES = #{detailEntity.totalActiveTimes},
-            AVG_SPEED = #{detailEntity.avgSpeed},
             CURRENT_COMBO = #{detailEntity.currentCombo},
             MAX_COMBO = #{detailEntity.maxCombo},
+            MISSION_COMBO = #{detailEntity.missionCombo},
             UPDATE_TIME = now()
         WHERE USER_ID = #{detailEntity.userId}
     </update>
@@ -357,7 +357,6 @@
         <result column="SEX" property="sex"/>
         <result column="USER_TITLE" property="userTitle"/>
         <result column="LEVEL" property="level"/>
-        <result column="LAST_ACTIVE_TIME" property="lastActiveTime"/>
     </resultMap>
 
     <sql id="searchAccountTable">
@@ -365,8 +364,7 @@
         U.NICK_NAME,
         U.SEX,
         UD.USER_TITLE,
-        UD.LEVEL,
-        UD.LAST_ACTIVE_TIME
+        UD.LEVEL
     </sql>
 
     <select id="searchAccountInfoByName" resultMap="searchAccountInfo">
@@ -375,8 +373,18 @@
         FROM USER_BASE AS U
         INNER JOIN USER_DETAIL AS UD
         ON U.USER_ID = UD.USER_ID
-        WHERE U.NICK_NAME like CONCAT('%',${nickName},'%')
+        WHERE U.NICK_NAME like CONCAT('%','${nickName}','%')
         LIMIT 10
+    </select>
+
+    <select id="getRecommendFriend" resultMap="searchAccountInfo">
+        SELECT
+        <include refid="searchAccountTable"/>
+        FROM USER_BASE AS U
+        INNER JOIN USER_DETAIL AS UD
+        ON U.USER_ID = UD.USER_ID
+        ORDER BY UD.UPDATE_TIME DESC
+        LIMIT 100
     </select>
 
     <!--for friend sort-->

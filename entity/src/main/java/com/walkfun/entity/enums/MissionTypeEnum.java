@@ -9,5 +9,9 @@ package com.walkfun.entity.enums;
  */
 public enum  MissionTypeEnum {
 
-    EASY,
+    WALKCHECK,
+
+    PROPDROP,
+
+    PROPUSE,
 }

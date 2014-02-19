@@ -45,11 +45,6 @@ public class RunningDAOImpl implements RunningDAO {
     }
 
     @Override
-    public List<MissionHistory> getUsingMissionHistories(Integer userId) {
-        return runningMapper.getUsingMissionHistories(userId);
-    }
-
-    @Override
     public void createOrUpdateMissionHistory(MissionHistory missionHistory) {
         runningMapper.createOrUpdateMissionHistory(missionHistory);
     }

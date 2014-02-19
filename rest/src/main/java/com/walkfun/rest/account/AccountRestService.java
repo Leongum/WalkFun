@@ -72,6 +72,10 @@ public class AccountRestService implements AccountRestDef {
                 CommonUtils.parseDateDefaultToNull(lastUpdateTime));
     }
 
+    @Override
+    public List<SearchUserInfo> getRecommendFriends(String pageNo) {
+        return accountService.getRecommendFriendForRest(CommonUtils.parseIntegerToNull(pageNo));
+    }
 
     @Override
     public void createUserAction(String userId, UserAction userAction) {

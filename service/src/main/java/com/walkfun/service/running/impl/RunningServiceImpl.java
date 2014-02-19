@@ -62,15 +62,6 @@ public class RunningServiceImpl implements RunningService {
     }
 
     @Override
-    public List<MissionHistory> getUsingMissionHistories(Integer userId) {
-        try {
-            return runningDAO.getUsingMissionHistories(userId);
-        } catch (Exception ex) {
-            throw new ServerRequestException(ex.getMessage());
-        }
-    }
-
-    @Override
     @Transactional
     public void createOrUpdateMissionHistory(List<MissionHistory> missionHistories) {
         try {

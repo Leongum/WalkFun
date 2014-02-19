@@ -16,5 +16,7 @@ public interface MissionService {
 
     List<Mission> getMissionsForRest(Integer missionId, Date lastUpdateTime);
 
+    Mission getDailyMission(Integer userId);
+
     List<Mission> getMissions(Integer missionId, Date lastUpdateTime);
 }

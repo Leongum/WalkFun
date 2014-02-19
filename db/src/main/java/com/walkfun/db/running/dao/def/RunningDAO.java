@@ -22,7 +22,5 @@ public interface RunningDAO {
 
     public List<MissionHistory> getMissionHistoriesByDate(Integer userId, Date lastUpdateTime);
 
-    public List<MissionHistory> getUsingMissionHistories(Integer userId);
-
     public void createOrUpdateMissionHistory(MissionHistory missionHistory);
 }

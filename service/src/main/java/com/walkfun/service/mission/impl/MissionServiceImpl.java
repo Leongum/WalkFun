@@ -8,9 +8,7 @@ import com.walkfun.service.mission.def.MissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -37,6 +35,22 @@ public class MissionServiceImpl implements MissionService {
                 }
             }
             return getMissions(missionId, lastUpdateTime);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public Mission getDailyMission(Integer userId) {
+        try {
+            Calendar cal = Calendar.getInstance();
+            int day = cal.get(Calendar.DATE);
+            if (userId == null) {
+                userId = 1;
+            }
+            Random random = new Random(userId * day);
+            int index = random.nextInt(BackendJobCache.allMissions.size());
+            return BackendJobCache.allMissions.get(index);
         } catch (Exception ex) {
             throw new ServerRequestException(ex.getMessage());
         }

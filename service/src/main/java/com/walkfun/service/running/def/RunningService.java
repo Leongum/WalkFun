@@ -22,8 +22,6 @@ public interface RunningService {
 
     public List<MissionHistory> getMissionHistoriesByDate(Integer userId, Date lastUpdateTime);
 
-    public List<MissionHistory> getUsingMissionHistories(Integer userId);
-
     public void createOrUpdateMissionHistory(List<MissionHistory> runningHistory);
 
 }

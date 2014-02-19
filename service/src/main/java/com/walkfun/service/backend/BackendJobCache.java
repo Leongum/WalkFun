@@ -1,9 +1,11 @@
 package com.walkfun.service.backend;
 
 import com.walkfun.common.lib.CommonUtils;
+import com.walkfun.entity.account.SearchUserInfo;
 import com.walkfun.entity.common.*;
 import com.walkfun.entity.mission.Mission;
 import com.walkfun.entity.vproduct.VProduct;
+import com.walkfun.service.account.def.AccountService;
 import com.walkfun.service.common.def.CommonService;
 import com.walkfun.service.mission.def.MissionService;
 import com.walkfun.service.vproduct.def.VProductService;
@@ -33,6 +35,9 @@ public class BackendJobCache {
     @Autowired
     private VProductService vProductService;
 
+    @Autowired
+    private AccountService accountService;
+
     public static VersionControl versionControlIOS = new VersionControl();
 
     public static List<Mission> allMissions = new ArrayList<Mission>();
@@ -44,6 +49,8 @@ public class BackendJobCache {
     public static List<ActionDefination> allActionDefine = new ArrayList<ActionDefination>();
 
     public static List<VProduct> allProducts = new ArrayList<VProduct>();
+
+    public static List<SearchUserInfo> allRecommendUsers = new ArrayList<SearchUserInfo>();
 
     public static Date missionLastTime = CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00");
 
@@ -128,6 +135,10 @@ public class BackendJobCache {
                 productFirstTime = vProduct.getUpdateTime();
             }
         }
+    }
+
+    public void recommendUserServiceJob() {
+        allRecommendUsers = accountService.getRecommendFriend();
     }
 
 }

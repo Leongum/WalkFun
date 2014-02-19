@@ -20,13 +20,12 @@ public class MissionHistory {
     private Integer userId;
     private String userName;
     private Integer missionId;
+    private Integer missionTypeId;
     private String missionName;
     private Date startTime;
     private Date endTime;
-    private Date lastRunTime;
-    private Integer historyStatus;
-    private Integer currentCombo;
-    private Integer totalActiveTimes;
+    private Integer missionStatus; //0 success 1 failed
+    private String missionStatusComment;
     private Date updateTime;
 
     public String getMissionUuid() {
@@ -61,12 +60,36 @@ public class MissionHistory {
         this.missionId = missionId;
     }
 
+    public Integer getMissionTypeId() {
+        return missionTypeId;
+    }
+
+    public void setMissionTypeId(Integer missionTypeId) {
+        this.missionTypeId = missionTypeId;
+    }
+
     public String getMissionName() {
         return missionName;
     }
 
     public void setMissionName(String missionName) {
         this.missionName = missionName;
+    }
+
+    public Integer getMissionStatus() {
+        return missionStatus;
+    }
+
+    public void setMissionStatus(Integer missionStatus) {
+        this.missionStatus = missionStatus;
+    }
+
+    public String getMissionStatusComment() {
+        return missionStatusComment;
+    }
+
+    public void setMissionStatusComment(String missionStatusComment) {
+        this.missionStatusComment = missionStatusComment;
     }
 
     @JsonSerialize(using = CustomDateSerializer.class)
@@ -87,40 +110,6 @@ public class MissionHistory {
     @JsonDeserialize(using = CustomDateDeserializer.class)
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
-    }
-
-    @JsonSerialize(using = CustomDateSerializer.class)
-    public Date getLastRunTime() {
-        return lastRunTime;
-    }
-
-    @JsonDeserialize(using = CustomDateDeserializer.class)
-    public void setLastRunTime(Date lastRunTime) {
-        this.lastRunTime = lastRunTime;
-    }
-
-    public Integer getHistoryStatus() {
-        return historyStatus;
-    }
-
-    public void setHistoryStatus(Integer historyStatus) {
-        this.historyStatus = historyStatus;
-    }
-
-    public Integer getCurrentCombo() {
-        return currentCombo;
-    }
-
-    public void setCurrentCombo(Integer currentCombo) {
-        this.currentCombo = currentCombo;
-    }
-
-    public Integer getTotalActiveTimes() {
-        return totalActiveTimes;
-    }
-
-    public void setTotalActiveTimes(Integer totalActiveTimes) {
-        this.totalActiveTimes = totalActiveTimes;
     }
 
     @JsonSerialize(using = CustomDateSerializer.class)

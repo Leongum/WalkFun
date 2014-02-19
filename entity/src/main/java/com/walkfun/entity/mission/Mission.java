@@ -19,21 +19,18 @@ import java.util.List;
 public class Mission {
 
     private Integer missionId;
-    private Integer missionTypeId;
+    private Integer missionTypeId; //0 for steps times limit 1 for prop drop limit 2 for prop use for user
     private String missionName;
+    private String missionRule;
     private String missionDescription;
-    private double scores;
+    private Integer triggerSteps;
+    private Integer triggerTimes;
+    private Double  triggerDistances;
+    private Integer triggerPropId;
+    private Integer triggerPropNumbers;
+    private Integer triggerUserNumbers;
+    private double goldCoin;
     private double experience;
-    private Integer missionFlag;
-    private double levelLimited;
-    private BigInteger missionTimeLimited;
-    private double missionDistanceLimited;
-    private double missionFromTimeLimited;
-    private double missionToTimeLimited;
-    private double cycleTime;
-    private double suggestionMaxSpeed;
-    private double suggestionMinSpeed;
-    private Integer sequence;
     private Date updateTime;
 
     public Integer getMissionId() {
@@ -60,6 +57,14 @@ public class Mission {
         this.missionName = missionName;
     }
 
+    public String getMissionRule() {
+        return missionRule;
+    }
+
+    public void setMissionRule(String missionRule) {
+        this.missionRule = missionRule;
+    }
+
     public String getMissionDescription() {
         return missionDescription;
     }
@@ -68,12 +73,60 @@ public class Mission {
         this.missionDescription = missionDescription;
     }
 
-    public double getScores() {
-        return scores;
+    public Integer getTriggerSteps() {
+        return triggerSteps;
     }
 
-    public void setScores(double scores) {
-        this.scores = scores;
+    public void setTriggerSteps(Integer triggerSteps) {
+        this.triggerSteps = triggerSteps;
+    }
+
+    public Integer getTriggerTimes() {
+        return triggerTimes;
+    }
+
+    public void setTriggerTimes(Integer triggerTimes) {
+        this.triggerTimes = triggerTimes;
+    }
+
+    public Double getTriggerDistances() {
+        return triggerDistances;
+    }
+
+    public void setTriggerDistances(Double triggerDistances) {
+        this.triggerDistances = triggerDistances;
+    }
+
+    public Integer getTriggerPropId() {
+        return triggerPropId;
+    }
+
+    public void setTriggerPropId(Integer triggerPropId) {
+        this.triggerPropId = triggerPropId;
+    }
+
+    public Integer getTriggerPropNumbers() {
+        return triggerPropNumbers;
+    }
+
+    public void setTriggerPropNumbers(Integer triggerPropNumbers) {
+        this.triggerPropNumbers = triggerPropNumbers;
+    }
+
+    public Integer getTriggerUserNumbers() {
+        return triggerUserNumbers;
+    }
+
+    public void setTriggerUserNumbers(Integer triggerUserNumbers) {
+        this.triggerUserNumbers = triggerUserNumbers;
+    }
+
+    public double getGoldCoin() {
+        return goldCoin;
+    }
+
+    public void setGoldCoin(double goldCoin) {
+        this.goldCoin = goldCoin;
     }
 
     public double getExperience() {
@@ -82,86 +135,6 @@ public class Mission {
 
     public void setExperience(double experience) {
         this.experience = experience;
-    }
-
-    public Integer getMissionFlag() {
-        return missionFlag;
-    }
-
-    public void setMissionFlag(Integer missionFlag) {
-        this.missionFlag = missionFlag;
-    }
-
-    public double getLevelLimited() {
-        return levelLimited;
-    }
-
-    public void setLevelLimited(double levelLimited) {
-        this.levelLimited = levelLimited;
-    }
-
-    public BigInteger getMissionTimeLimited() {
-        return missionTimeLimited;
-    }
-
-    public void setMissionTimeLimited(BigInteger missionTimeLimited) {
-        this.missionTimeLimited = missionTimeLimited;
-    }
-
-    public double getMissionDistanceLimited() {
-        return missionDistanceLimited;
-    }
-
-    public void setMissionDistanceLimited(double missionDistanceLimited) {
-        this.missionDistanceLimited = missionDistanceLimited;
-    }
-
-    public double getMissionToTimeLimited() {
-        return missionToTimeLimited;
-    }
-
-    public void setMissionToTimeLimited(double missionToTimeLimited) {
-        this.missionToTimeLimited = missionToTimeLimited;
-    }
-
-    public double getMissionFromTimeLimited() {
-        return missionFromTimeLimited;
-    }
-
-    public void setMissionFromTimeLimited(double missionFromTimeLimited) {
-        this.missionFromTimeLimited = missionFromTimeLimited;
-    }
-
-    public double getCycleTime() {
-        return cycleTime;
-    }
-
-    public void setCycleTime(double cycleTime) {
-        this.cycleTime = cycleTime;
-    }
-
-    public double getSuggestionMaxSpeed() {
-        return suggestionMaxSpeed;
-    }
-
-    public void setSuggestionMaxSpeed(double suggestionMaxSpeed) {
-        this.suggestionMaxSpeed = suggestionMaxSpeed;
-    }
-
-    public double getSuggestionMinSpeed() {
-        return suggestionMinSpeed;
-    }
-
-    public void setSuggestionMinSpeed(double suggestionMinSpeed) {
-        this.suggestionMinSpeed = suggestionMinSpeed;
-    }
-
-    public Integer getSequence() {
-        return sequence;
-    }
-
-    public void setSequence(Integer sequence) {
-        this.sequence = sequence;
     }
 
     @JsonSerialize(using = CustomDateSerializer.class)

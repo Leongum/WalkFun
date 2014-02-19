@@ -107,6 +107,11 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
+    public List<SearchUserInfo> getRecommendFriend() {
+        return accountMapper.getRecommendFriend();
+    }
+
+    @Override
     public List<FriendSortInfo> getFriendSort(Integer userId, Date lastUpdateTime) {
         return accountMapper.getFriendSort(userId, lastUpdateTime);
     }

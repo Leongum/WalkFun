@@ -21,7 +21,6 @@ public class SearchUserInfo {
     private String sex;
     private Double level;
     private String userTitle;
-    private Date lastActiveTime;
 
     public Integer getUserId() {
         return userId;
@@ -61,15 +60,5 @@ public class SearchUserInfo {
 
     public void setUserTitle(String userTitle) {
         this.userTitle = userTitle;
-    }
-
-    @JsonSerialize(using = CustomDateSerializer.class)
-    public Date getLastActiveTime() {
-        return lastActiveTime;
-    }
-
-    @JsonDeserialize(using = CustomDateDeserializer.class)
-    public void setLastActiveTime(Date lastActiveTime) {
-        this.lastActiveTime = lastActiveTime;
     }
 }

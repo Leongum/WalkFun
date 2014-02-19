@@ -6,11 +6,13 @@ import com.walkfun.common.lib.Universe;
 import com.walkfun.db.account.dao.def.AccountDAO;
 import com.walkfun.service.Cache.CacheFacade;
 import com.walkfun.service.account.def.AccountService;
+import com.walkfun.service.backend.BackendJobCache;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.walkfun.entity.account.*;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -168,6 +170,33 @@ public class AccountServiceImpl implements AccountService {
     public List<SearchUserInfo> searchAccountInfoByName(String nickName) {
         try {
             return accountDAO.searchAccountInfoByName(nickName);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public List<SearchUserInfo> getRecommendFriend() {
+        try {
+            return accountDAO.getRecommendFriend();
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public List<SearchUserInfo> getRecommendFriendForRest(Integer pageNo) {
+        try {
+            List<SearchUserInfo> recommendUsers = new ArrayList<SearchUserInfo>();
+            if (pageNo == null) {
+                pageNo = 0;
+            }
+            for (int i = pageNo * 10; i < pageNo * 10 + 10; i++) {
+                if (i < BackendJobCache.allRecommendUsers.size()) {
+                    recommendUsers.add(BackendJobCache.allRecommendUsers.get(i));
+                }
+            }
+            return recommendUsers;
         } catch (Exception ex) {
             throw new ServerRequestException(ex.getMessage());
         }

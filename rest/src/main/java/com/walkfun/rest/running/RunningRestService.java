@@ -55,11 +55,6 @@ public class RunningRestService implements RunningRestDef {
     }
 
     @Override
-    public List<MissionHistory> getUsingMissionHistories(String userId) {
-        return runningService.getUsingMissionHistories(CommonUtils.parseIntegerToNull(userId));
-    }
-
-    @Override
     public void createOrUpdateMissionHistory(String userId, List<MissionHistory> missionHistoryList) {
         accountService.checkUserLoginStatus(CommonUtils.parseIntegerToNull(userId));
         for (MissionHistory runningHistory : missionHistoryList) {

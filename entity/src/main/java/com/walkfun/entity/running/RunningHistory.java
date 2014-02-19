@@ -21,7 +21,6 @@ public class RunningHistory {
     private Integer missionId;
     private Integer missionTypeId;
     private String missionRoute;
-    private String speedList;
     private Date missionStartTime;
     private Date missionEndTime;
     private Date missionDate;
@@ -32,6 +31,7 @@ public class RunningHistory {
     private double distance;
     private Integer missionGrade;
     private double goldCoin;
+    private double extraGoldCoin;
     private double experience;
     private double extraExperience;
     private String comment;
@@ -217,14 +217,6 @@ public class RunningHistory {
         this.sequence = sequence;
     }
 
-    public String getSpeedList() {
-        return speedList;
-    }
-
-    public void setSpeedList(String speedList) {
-        this.speedList = speedList;
-    }
-
     public String getMissionUuid() {
         return missionUuid;
     }
@@ -239,5 +231,13 @@ public class RunningHistory {
 
     public void setPropGet(String propGet) {
         this.propGet = propGet;
+    }
+
+    public double getExtraGoldCoin() {
+        return extraGoldCoin;
+    }
+
+    public void setExtraGoldCoin(double extraGoldCoin) {
+        this.extraGoldCoin = extraGoldCoin;
     }
 }

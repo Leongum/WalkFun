@@ -36,6 +36,10 @@ public interface AccountService {
 
     public List<SearchUserInfo> searchAccountInfoByName(String nickName);
 
+    public List<SearchUserInfo> getRecommendFriend();
+
+    public List<SearchUserInfo> getRecommendFriendForRest(Integer pageNo);
+
     public List<FriendSortInfo> getFriendSort(Integer userId, Date lastUpdateTime);
 
     public List<UserProp> getUserProps(Integer userId, Date lastUpdateTime);
