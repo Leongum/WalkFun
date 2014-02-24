@@ -6,7 +6,6 @@ import com.walkfun.entity.common.*;
 import com.walkfun.service.common.def.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,7 +38,7 @@ public class SystemRestService implements SystemRestDef{
     }
 
     @Override
-    public List<ActionDefination> getActionDefine(String lastUpdateTime) {
+    public List<ActionDefinition> getActionDefine(String lastUpdateTime) {
         return commonService.getActionDefineForRest(CommonUtils.parseDateDefaultToNull(lastUpdateTime));
     }
 

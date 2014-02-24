@@ -46,9 +46,11 @@ public class BackendJobCache {
 
     public static List<RecommendApp> allRecommendApp = new ArrayList<RecommendApp>();
 
-    public static List<ActionDefination> allActionDefine = new ArrayList<ActionDefination>();
+    public static List<ActionDefinition> allActionDefine = new ArrayList<ActionDefinition>();
 
     public static List<VProduct> allProducts = new ArrayList<VProduct>();
+
+    public static List<ExperienceDefinition> allExperience = new ArrayList<ExperienceDefinition>();
 
     public static List<SearchUserInfo> allRecommendUsers = new ArrayList<SearchUserInfo>();
 
@@ -111,12 +113,12 @@ public class BackendJobCache {
 
     public void actionDefineServiceJob() {
         allActionDefine = commonService.getActionDefine(CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00"));
-        for (ActionDefination actionDefination : allActionDefine) {
-            if (actionDefination.getUpdateTime().after(actionDefineLastTime)) {
-                actionDefineLastTime = actionDefination.getUpdateTime();
+        for (ActionDefinition actionDefinition : allActionDefine) {
+            if (actionDefinition.getUpdateTime().after(actionDefineLastTime)) {
+                actionDefineLastTime = actionDefinition.getUpdateTime();
             }
-            if (actionDefination.getUpdateTime().before(actionDefineFirstTime)) {
-                actionDefineFirstTime = actionDefination.getUpdateTime();
+            if (actionDefinition.getUpdateTime().before(actionDefineFirstTime)) {
+                actionDefineFirstTime = actionDefinition.getUpdateTime();
             }
         }
     }
@@ -135,6 +137,10 @@ public class BackendJobCache {
                 productFirstTime = vProduct.getUpdateTime();
             }
         }
+    }
+
+    public void experienceServiceJob() {
+        allExperience = commonService.getExperienceDefine();
     }
 
     public void recommendUserServiceJob() {

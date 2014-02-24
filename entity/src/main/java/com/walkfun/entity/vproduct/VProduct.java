@@ -22,6 +22,9 @@ public class VProduct {
     private Integer virtualPrice;
     private Integer dropFlag;
     private String picLink;
+    private String effectiveRule;
+    private String dropPicList;
+    private Integer maxDropNum;
     private Date updateTime;
 
     public Integer getProductId() {
@@ -80,5 +83,29 @@ public class VProduct {
 
     public void setPicLink(String picLink) {
         this.picLink = picLink;
+    }
+
+    public String getEffectiveRule() {
+        return effectiveRule;
+    }
+
+    public void setEffectiveRule(String effectiveRule) {
+        this.effectiveRule = effectiveRule;
+    }
+
+    public String getDropPicList() {
+        return dropPicList;
+    }
+
+    public void setDropPicList(String dropPicList) {
+        this.dropPicList = dropPicList;
+    }
+
+    public Integer getMaxDropNum() {
+        return maxDropNum;
+    }
+
+    public void setMaxDropNum(Integer maxDropNum) {
+        this.maxDropNum = maxDropNum;
     }
 }

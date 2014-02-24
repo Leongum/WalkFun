@@ -21,6 +21,7 @@ public class FriendSortInfo {
     private String sex;
     private Double level;
     private String userTitle;
+    private String userTitlePic;
     private Double totalDistance;
 
     public Integer getFriendId() {
@@ -69,5 +70,13 @@ public class FriendSortInfo {
 
     public void setTotalDistance(Double totalDistance) {
         this.totalDistance = totalDistance;
+    }
+
+    public String getUserTitlePic() {
+        return userTitlePic;
+    }
+
+    public void setUserTitlePic(String userTitlePic) {
+        this.userTitlePic = userTitlePic;
     }
 }

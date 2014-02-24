@@ -21,6 +21,7 @@ public class SearchUserInfo {
     private String sex;
     private Double level;
     private String userTitle;
+    private String userTitlePic;
 
     public Integer getUserId() {
         return userId;
@@ -60,5 +61,13 @@ public class SearchUserInfo {
 
     public void setUserTitle(String userTitle) {
         this.userTitle = userTitle;
+    }
+
+    public String getUserTitlePic() {
+        return userTitlePic;
+    }
+
+    public void setUserTitlePic(String userTitlePic) {
+        this.userTitlePic = userTitlePic;
     }
 }

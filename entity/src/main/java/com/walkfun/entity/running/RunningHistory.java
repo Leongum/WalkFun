@@ -25,7 +25,7 @@ public class RunningHistory {
     private Date missionEndTime;
     private Date missionDate;
     private double spendCarlorie;
-    private BigInteger duration;
+    private Integer duration;
     private double avgSpeed;
     private Integer steps;
     private double distance;
@@ -34,11 +34,14 @@ public class RunningHistory {
     private double extraGoldCoin;
     private double experience;
     private double extraExperience;
+    private double fatness;
+    private double health;
     private String comment;
     private Integer valid;
     private String missionUuid;
     private Integer sequence;
     private String propGet;
+    private String actionIds;
     private Date commitTime;
 
     public Integer getUserId() {
@@ -119,11 +122,11 @@ public class RunningHistory {
         this.spendCarlorie = spendCarlorie;
     }
 
-    public BigInteger getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(BigInteger duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 
@@ -239,5 +242,29 @@ public class RunningHistory {
 
     public void setExtraGoldCoin(double extraGoldCoin) {
         this.extraGoldCoin = extraGoldCoin;
+    }
+
+    public String getActionIds() {
+        return actionIds;
+    }
+
+    public void setActionIds(String actionIds) {
+        this.actionIds = actionIds;
+    }
+
+    public double getFatness() {
+        return fatness;
+    }
+
+    public void setFatness(double fatness) {
+        this.fatness = fatness;
+    }
+
+    public double getHealth() {
+        return health;
+    }
+
+    public void setHealth(double health) {
+        this.health = health;
     }
 }

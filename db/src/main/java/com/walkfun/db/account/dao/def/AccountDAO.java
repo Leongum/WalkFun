@@ -35,6 +35,8 @@ public interface AccountDAO {
 
     public List<UserAction> getNewlyUserAction(Integer userId);
 
+    public List<UserAction>  getUserActionById(Integer userId);
+
     public List<SearchUserInfo> searchAccountInfoByName(String nickName);
 
     public List<SearchUserInfo> getRecommendFriend();

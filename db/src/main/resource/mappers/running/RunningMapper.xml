@@ -19,6 +19,8 @@
         <result column="AVG_SPEED" property="avgSpeed"/>
         <result column="DISTANCE" property="distance"/>
         <result column="MISSION_GRADE" property="missionGrade"/>
+        <result column="HEALTH" property="health"/>
+        <result column="FATNESS" property="fatness"/>
         <result column="GOLD_COIN" property="goldCoin"/>
         <result column="EXTRA_GOLD_COIN" property="extraGoldCoin"/>
         <result column="EXPERIENCE" property="experience"/>
@@ -28,6 +30,7 @@
         <result column="MISSION_UUID" property="missionUuid"/>
         <result column="SEQUENCE" property="sequence"/>
         <result column="PROP_GET" property="propGet"/>
+        <result column="ACTION_IDS" property="actionIds"/>
         <result column="COMMIT_TIME" property="commitTime"/>
     </resultMap>
 
@@ -46,6 +49,8 @@
         AVG_SPEED,
         DISTANCE,
         MISSION_GRADE,
+        HEALTH,
+        FATNESS,
         GOLD_COIN,
         EXTRA_GOLD_COIN,
         EXPERIENCE,
@@ -55,6 +60,7 @@
         MISSION_UUID,
         SEQUENCE,
         PROP_GET,
+        ACTION_IDS,
         COMMIT_TIME
     </sql>
 
@@ -92,6 +98,8 @@
             AVG_SPEED,
             DISTANCE,
             MISSION_GRADE,
+            HEALTH,
+            FATNESS,
             GOLD_COIN,
             EXTRA_GOLD_COIN,
             EXPERIENCE,
@@ -101,6 +109,7 @@
             MISSION_UUID,
             SEQUENCE,
             PROP_GET,
+            ACTION_IDS,
             COMMIT_TIME
         )
         VALUES
@@ -119,6 +128,8 @@
             #{entity.avgSpeed},
             #{entity.distance},
             #{entity.missionGrade},
+            #{entity.health},
+            #{entity.fatness},
             #{entity.goldCoin},
             #{entity.extraGoldCoin},
             #{entity.experience},
@@ -128,6 +139,7 @@
             #{entity.missionUuid},
             #{entity.sequence},
             #{entity.propGet},
+            #{entity.actionIds},
             now()
         )
     </insert>

@@ -20,5 +20,7 @@ public interface CommonDAO {
 
     public List<RecommendApp> getRecommendApp(Date lastUpdateTime);
 
-    public List<ActionDefination> getActionDefine(Date lastUpdateTime);
+    public List<ActionDefinition> getActionDefine(Date lastUpdateTime);
+
+    public List<ExperienceDefinition> getExperienceDefine();
 }

@@ -21,5 +21,7 @@ public interface CommonMapper {
 
     public List<RecommendApp> getRecommendApp(@Param("lastUpdateTime")Date lastUpdateTime);
 
-    public List<ActionDefination> getActionDefine(@Param("lastUpdateTime")Date lastUpdateTime);
+    public List<ActionDefinition> getActionDefine(@Param("lastUpdateTime")Date lastUpdateTime);
+
+    public List<ExperienceDefinition> getExperienceDefinition();
 }

@@ -12,9 +12,11 @@ import java.util.List;
  * Time: 11:51 AM
  * To change this template use File | Settings | File Templates.
  */
-public interface AccountService {
+public interface AccountService{
 
     public void checkUserLoginStatus(Integer userId);
+
+    public UserInfo checkUserLevel(UserInfo userInfo);
 
     public UserInfo getAccountInfo(String userName, String password);
 
@@ -34,6 +36,8 @@ public interface AccountService {
 
     public List<UserAction> getNewlyUserAction(Integer userId);
 
+    public List<UserAction>  getUserActionById(Integer userId);
+
     public List<SearchUserInfo> searchAccountInfoByName(String nickName);
 
     public List<SearchUserInfo> getRecommendFriend();
@@ -45,4 +49,6 @@ public interface AccountService {
     public List<UserProp> getUserProps(Integer userId, Date lastUpdateTime);
 
     public void createOrUpdateUserProp(List<UserProp> userProps);
+
+    public RewardDetails getRandomReward(Integer userId);
 }

@@ -16,12 +16,12 @@ public interface RunningService {
 
     public List<RunningHistory> getRunningHistoriesByDate(Integer userId, Date lastUpdateTime);
 
-    public void createRunningHistory(List<RunningHistory> runningHistory);
+    public void createRunningHistory(Integer userId, List<RunningHistory> runningHistory);
 
     public List<SimpleRunningHistory> getSimpleRunningHistoriesByDate(Integer userId);
 
     public List<MissionHistory> getMissionHistoriesByDate(Integer userId, Date lastUpdateTime);
 
-    public void createOrUpdateMissionHistory(List<MissionHistory> runningHistory);
+    public void createOrUpdateMissionHistory(Integer userId, List<MissionHistory> runningHistory);
 
 }

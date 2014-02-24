@@ -25,8 +25,6 @@ public interface AccountMapper {
 
     public void updateAccountBase(@Param("baseEntity") UserBase userBase);
 
-    public void createAccountDetail(@Param("detailEntity") UserInfo accountInfo);
-
     public void updateAccountDetail(@Param("detailEntity") UserInfo userInfo);
 
     public UserFriend getFriendById(@Param("userId") Integer userId, @Param("friendId") Integer friendId);
@@ -38,6 +36,8 @@ public interface AccountMapper {
     public void createUserAction(@Param("entity") UserAction userAction);
 
     public List<UserAction> getNewlyUserAction(@Param("userId") Integer userId);
+
+    public List<UserAction>  getUserActionById(@Param("userId") Integer userId);
 
     public void updateUserActionSyncTime(@Param("userId") Integer userId);
 

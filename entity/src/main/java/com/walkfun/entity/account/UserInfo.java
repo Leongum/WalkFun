@@ -5,6 +5,7 @@ import com.walkfun.common.lib.CustomDateSerializer;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 /**
@@ -18,19 +19,21 @@ public class UserInfo extends UserBase {
 
     private Integer userId;
     private Integer picId;
-    private Integer userTitleId;
     private String userTitle;
+    private String userTitlePic;
     private String userFatDesc;
     private Double level;
     private Double goldCoin;
+    private Double goldCoinSpeed;
     private Double experience;
+    private Double experienceSpeed;
     private Double health;
     private Double fatness;
     private Double totalDistance;
     private Double totalCarlorie;
-    private Double totalSteps;
-    private Double totalWalkingTimes;
-    private Double totalActiveTimes;
+    private Integer totalSteps;
+    private Integer totalWalkingTimes;
+    private Integer totalActiveTimes;
     private Integer currentCombo;
     private Integer maxCombo;
     private Integer missionCombo;
@@ -53,18 +56,20 @@ public class UserInfo extends UserBase {
         this.setHeight(userBase.getHeight());
         this.setWeight(userBase.getWeight());
         this.setPlatformInfo(userBase.getPlatformInfo());
-        this.userTitleId = 0;
         this.userTitle = "新手上路";
+        this.userTitlePic ="http://cyberace.qiniudn.com/walkfun1.png";
         this.level = 0d;
         this.goldCoin = 0d;
+        this.goldCoinSpeed = 0d;
         this.experience = 0d;
+        this.experienceSpeed = 0d;
         this.health = 0d;
         this.fatness = 0d;
         this.totalDistance = 0d;
         this.totalCarlorie = 0d;
-        this.totalSteps = 0d;
-        this.totalWalkingTimes = 0d;
-        this.totalActiveTimes = 0d;
+        this.totalSteps = 0;
+        this.totalWalkingTimes = 0;
+        this.totalActiveTimes = 0;
         this.currentCombo = 0;
         this.maxCombo = 0;
         this.missionCombo = 0;
@@ -87,12 +92,12 @@ public class UserInfo extends UserBase {
         this.picId = picId;
     }
 
-    public Integer getUserTitleId() {
-        return userTitleId;
+    public String getUserTitlePic() {
+        return userTitlePic;
     }
 
-    public void setUserTitleId(Integer userTitleId) {
-        this.userTitleId = userTitleId;
+    public void setUserTitlePic(String userTitlePic) {
+        this.userTitlePic = userTitlePic;
     }
 
     public String getUserTitle() {
@@ -143,27 +148,27 @@ public class UserInfo extends UserBase {
         this.totalCarlorie = totalCarlorie;
     }
 
-    public Double getTotalSteps() {
+    public Integer getTotalSteps() {
         return totalSteps;
     }
 
-    public void setTotalSteps(Double totalSteps) {
+    public void setTotalSteps(Integer totalSteps) {
         this.totalSteps = totalSteps;
     }
 
-    public Double getTotalWalkingTimes() {
+    public Integer getTotalWalkingTimes() {
         return totalWalkingTimes;
     }
 
-    public void setTotalWalkingTimes(Double totalWalkingTimes) {
+    public void setTotalWalkingTimes(Integer totalWalkingTimes) {
         this.totalWalkingTimes = totalWalkingTimes;
     }
 
-    public Double getTotalActiveTimes() {
+    public Integer getTotalActiveTimes() {
         return totalActiveTimes;
     }
 
-    public void setTotalActiveTimes(Double totalActiveTimes) {
+    public void setTotalActiveTimes(Integer totalActiveTimes) {
         this.totalActiveTimes = totalActiveTimes;
     }
 
@@ -231,5 +236,21 @@ public class UserInfo extends UserBase {
 
     public void setMissionCombo(Integer missionCombo) {
         this.missionCombo = missionCombo;
+    }
+
+    public Double getGoldCoinSpeed() {
+        return goldCoinSpeed;
+    }
+
+    public void setGoldCoinSpeed(Double goldCoinSpeed) {
+        this.goldCoinSpeed = goldCoinSpeed;
+    }
+
+    public Double getExperienceSpeed() {
+        return experienceSpeed;
+    }
+
+    public void setExperienceSpeed(Double experienceSpeed) {
+        this.experienceSpeed = experienceSpeed;
     }
 }

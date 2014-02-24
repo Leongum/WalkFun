@@ -102,6 +102,11 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
+    public List<UserAction> getUserActionById(Integer userId) {
+        return accountMapper.getUserActionById(userId);
+    }
+
+    @Override
     public List<SearchUserInfo> searchAccountInfoByName(String nickName) {
         return accountMapper.searchAccountInfoByName(nickName);
     }

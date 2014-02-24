@@ -4,7 +4,6 @@ import com.walkfun.entity.common.*;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,9 +27,15 @@ public interface CommonService {
 
     List<RecommendApp> getRecommendAppForRest(Date lastUpdateTime);
 
-    List<ActionDefination> getActionDefine(Date lastUpdateTime);
+    List<ActionDefinition> getActionDefine(Date lastUpdateTime);
 
-    List<ActionDefination> getActionDefineForRest(Date lastUpdateTime);
+    List<ActionDefinition> getActionDefineForRest(Date lastUpdateTime);
+
+    ActionDefinition getActionDefineById(Integer actionId);
+
+    public List<ActionDefinition> getRewardActionDefine();
+
+    List<ExperienceDefinition> getExperienceDefine();
 
     void evictJobCache(String jobCache);
 }

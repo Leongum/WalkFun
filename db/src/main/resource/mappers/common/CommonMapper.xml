@@ -82,7 +82,7 @@
     </select>
 
     <!-- Action Define -->
-    <resultMap id="actionDefineInfo" type="com.walkfun.entity.common.ActionDefination">
+    <resultMap id="actionDefineInfo" type="com.walkfun.entity.common.ActionDefinition">
         <id column="ACTION_ID" property="actionId"/>
         <result column="ACTION_TYPE" property="actionType"/>
         <result column="IN_USING" property="inUsing"/>
@@ -90,6 +90,7 @@
         <result column="ACTION_DESCRIPTION" property="actionDescription"/>
         <result column="ACTION_ATTRIBUTE" property="actionAttribute"/>
         <result column="ACTION_RULE" property="actionRule"/>
+        <result column="EFFECTIVE_RULE" property="effectiveRule"/>
         <result column="TRIGGER_PROBABILITY" property="triggerProbability"/>
         <result column="SOUND_LINK" property="soundLink"/>
         <result column="UPDATE_TIME" property="updateTime"/>
@@ -103,6 +104,7 @@
         ACTION_DESCRIPTION,
         ACTION_ATTRIBUTE,
         ACTION_RULE,
+        EFFECTIVE_RULE,
         TRIGGER_PROBABILITY,
         SOUND_LINK,
         UPDATE_TIME
@@ -118,4 +120,31 @@
         ]]></if>
     </select>
 
+    <!--experience define db-->
+    <resultMap id="experienceDefineInfo" type="com.walkfun.entity.common.ExperienceDefinition">
+        <id column="LEVEL" property="level"/>
+        <result column="EXPERIENCE" property="experience"/>
+        <result column="TOTAL_EXPERIENCE" property="totalExperience"/>
+        <result column="TITLE" property="title"/>
+        <result column="TITLE_PIC" property="titlePic"/>
+        <result column="GOLD_COIN_SPEED" property="goldCoinSpeed"/>
+        <result column="EXPERIENCE_SPEED" property="experienceSpeed"/>
+    </resultMap>
+
+    <sql id="experienceDefineTable">
+        LEVEL,
+        EXPERIENCE,
+        TOTAL_EXPERIENCE,
+        TITLE,
+        TITLE_PIC,
+        GOLD_COIN_SPEED,
+        EXPERIENCE_SPEED
+    </sql>
+
+    <select id="getExperienceDefinition" resultMap="experienceDefineInfo">
+        SELECT
+        <include refid="experienceDefineTable"/>
+        FROM EXPERIENCE_DEFINE
+        ORDER BY LEVEL ASC
+    </select>
 </mapper>

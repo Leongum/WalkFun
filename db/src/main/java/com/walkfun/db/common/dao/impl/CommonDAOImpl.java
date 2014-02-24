@@ -30,8 +30,13 @@ public class CommonDAOImpl implements CommonDAO{
     }
 
     @Override
-    public List<ActionDefination> getActionDefine(Date lastUpdateTime) {
+    public List<ActionDefinition> getActionDefine(Date lastUpdateTime) {
         return commonMapper.getActionDefine(lastUpdateTime);
+    }
+
+    @Override
+    public List<ExperienceDefinition> getExperienceDefine() {
+        return commonMapper.getExperienceDefinition();
     }
 
     @Override

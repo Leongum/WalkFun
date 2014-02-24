@@ -90,6 +90,11 @@ public class AccountRestService implements AccountRestDef {
     }
 
     @Override
+    public List<UserAction> getUserActionById(String userId) {
+        return accountService.getUserActionById(CommonUtils.parseIntegerToNull(userId));
+    }
+
+    @Override
     public List<SearchUserInfo> searchAccountInfoByName(String nickName) {
         return accountService.searchAccountInfoByName(nickName);
     }
@@ -113,5 +118,10 @@ public class AccountRestService implements AccountRestDef {
             userProp.setUserId(CommonUtils.parseIntegerToNull(userId));
         }
         accountService.createOrUpdateUserProp(userProps);
+    }
+
+    @Override
+    public RewardDetails getRandomReward(String userId) {
+        return accountService.getRandomReward(CommonUtils.parseIntegerToNull(userId));
     }
 }

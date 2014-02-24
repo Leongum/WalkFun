@@ -82,6 +82,12 @@ public interface AccountRestDef extends RestDef {
     List<UserAction> getNewlyUserAction(
             @PathParam(PARAM_USER_ID) String userId);
 
+    //获取用户动作
+    @GET
+    @Path("/action/others/get/{" + PARAM_USER_ID + "}")
+    List<UserAction> getUserActionById(
+            @PathParam(PARAM_USER_ID) String userId);
+
     //根据用户的昵称，搜索用户
     @GET
     @Path("/search/get/{" + PARAM_NICK_NAME + "}")
@@ -107,4 +113,10 @@ public interface AccountRestDef extends RestDef {
     @Path("/props/create/{" + PARAM_USER_ID + "}")
     void createOrUpdateUserProp(@PathParam(PARAM_USER_ID) String userId,
                           List<UserProp> userProps);
+
+    //获取随机奖励
+    @GET
+    @Path("/reward/get/{" + PARAM_USER_ID + "}")
+    RewardDetails getRandomReward(
+            @PathParam(PARAM_USER_ID) String userId);
 }

@@ -3,6 +3,7 @@ package com.walkfun.service.common.impl;
 import com.walkfun.common.exception.ServerRequestException;
 import com.walkfun.db.common.dao.def.CommonDAO;
 import com.walkfun.entity.common.*;
+import com.walkfun.entity.enums.ActionDefineTypeEnum;
 import com.walkfun.service.backend.BackendJobCache;
 import com.walkfun.service.common.def.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -113,7 +113,7 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public List<ActionDefination> getActionDefine(Date lastUpdateTime) {
+    public List<ActionDefinition> getActionDefine(Date lastUpdateTime) {
         try {
             return commonDAO.getActionDefine(lastUpdateTime);
         } catch (Exception ex) {
@@ -122,15 +122,45 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public List<ActionDefination> getActionDefineForRest(Date lastUpdateTime) {
+    public List<ActionDefinition> getActionDefineForRest(Date lastUpdateTime) {
         try {
             if (lastUpdateTime.before(BackendJobCache.actionDefineFirstTime)) {
                 return BackendJobCache.allActionDefine;
             }
             if (lastUpdateTime.after(BackendJobCache.actionDefineLastTime)) {
-                return new ArrayList<ActionDefination>();
+                return new ArrayList<ActionDefinition>();
             }
             return getActionDefine(lastUpdateTime);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public ActionDefinition getActionDefineById(Integer actionId) {
+        for(ActionDefinition actionDefinition : BackendJobCache.allActionDefine){
+            if(actionDefinition.getActionId() == actionId){
+                return actionDefinition;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<ActionDefinition> getRewardActionDefine() {
+        List<ActionDefinition> actionDefinitionList = new ArrayList<ActionDefinition>();
+        for(ActionDefinition actionDefinition : BackendJobCache.allActionDefine){
+            if(actionDefinition.getActionType() == ActionDefineTypeEnum.REWARD.ordinal()){
+                actionDefinitionList.add(actionDefinition);
+            }
+        }
+        return actionDefinitionList;
+    }
+
+    @Override
+    public List<ExperienceDefinition> getExperienceDefine() {
+        try {
+            return commonDAO.getExperienceDefine();
         } catch (Exception ex) {
             throw new ServerRequestException(ex.getMessage());
         }
@@ -152,6 +182,8 @@ public class CommonServiceImpl implements CommonService {
             backendJobCache.actionDefineServiceJob();
         }  else if (jobCache.equalsIgnoreCase("recommendUserServiceJob")) {
             backendJobCache.recommendUserServiceJob();
+        }  else if (jobCache.equalsIgnoreCase("experienceServiceJob")) {
+            backendJobCache.experienceServiceJob();
         }
     }
 }

@@ -11,6 +11,9 @@
         <result column="VIRTUAL_PRICE" property="virtualPrice"/>
         <result column="DROP_FLAG" property="dropFlag"/>
         <result column="PIC_LINK" property="picLink"/>
+        <result column="EFFECTIVE_RULE" property="effectiveRule"/>
+        <result column="DROP_PIC_LIST" property="dropPicList"/>
+        <result column="MAX_DROP_NUM" property="maxDropNum"/>
         <result column="UPDATE_TIME" property="updateTime"/>
     </resultMap>
 
@@ -21,6 +24,9 @@
         VIRTUAL_PRICE,
         DROP_FLAG,
         PIC_LINK,
+        EFFECTIVE_RULE,
+        DROP_PIC_LIST,
+        MAX_DROP_NUM,
         UPDATE_TIME
     </sql>
 

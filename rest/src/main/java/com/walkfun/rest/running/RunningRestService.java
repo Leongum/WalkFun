@@ -40,7 +40,7 @@ public class RunningRestService implements RunningRestDef {
                 runningHistory.setExtraExperience(0);
             }
         }
-        runningService.createRunningHistory(runningHistoryList);
+        runningService.createRunningHistory(CommonUtils.parseIntegerToNull(userId),runningHistoryList);
     }
 
     @Override
@@ -60,6 +60,6 @@ public class RunningRestService implements RunningRestDef {
         for (MissionHistory runningHistory : missionHistoryList) {
             runningHistory.setUserId(CommonUtils.parseIntegerToNull(userId));
         }
-        runningService.createOrUpdateMissionHistory(missionHistoryList);
+        runningService.createOrUpdateMissionHistory(CommonUtils.parseIntegerToNull(userId),missionHistoryList);
     }
 }

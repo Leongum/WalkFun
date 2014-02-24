@@ -19,4 +19,6 @@ public interface VProductService {
     public List<VProduct> getVProduct(Date lastUpdateTime);
 
     public void createVProductHistory(VProductHistory vProductHistory);
+
+    public VProduct getVProductById(Integer vProductId);
 }

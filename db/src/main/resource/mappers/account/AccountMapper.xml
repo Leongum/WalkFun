@@ -16,12 +16,14 @@
         <result column="HEIGHT" property="height"/>
         <result column="PLATFORM_INFO" property="platformInfo"/>
         <result column="PIC_ID" property="picId"/>
-        <result column="USER_TITLE_ID" property="userTitleId"/>
         <result column="USER_TITLE" property="userTitle"/>
+        <result column="USER_TITLE_PIC" property="userTitlePic"/>
         <result column="USER_FAT_DESC" property="userFatDesc"/>
         <result column="LEVEL" property="level"/>
         <result column="GOLD_COIN" property="goldCoin"/>
         <result column="EXPERIENCE" property="experience"/>
+        <result column="GOLD_COIN_SPEED" property="goldCoinSpeed"/>
+        <result column="EXPERIENCE_SPEED" property="experienceSpeed"/>
         <result column="HEALTH" property="health"/>
         <result column="FATNESS" property="fatness"/>
         <result column="TOTAL_DISTANCE" property="totalDistance"/>
@@ -48,12 +50,14 @@
         U.HEIGHT,
         U.PLATFORM_INFO,
         UD.PIC_ID,
-        UD.USER_TITLE_ID,
         UD.USER_TITLE,
+        UD.USER_TITLE_PIC,
         UD.USER_FAT_DESC,
         UD.LEVEL,
         UD.GOLD_COIN,
+        UD.GOLD_COIN_SPEED,
         UD.EXPERIENCE,
+        UD.EXPERIENCE_SPEED,
         UD.HEALTH,
         UD.FATNESS,
         UD.TOTAL_DISTANCE,
@@ -153,63 +157,18 @@
         WHERE USER_ID = #{baseEntity.userId}
     </update>
 
-    <insert id="createAccountDetail" parameterType="com.walkfun.entity.account.UserInfo">
-        INSERT INTO USER_DETAIL
-        (
-            USER_ID,
-            PIC_ID,
-            USER_TITLE_ID,
-            USER_TITLE,
-            USER_FAT_DESC,
-            LEVEL,
-            GOLD_COIN,
-            EXPERIENCE,
-            HEALTH,
-            FATNESS,
-            TOTAL_DISTANCE,
-            TOTAL_CARLORIE,
-            TOTAL_STEPS,
-            TOTAL_WALKING_TIMES,
-            TOTAL_ACTIVE_TIMES,
-            CURRENT_COMBO,
-            MAX_COMBO,
-            MISSION_COMBO,
-            UPDATE_TIME
-        )
-        VALUES
-        (
-          #{detailEntity.userId},
-          #{detailEntity.picId},
-          #{detailEntity.userTitleId},
-          #{detailEntity.userTitle},
-          #{detailEntity.userFatDesc},
-          #{detailEntity.level},
-          #{detailEntity.goldCoin},
-          #{detailEntity.health},
-          #{detailEntity.fatness},
-          #{detailEntity.experience},
-          #{detailEntity.totalDistance},
-          #{detailEntity.totalCarlorie},
-          #{detailEntity.totalSteps},
-          #{detailEntity.totalWalkingTimes},
-          #{detailEntity.totalActiveTimes},
-          #{detailEntity.currentCombo},
-          #{detailEntity.maxCombo},
-          #{detailEntity.missionCombo},
-          now()
-        );
-    </insert>
-
     <update id="updateAccountDetail" parameterType="com.walkfun.entity.account.UserInfo">
         UPDATE USER_DETAIL
         SET
             PIC_ID = #{detailEntity.picId},
-            USER_TITLE_ID = #{detailEntity.userTitleId},
             USER_TITLE = #{detailEntity.userTitle},
+            USER_TITLE_PIC = #{detailEntity.userTitlePic},
             USER_FAT_DESC = #{detailEntity.userFatDesc},
             LEVEL = #{detailEntity.level},
             GOLD_COIN = #{detailEntity.goldCoin},
+            GOLD_COIN_SPEED = #{detailEntity.goldCoinSpeed},
             EXPERIENCE = #{detailEntity.experience},
+            EXPERIENCE_SPEED = #{detailEntity.experienceSpeed},
             HEALTH = #{detailEntity.health},
             FATNESS = #{detailEntity.fatness},
             TOTAL_DISTANCE = #{detailEntity.totalDistance},
@@ -220,6 +179,7 @@
             CURRENT_COMBO = #{detailEntity.currentCombo},
             MAX_COMBO = #{detailEntity.maxCombo},
             MISSION_COMBO = #{detailEntity.missionCombo},
+            PROP_HAVING = #{detailEntity.propHaving},
             UPDATE_TIME = now()
         WHERE USER_ID = #{detailEntity.userId}
     </update>
@@ -343,6 +303,15 @@
         AND A.UPDATE_TIME > ULS.ACTION_SYNC_TIME
     </select>
 
+    <select id="getUserActionById" resultMap="userActionInfo">
+        SELECT
+        <include refid="userActionInfoTable"/>
+        FROM ACTION AS A
+        WHERE A.ACTION_TO_ID = #{userId}
+        ORDER BY A.ID DESC
+        LIMIT 3
+    </select>
+
     <update id="updateUserActionSyncTime">
          UPDATE USER_LAST_SYNC
          SET
@@ -356,6 +325,7 @@
         <result column="NICK_NAME" property="nickName"/>
         <result column="SEX" property="sex"/>
         <result column="USER_TITLE" property="userTitle"/>
+        <result column="USER_TITLE_PIC" property="userTitlePic"/>
         <result column="LEVEL" property="level"/>
     </resultMap>
 
@@ -364,6 +334,7 @@
         U.NICK_NAME,
         U.SEX,
         UD.USER_TITLE,
+        UD.USER_TITLE_PIC,
         UD.LEVEL
     </sql>
 
@@ -393,6 +364,7 @@
         <result column="NICK_NAME" property="friendName"/>
         <result column="SEX" property="sex"/>
         <result column="USER_TITLE" property="userTitle"/>
+        <result column="USER_TITLE_PIC" property="userTitlePic"/>
         <result column="LEVEL" property="level"/>
         <result column="TOTAL_DISTANCE" property="totalDistance"/>
     </resultMap>
@@ -402,6 +374,7 @@
         U.NICK_NAME,
         U.SEX,
         UD.USER_TITLE,
+        UD.USER_TITLE_PIC,
         UD.LEVEL,
         UD.TOTAL_DISTANCE
     </sql>
@@ -411,7 +384,7 @@
         <include refid="friendSortTable"/>
         FROM FRIENDSHIP AS UF
         INNER JOIN USER_BASE AS U
-        ON UF.USER_ID = U.USER_ID
+        ON UF.USER_ID = U.USER_ID OR UF.FRIEND_ID = U.USER_ID
         INNER JOIN USER_DETAIL AS UD
         ON U.USER_ID = UD.USER_ID
         WHERE (UF.USER_ID = #{userId} OR UF.FRIEND_ID = #{userId})

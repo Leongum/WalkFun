@@ -14,7 +14,7 @@ import java.util.Date;
  * Time: 下午9:35
  * To change this template use File | Settings | File Templates.
  */
-public class ActionDefination {
+public class ActionDefinition {
 
     private Integer actionId;
     private Integer actionType; //0 for run 1 for use
@@ -23,6 +23,7 @@ public class ActionDefination {
     private String actionDescription;
     private String actionAttribute;
     private String actionRule;
+    private String effectiveRule;
     private Double triggerProbability;
     private String soundLink;
     private Date updateTime;
@@ -97,6 +98,14 @@ public class ActionDefination {
 
     public void setInUsing(Integer inUsing) {
         this.inUsing = inUsing;
+    }
+
+    public String getEffectiveRule() {
+        return effectiveRule;
+    }
+
+    public void setEffectiveRule(String effectiveRule) {
+        this.effectiveRule = effectiveRule;
     }
 
     @JsonSerialize(using = CustomDateSerializer.class)

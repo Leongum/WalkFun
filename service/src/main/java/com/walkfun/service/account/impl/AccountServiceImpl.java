@@ -2,19 +2,22 @@ package com.walkfun.service.account.impl;
 
 import com.walkfun.common.exception.*;
 import com.walkfun.common.lib.Callable;
+import com.walkfun.common.lib.CloneUtils;
 import com.walkfun.common.lib.Universe;
 import com.walkfun.db.account.dao.def.AccountDAO;
+import com.walkfun.entity.common.ActionDefinition;
+import com.walkfun.entity.common.ExperienceDefinition;
+import com.walkfun.service.BaseService;
 import com.walkfun.service.Cache.CacheFacade;
 import com.walkfun.service.account.def.AccountService;
 import com.walkfun.service.backend.BackendJobCache;
+import com.walkfun.service.common.def.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.walkfun.entity.account.*;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,10 +26,13 @@ import java.util.List;
  * Time: 11:51 AM
  * To change this template use File | Settings | File Templates.
  */
-public class AccountServiceImpl implements AccountService {
+public class AccountServiceImpl extends BaseService implements AccountService {
 
     @Autowired
     private AccountDAO accountDAO;
+
+    @Autowired
+    private CommonService commonService;
 
     @Override
     public void checkUserLoginStatus(Integer userId) {
@@ -45,6 +51,21 @@ public class AccountServiceImpl implements AccountService {
         } catch (Exception ex) {
             throw new ServerRequestException(ex.getMessage());
         }
+    }
+
+    @Override
+    public UserInfo checkUserLevel(UserInfo userInfo) {
+        for (ExperienceDefinition experienceDefinition : BackendJobCache.allExperience) {
+            if (userInfo.getExperience() < experienceDefinition.getTotalExperience()) {
+                userInfo.setLevel(experienceDefinition.getLevel());
+                userInfo.setUserTitle(experienceDefinition.getTitle());
+                userInfo.setUserTitlePic(experienceDefinition.getTitlePic());
+                userInfo.setGoldCoinSpeed(experienceDefinition.getGoldCoinSpeed());
+                userInfo.setExperienceSpeed(experienceDefinition.getExperienceSpeed());
+                break;
+            }
+        }
+        return userInfo;
     }
 
     private UserInfo checkUserExisting(final Integer userId, final Date lastUpdateTime) {
@@ -151,7 +172,21 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public void createUserAction(UserAction userAction) {
         try {
+            //1. get action definition
+            ActionDefinition actionDefinition = commonService.getActionDefineById(userAction.getActionId());
+            //2. get user info
+            UserInfo toUser = checkUserExisting(userAction.getActionToId(), null);
+            //3. explain action and effective
+            Map<Integer, Integer> vProductIds = explainActionRule(actionDefinition.getActionRule());
+            Map<String, Integer> userStatusMap = explainActionEffetiveRule(actionDefinition.getEffectiveRule());
+            //4. add effective into user
+            List<UserProp> updateProps = getUserProps(userAction.getActionFromId(), null);
+            updateProps = calculateUserProp(userAction.getActionFromId(), updateProps, vProductIds);
+            UserInfo updateUserInfo = calculateUserInfo(toUser, userStatusMap, vProductIds);
+            //5. update database
             accountDAO.createUserAction(userAction);
+            this.createOrUpdateUserProp(updateProps);
+            this.updateAccountInfo(updateUserInfo);
         } catch (Exception ex) {
             throw new ServerRequestException(ex.getMessage());
         }
@@ -161,6 +196,15 @@ public class AccountServiceImpl implements AccountService {
     public List<UserAction> getNewlyUserAction(Integer userId) {
         try {
             return accountDAO.getNewlyUserAction(userId);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public List<UserAction> getUserActionById(Integer userId) {
+        try {
+            return accountDAO.getUserActionById(userId);
         } catch (Exception ex) {
             throw new ServerRequestException(ex.getMessage());
         }
@@ -227,6 +271,48 @@ public class AccountServiceImpl implements AccountService {
             for (UserProp userProp : userProps) {
                 accountDAO.createOrUpdateUserProp(userProp);
             }
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public RewardDetails getRandomReward(Integer userId) {
+        try {
+            UserInfo userInfo = checkUserExisting(userId, null);
+            List<UserProp> userProps = getUserProps(userId, null);
+            RewardDetails rewardDetails = new RewardDetails();
+            rewardDetails.setUserId(userId);
+            rewardDetails.setActionId(200);
+            Random random = new Random(new Date().getTime());
+            List<ActionDefinition> rewardActions = commonService.getRewardActionDefine();
+            for (ActionDefinition actionDefinition : rewardActions) {
+                int randomNum = random.nextInt(100);
+                if (randomNum < actionDefinition.getTriggerProbability() * 100) {
+                    rewardDetails.setActionId(actionDefinition.getActionId());
+                    break;
+                }
+            }
+            ActionDefinition randomActionDefinition = commonService.getActionDefineById(rewardDetails.getActionId());
+            Map<Integer, Integer> vProductIds = explainActionRule(randomActionDefinition.getActionRule());
+            Map<String, Integer> userStatusMap = explainActionEffetiveRule(randomActionDefinition.getEffectiveRule());
+            userProps = calculateUserProp(userId, userProps, vProductIds);
+            userInfo = calculateUserInfo(userInfo, userStatusMap);
+            for (Integer key : vProductIds.keySet()) {
+                rewardDetails.setRewardPropId(vProductIds.get(key));
+            }
+            for (String key : userStatusMap.keySet()) {
+                if (key.equalsIgnoreCase(MONEY)) {
+                    rewardDetails.setRewardMoney(userStatusMap.get(key));
+                }
+            }
+            if (rewardDetails.getRewardPropId() != null) {
+                this.createOrUpdateUserProp(userProps);
+            }
+            if (rewardDetails.getRewardMoney() != null) {
+                this.updateAccountInfo(userInfo);
+            }
+            return rewardDetails;
         } catch (Exception ex) {
             throw new ServerRequestException(ex.getMessage());
         }

@@ -36,7 +36,7 @@ public interface SystemRestDef extends RestDef {
 
     @GET
     @Path("/actionDefine/get/{" + PARAM_LAST_UPDATE_TIME + "}")
-    List<ActionDefination> getActionDefine(
+    List<ActionDefinition> getActionDefine(
             @PathParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
 
     @GET
