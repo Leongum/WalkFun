@@ -2,12 +2,14 @@ package com.walkfun.common.lib;
 
 
 import com.walkfun.common.logService.LogHelper;
+import javapns.Push;
 import javapns.devices.Device;
 import javapns.devices.implementations.basic.BasicDevice;
 import javapns.notification.AppleNotificationServerBasicImpl;
 import javapns.notification.PushNotificationManager;
 import javapns.notification.PushNotificationPayload;
 import javapns.notification.PushedNotification;
+import javapns.notification.transmission.PushQueue;
 import org.springframework.core.io.Resource;
 
 import java.util.ArrayList;
@@ -36,6 +38,8 @@ public class IOSMessageSend {
     private static String sound = "default";
     // @param production true：表示的是产品发布推送服务 false：表示的是产品测试推送服务
     private boolean production;
+    // @param threads 表示创建多少个push thread
+    private int maxThread;
 
     public Resource getPath() {
         return path;
@@ -59,6 +63,14 @@ public class IOSMessageSend {
 
     public void setProduction(boolean production) {
         this.production = production;
+    }
+
+    public int getMaxThread() {
+        return maxThread;
+    }
+
+    public void setMaxThread(int maxThread) {
+        this.maxThread = maxThread;
     }
 
     /************************************************
@@ -123,6 +135,27 @@ public class IOSMessageSend {
                 log.logInfo("------Some notifications success (" + failedNotifications.size() + "):");
                 log.logInfo("------Others fail (" + successfulNotifications.size() + "):");
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void send(String token, String message) {
+        try {
+            /* Prepare a simple payload to push */
+            PushNotificationPayload payLoad = new PushNotificationPayload();
+            payLoad.addAlert(message);
+            payLoad.addBadge(count);
+            payLoad.addSound(sound);
+
+            /* Create the queue */
+            PushQueue queue = Push.queue(path.getInputStream(), password, production, maxThread);
+
+            /* Start the queue (all threads and connections and initiated) */
+            queue.start();
+
+            /* Add a notification for the queue to push */
+            queue.add(payLoad, token);
         } catch (Exception e) {
             e.printStackTrace();
         }

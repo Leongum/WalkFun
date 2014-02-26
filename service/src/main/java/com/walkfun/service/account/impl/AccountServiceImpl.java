@@ -5,6 +5,7 @@ import com.walkfun.common.lib.*;
 import com.walkfun.db.account.dao.def.AccountDAO;
 import com.walkfun.entity.common.ActionDefinition;
 import com.walkfun.entity.common.ExperienceDefinition;
+import com.walkfun.entity.enums.FollowStatusEnum;
 import com.walkfun.service.BaseService;
 import com.walkfun.service.Cache.CacheFacade;
 import com.walkfun.service.account.def.AccountService;
@@ -155,13 +156,11 @@ public class AccountServiceImpl extends BaseService implements AccountService {
             UserInfo me = checkUserExisting(userFriend.getUserId(), null);
             UserInfo friend = checkUserExisting(userFriend.getFriendId(), null);
             accountDAO.createOrUpdateUserFriend(userFriend);
-            List<String> tokens = new ArrayList<String>();
-            String friendDeviceId = CommonUtils.getDeviceId(friend.getDeviceId());
-            if (friendDeviceId != null) {
-                tokens.add(friendDeviceId);
-            }
-            if (tokens.size() > 0) {
-                iosMessageSend.sendpush(tokens, me.getNickName() + "加你为好友了，快去好友列表看看吧！", false);
+            if (userFriend.getFriendStatus() == FollowStatusEnum.FOLLOWED.ordinal()) {
+                String token = CommonUtils.getDeviceId(friend.getDeviceId());
+                if (token != null) {
+                    iosMessageSend.send(token, me.getNickName() + "加你为好友了，快去好友列表看看吧！");
+                }
             }
         } catch (Exception ex) {
             throw new ServerRequestException(ex.getMessage());
@@ -196,13 +195,11 @@ public class AccountServiceImpl extends BaseService implements AccountService {
             accountDAO.createUserAction(userAction);
             this.createOrUpdateUserProp(updateProps);
             this.updateAccountInfo(updateUserInfo);
-            List<String> tokens = new ArrayList<String>();
-            String friendDeviceId = CommonUtils.getDeviceId(toUser.getDeviceId());
-            if (friendDeviceId != null) {
-                tokens.add(friendDeviceId);
-            }
-            if (tokens.size() > 0) {
-                iosMessageSend.sendpush(tokens, userAction.getActionFromName() + actionDefinition.getNotificationMessage(), false);
+            if (userAction.getActionFromId() != userAction.getActionToId()) {
+                String token = CommonUtils.getDeviceId(toUser.getDeviceId());
+                if (token != null) {
+                    iosMessageSend.send(token, userAction.getActionFromName() + actionDefinition.getNotificationMessage());
+                }
             }
         } catch (Exception ex) {
             throw new ServerRequestException(ex.getMessage());

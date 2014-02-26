@@ -44,6 +44,7 @@
         <property name="password" value="${notifaction.password}"/>
         <property name="path" value="${notifaction.path}"/>
         <property name="production" value="${notifaction.production}"/>
+        <property name="maxThread" value="${notifaction.thread}"/>
     </bean>
 
     <!-- Logger Interceptor -->
