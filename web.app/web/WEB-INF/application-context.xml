@@ -40,6 +40,12 @@
         </property>
     </bean>
 
+    <bean id="iosMessageSend" class="com.walkfun.common.lib.IOSMessageSend">
+        <property name="password" value="${notifaction.password}"/>
+        <property name="path" value="${notifaction.path}"/>
+        <property name="production" value="${notifaction.production}"/>
+    </bean>
+
     <!-- Logger Interceptor -->
     <bean id="logInbound" class="org.apache.cxf.interceptor.LoggingInInterceptor"/>
     <bean id="logOutbound" class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>

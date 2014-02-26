@@ -93,6 +93,7 @@
         <result column="EFFECTIVE_RULE" property="effectiveRule"/>
         <result column="TRIGGER_PROBABILITY" property="triggerProbability"/>
         <result column="SOUND_LINK" property="soundLink"/>
+        <result column="NOTIFICATION_MESSAGE" property="notificationMessage"/>
         <result column="UPDATE_TIME" property="updateTime"/>
     </resultMap>
 
@@ -107,6 +108,7 @@
         EFFECTIVE_RULE,
         TRIGGER_PROBABILITY,
         SOUND_LINK,
+        NOTIFICATION_MESSAGE,
         UPDATE_TIME
     </sql>
 

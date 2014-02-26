@@ -26,6 +26,7 @@ public class ActionDefinition {
     private String effectiveRule;
     private Double triggerProbability;
     private String soundLink;
+    private String notificationMessage;
     private Date updateTime;
 
     public Integer getActionId() {
@@ -106,6 +107,14 @@ public class ActionDefinition {
 
     public void setEffectiveRule(String effectiveRule) {
         this.effectiveRule = effectiveRule;
+    }
+
+    public String getNotificationMessage() {
+        return notificationMessage;
+    }
+
+    public void setNotificationMessage(String notificationMessage) {
+        this.notificationMessage = notificationMessage;
     }
 
     @JsonSerialize(using = CustomDateSerializer.class)

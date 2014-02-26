@@ -80,7 +80,6 @@ public class AccountDAOImpl implements AccountDAO {
         if(friendFollow != null){
             accountMapper.createOrUpdateUserFriend(friendFollow);
         }
-        //todo:: send message to client.
     }
 
     @Override
@@ -91,7 +90,6 @@ public class AccountDAOImpl implements AccountDAO {
     @Override
     public void createUserAction(UserAction userAction) {
         accountMapper.createUserAction(userAction);
-        //todo:: send message to client.
     }
 
     @Override

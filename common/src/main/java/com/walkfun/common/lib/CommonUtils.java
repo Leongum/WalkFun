@@ -102,4 +102,14 @@ public class CommonUtils {
         }
         return result;
     }
+
+    public static String getDeviceId(String deviceId) {
+        if (deviceId != null) {
+            deviceId = deviceId.replaceAll(" ", "").replaceAll("<", "").replaceAll(">", "");
+        }
+        if(deviceId != null && deviceId.length() == 64){
+            return deviceId;
+        }
+        return null;
+    }
 }

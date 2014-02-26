@@ -2,8 +2,10 @@ package com.walkfun.service.vproduct.impl;
 
 import com.walkfun.common.exception.ServerRequestException;
 import com.walkfun.db.vproduct.dao.def.VProductDAO;
+import com.walkfun.entity.account.UserInfo;
 import com.walkfun.entity.account.UserProp;
 import com.walkfun.entity.vproduct.*;
+import com.walkfun.service.BaseService;
 import com.walkfun.service.account.def.AccountService;
 import com.walkfun.service.backend.BackendJobCache;
 import com.walkfun.service.vproduct.def.VProductService;
@@ -21,7 +23,7 @@ import java.util.List;
  * Time: 上午11:47
  * To change this template use File | Settings | File Templates.
  */
-public class VProductServiceImpl implements VProductService {
+public class VProductServiceImpl extends BaseService implements VProductService {
 
     @Autowired
     private VProductDAO vProductDAO;
@@ -58,19 +60,23 @@ public class VProductServiceImpl implements VProductService {
     public void createVProductHistory(VProductHistory vProductHistory) {
         try {
             vProductDAO.createVProductHistory(vProductHistory);
+            UserInfo userInfo = accountService.getAccountInfoByID(vProductHistory.getUserId(), null);
             List<UserProp> userProps = accountService.getUserProps(vProductHistory.getUserId(), null);
             List<UserProp> updateProps = new ArrayList<UserProp>();
+            VProduct vProduct = getVProductById(vProductHistory.getProductId());
             //update old props
             for (UserProp userProp : userProps) {
                 if (userProp.getProductId() == vProductHistory.getProductId()) {
                     userProp.setOwnNumber(userProp.getOwnNumber() + vProductHistory.getNumbers());
                     updateProps.add(userProp);
+                    double price = -(double) (vProductHistory.getNumbers() * vProduct.getVirtualPrice());
+                    userInfo.setGoldCoin(plus(userInfo.getGoldCoin(), price));
                     accountService.createOrUpdateUserProp(updateProps);
+                    accountService.updateAccountInfo(userInfo);
                     return;
                 }
             }
             // add new props
-            VProduct vProduct = this.getVProductById(vProductHistory.getProductId());
             if (vProduct != null) {
                 UserProp newUserProp = new UserProp();
                 newUserProp.setUserId(vProductHistory.getUserId());
@@ -78,7 +84,10 @@ public class VProductServiceImpl implements VProductService {
                 newUserProp.setProductName(vProduct.getProductName());
                 newUserProp.setOwnNumber(vProductHistory.getNumbers());
                 updateProps.add(newUserProp);
+                double price = -(double) (vProductHistory.getNumbers() * vProduct.getVirtualPrice());
+                userInfo.setGoldCoin(plus(userInfo.getGoldCoin(), price));
                 accountService.createOrUpdateUserProp(updateProps);
+                accountService.updateAccountInfo(userInfo);
             }
         } catch (Exception ex) {
             throw new ServerRequestException(ex.getMessage());
