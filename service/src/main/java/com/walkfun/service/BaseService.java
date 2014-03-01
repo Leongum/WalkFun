@@ -153,7 +153,7 @@ public class BaseService {
             String[] ruleArray = actionList.split("\\|");
             for (int i = 0; i < ruleArray.length; i++) {
                 String[] ruleDetails = ruleArray[i].split(",");
-                if (ruleDetails != null && ruleDetails.length == 2) {
+                if (ruleDetails != null && ruleDetails.length >= 2) {
                     actions.add(Integer.parseInt(ruleDetails[1]));
                 }
             }

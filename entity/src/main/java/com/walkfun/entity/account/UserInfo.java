@@ -57,7 +57,7 @@ public class UserInfo extends UserBase {
         this.setWeight(userBase.getWeight());
         this.setPlatformInfo(userBase.getPlatformInfo());
         this.userTitle = "新手上路";
-        this.userTitlePic ="http://cyberace.qiniudn.com/walkfun1.png";
+        this.userTitlePic = "http://cyberace.qiniudn.com/walkfun1.png";
         this.level = 0d;
         this.goldCoin = 0d;
         this.goldCoinSpeed = 0d;
@@ -211,6 +211,12 @@ public class UserInfo extends UserBase {
     }
 
     public void setHealth(Double health) {
+        if (health < 0) {
+            this.health = 0.0;
+        }
+        if (health > 100) {
+            this.health = 100.0;
+        }
         this.health = health;
     }
 
@@ -219,6 +225,12 @@ public class UserInfo extends UserBase {
     }
 
     public void setFatness(Double fatness) {
+        if (fatness < 0) {
+            this.fatness = 0.0;
+        }
+        if (fatness > 100) {
+            this.fatness = 100.0;
+        }
         this.fatness = fatness;
     }
 

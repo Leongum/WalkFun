@@ -4,6 +4,7 @@ import com.walkfun.common.exception.ServerRequestException;
 import com.walkfun.db.common.dao.def.CommonDAO;
 import com.walkfun.entity.common.*;
 import com.walkfun.entity.enums.ActionDefineTypeEnum;
+import com.walkfun.service.Cache.CacheFacade;
 import com.walkfun.service.backend.BackendJobCache;
 import com.walkfun.service.common.def.CommonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,6 +87,7 @@ public class CommonServiceImpl implements CommonService {
 
     @Override
     public void evictCache(String cacheId) {
+        CacheFacade.USER.evict(cacheId);
     }
 
     @Override
