@@ -121,6 +121,9 @@ public class UserInfo extends UserBase {
     }
 
     public void setGoldCoin(Double goldCoin) {
+        if (goldCoin < 0) {
+            goldCoin = 0d;
+        }
         this.goldCoin = goldCoin;
     }
 

@@ -186,7 +186,7 @@ public class AccountServiceImpl extends BaseService implements AccountService {
             UserInfo toUser = checkUserExisting(userAction.getActionToId(), null);
             //3. explain action and effective
             Map<Integer, Integer> vProductIds = explainActionRule(actionDefinition.getActionRule());
-            Map<String, Integer> userStatusMap = explainActionEffetiveRule(actionDefinition.getEffectiveRule());
+            Map<String, Integer> userStatusMap = explainActionEffectiveRule(actionDefinition.getEffectiveRule());
             //4. add effective into user
             List<UserProp> updateProps = getUserProps(userAction.getActionFromId(), null);
             updateProps = calculateUserProp(userAction.getActionFromId(), updateProps, vProductIds);
@@ -309,7 +309,7 @@ public class AccountServiceImpl extends BaseService implements AccountService {
             }
             ActionDefinition randomActionDefinition = commonService.getActionDefineById(rewardDetails.getActionId());
             Map<Integer, Integer> vProductIds = explainActionRule(randomActionDefinition.getActionRule());
-            Map<String, Integer> userStatusMap = explainActionEffetiveRule(randomActionDefinition.getEffectiveRule());
+            Map<String, Integer> userStatusMap = explainActionEffectiveRule(randomActionDefinition.getEffectiveRule());
             userProps = calculateUserProp(userId, userProps, vProductIds);
             userInfo = calculateUserInfo(userInfo, userStatusMap);
             for (Integer key : vProductIds.keySet()) {

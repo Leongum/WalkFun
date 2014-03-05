@@ -99,7 +99,7 @@ public class RunningServiceImpl extends BaseService implements RunningService {
         UserInfo newUser = userInfo;
         for (Integer actionId : actions) {
             ActionDefinition actionDefinition = commonService.getActionDefineById(actionId);
-            Map<String, Integer> effectiveRule = explainActionEffetiveRule(actionDefinition.getEffectiveRule());
+            Map<String, Integer> effectiveRule = explainActionEffectiveRule(actionDefinition.getEffectiveRule());
             newUser = calculateUserInfo(newUser, effectiveRule);
         }
         return newUser;

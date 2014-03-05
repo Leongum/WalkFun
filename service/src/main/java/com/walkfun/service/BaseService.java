@@ -73,7 +73,7 @@ public class BaseService {
         return updateProps;
     }
 
-    public Map<String, Integer> explainActionEffetiveRule(String effectiveRule) {
+    public Map<String, Integer> explainActionEffectiveRule(String effectiveRule) {
         Map<String, Integer> userStatusMap = new HashMap<String, Integer>();
         //B,1|H,-1
         if (effectiveRule != null) {
@@ -164,7 +164,7 @@ public class BaseService {
     public <K, V> String transMapToString(Map<K, V> mapList) {
         String str = "";
         for (K key : mapList.keySet()) {
-            str = key.toString() + "," + mapList.get(key).toString() + "|";
+            str = str + key.toString() + "," + mapList.get(key).toString() + "|";
         }
         return str;
     }
