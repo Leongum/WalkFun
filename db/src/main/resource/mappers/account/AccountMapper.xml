@@ -309,7 +309,7 @@
         FROM ACTION AS A
         WHERE A.ACTION_TO_ID = #{userId}
         ORDER BY A.ID DESC
-        LIMIT 3
+        LIMIT 1
     </select>
 
     <update id="updateUserActionSyncTime">

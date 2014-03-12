@@ -1,6 +1,7 @@
 package com.walkfun.service.common.impl;
 
 import com.walkfun.common.exception.ServerRequestException;
+import com.walkfun.common.lib.CommonUtils;
 import com.walkfun.db.common.dao.def.CommonDAO;
 import com.walkfun.entity.common.*;
 import com.walkfun.entity.enums.ActionDefineTypeEnum;
@@ -50,7 +51,7 @@ public class CommonServiceImpl implements CommonService {
             } else {
                 versionControl = getVersionControl(platform);
             }
-            versionControl.setMessageLastUpdateTime(BackendJobCache.messageLastTime);
+            versionControl.setMessageLastUpdateTime(CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00"));
             versionControl.setMissionLastUpdateTime(BackendJobCache.missionLastTime);
             versionControl.setRecommendLastUpdateTime(BackendJobCache.recommendAppLastTime);
             versionControl.setProductLastUpdateTime(BackendJobCache.productLastTime);
@@ -72,17 +73,18 @@ public class CommonServiceImpl implements CommonService {
 
     @Override
     public List<SystemMessage> getSystemMessageForRest(Date lastUpdateTime) {
-        try {
-            if (lastUpdateTime.before(BackendJobCache.messageFirstTime)) {
-                return BackendJobCache.allMessages;
-            }
-            if (lastUpdateTime.after(BackendJobCache.messageLastTime)) {
-                return new ArrayList<SystemMessage>();
-            }
-            return getSystemMessage(lastUpdateTime);
-        } catch (Exception ex) {
-            throw new ServerRequestException(ex.getMessage());
-        }
+//        try {
+//            if (lastUpdateTime.before(BackendJobCache.messageFirstTime)) {
+//                return BackendJobCache.allMessages;
+//            }
+//            if (lastUpdateTime.after(BackendJobCache.messageLastTime)) {
+//                return new ArrayList<SystemMessage>();
+//            }
+//            return getSystemMessage(lastUpdateTime);
+//        } catch (Exception ex) {
+//            throw new ServerRequestException(ex.getMessage());
+//        }
+        return new ArrayList<SystemMessage>();
     }
 
     @Override
@@ -173,7 +175,7 @@ public class CommonServiceImpl implements CommonService {
         if (jobCache.equalsIgnoreCase("missionServiceJob")) {
             backendJobCache.missionServiceJob();
         } else if (jobCache.equalsIgnoreCase("systemMessageServiceJob")) {
-            backendJobCache.systemMessageServiceJob();
+            //backendJobCache.systemMessageServiceJob();
         } else if (jobCache.equalsIgnoreCase("recommendAppServiceJob")) {
             backendJobCache.recommendAppServiceJob();
         } else if (jobCache.equalsIgnoreCase("versionServiceJob")) {
@@ -187,5 +189,6 @@ public class CommonServiceImpl implements CommonService {
         }  else if (jobCache.equalsIgnoreCase("experienceServiceJob")) {
             backendJobCache.experienceServiceJob();
         }
+
     }
 }

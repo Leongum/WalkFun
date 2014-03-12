@@ -15,6 +15,6 @@
            overflowToDisk="false"
            diskPersistent="false"
            timeToIdleSeconds="0"
-           timeToLiveSeconds="604800"
+           timeToLiveSeconds="14400"
            memoryStoreEvictionPolicy="LRU"/>
 </ehcache>

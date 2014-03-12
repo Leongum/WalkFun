@@ -23,7 +23,7 @@
     <task:scheduled-tasks>
         <task:scheduled ref="backendJobCache" method="missionServiceJob" fixed-rate="21600000"/>
         <task:scheduled ref="backendJobCache" method="versionServiceJob" fixed-rate="22000000"/>
-        <task:scheduled ref="backendJobCache" method="systemMessageServiceJob" fixed-rate="23000000"/>
+        <!--<task:scheduled ref="backendJobCache" method="systemMessageServiceJob" fixed-rate="23000000"/>-->
         <task:scheduled ref="backendJobCache" method="recommendAppServiceJob" fixed-rate="35000000"/>
         <task:scheduled ref="backendJobCache" method="actionDefineServiceJob" fixed-rate="45000000"/>
         <task:scheduled ref="backendJobCache" method="productServiceJob" fixed-rate="25000000"/>

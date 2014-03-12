@@ -175,7 +175,7 @@
         FROM USER_RUNNING_HISTORY
         WHERE USER_ID = #{userId}
         ORDER BY MISSION_END_TIME DESC
-        LIMIT 3
+        LIMIT 1
     </select>
 
     <!--mission history DB-->

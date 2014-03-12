@@ -123,7 +123,7 @@ public class BaseService {
             if (propMap.containsKey(key)) {
                 propMap.put(key, propMap.get(key) + (-vProductIds.get(key)));
             }
-            propMap.put(key, vProductIds.get(key));
+            propMap.put(key, -vProductIds.get(key));
         }
         updateUser.setPropHaving(transMapToString(propMap));
         return updateUser;
