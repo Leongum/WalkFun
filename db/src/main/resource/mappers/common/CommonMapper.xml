@@ -25,28 +25,6 @@
         WHERE VC.PLATFORM = #{platform}
     </select>
 
-    <!-- system message -->
-    <resultMap id="systemMessageInfo" type="com.walkfun.entity.common.SystemMessage">
-        <id column="MESSAGE_ID" property="messageId"/>
-        <result column="MESSAGE" property="message"/>
-        <result column="RULE" property="rule" />
-        <result column="UPDATE_TIME" property="updateTime"/>
-    </resultMap>
-
-    <sql id="systemMessageTable">
-        MESSAGE_ID,
-        MESSAGE,
-        RULE,
-        UPDATE_TIME
-    </sql>
-
-    <select id="getSystemMessageInfo" resultMap="systemMessageInfo">
-        SELECT
-        <include refid="systemMessageTable"/>
-        FROM SYSTEM_MESSAGE
-        WHERE UPDATE_TIME > #{lastUpdateTime}
-    </select>
-
     <!-- Recommend App -->
     <resultMap id="recommendAppInfo" type="com.walkfun.entity.common.RecommendApp">
         <id column="APP_ID" property="appId"/>
@@ -122,6 +100,59 @@
         ]]></if>
     </select>
 
+    <!-- Fight Define -->
+    <resultMap id="fightDefineInfo" type="com.walkfun.entity.common.FightDefinition">
+        <id column="FIGHT_ID" property="id"/>
+        <result column="IN_USING" property="inUsing"/>
+        <result column="FIGHT_NAME" property="fName"/>
+        <result column="MIN_LEVEL_LIMIT" property="minLimit"/>
+        <result column="MAX_LEVEL_LIMIT" property="maxLimit"/>
+        <result column="MONSTER_NAME" property="mName"/>
+        <result column="MONSTER_LEVEL" property="mLevel"/>
+        <result column="MONSTER_MAX_FIGHT" property="mMaxFight"/>
+        <result column="MONSTER_MIN_FIGHT" property="mMinFight"/>
+        <result column="BASE_POWER_CONSUME" property="bPower"/>
+        <result column="BASE_EXPERIENCE" property="bExperience"/>
+        <result column="BASE_GOLD" property="bGold"/>
+        <result column="FIGHT_WIN" property="fWin"/>
+        <result column="WIN_GOT" property="winGot"/>
+        <result column="WIN_GOT_RULE" property="winRule"/>
+        <result column="FIGHT_LOOSE" property="fLoose"/>
+        <result column="TRIGGER_PROBABILITY" property="tProb"/>
+        <result column="UPDATE_TIME" property="updateTime"/>
+    </resultMap>
+
+    <sql id="fightDefineTable">
+        FIGHT_ID,
+        IN_USING,
+        FIGHT_NAME,
+        MIN_LEVEL_LIMIT,
+        MAX_LEVEL_LIMIT,
+        MONSTER_NAME,
+        MONSTER_LEVEL,
+        MONSTER_MAX_FIGHT,
+        MONSTER_MIN_FIGHT,
+        BASE_POWER_CONSUME,
+        BASE_EXPERIENCE,
+        BASE_GOLD,
+        FIGHT_WIN,
+        WIN_GOT,
+        WIN_GOT_RULE,
+        FIGHT_LOOSE,
+        TRIGGER_PROBABILITY,
+        UPDATE_TIME
+    </sql>
+
+    <select id="getFightDefine" resultMap="fightDefineInfo">
+        SELECT
+        <include refid="fightDefineTable"/>
+        FROM FIGHT_DEFINE
+        WHERE 1 = 1
+        <if test="lastUpdateTime != null"><![CDATA[
+        AND UPDATE_TIME > #{lastUpdateTime}
+        ]]></if>
+    </select>
+
     <!--experience define db-->
     <resultMap id="experienceDefineInfo" type="com.walkfun.entity.common.ExperienceDefinition">
         <id column="LEVEL" property="level"/>
@@ -129,8 +160,6 @@
         <result column="TOTAL_EXPERIENCE" property="totalExperience"/>
         <result column="TITLE" property="title"/>
         <result column="TITLE_PIC" property="titlePic"/>
-        <result column="GOLD_COIN_SPEED" property="goldCoinSpeed"/>
-        <result column="EXPERIENCE_SPEED" property="experienceSpeed"/>
     </resultMap>
 
     <sql id="experienceDefineTable">
@@ -138,9 +167,7 @@
         EXPERIENCE,
         TOTAL_EXPERIENCE,
         TITLE,
-        TITLE_PIC,
-        GOLD_COIN_SPEED,
-        EXPERIENCE_SPEED
+        TITLE_PIC
     </sql>
 
     <select id="getExperienceDefinition" resultMap="experienceDefineInfo">

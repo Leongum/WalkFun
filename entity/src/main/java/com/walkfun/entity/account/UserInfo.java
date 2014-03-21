@@ -21,59 +21,25 @@ public class UserInfo extends UserBase {
     private Integer picId;
     private String userTitle;
     private String userTitlePic;
-    private String userFatDesc;
     private Double level;
     private Double goldCoin;
-    private Double goldCoinSpeed;
     private Double experience;
-    private Double experienceSpeed;
-    private Double health;
     private Double fatness;
+    private Double power;
+    private Double powerPlus;
+    private Double fight;
+    private Double fightPlus;
     private Double totalDistance;
     private Double totalCarlorie;
     private Integer totalSteps;
     private Integer totalWalkingTimes;
     private Integer totalActiveTimes;
-    private Integer currentCombo;
-    private Integer maxCombo;
     private Integer missionCombo;
     private String propHaving;
     private Date updateTime;
 
     public UserInfo() {
 
-    }
-
-    public UserInfo(UserBase userBase) {
-        this.setUserId(userBase.getUserId());
-        this.setUuid(userBase.getUuid());
-        this.setDeviceId(userBase.getDeviceId());
-        this.setUserName(userBase.getUserName());
-        this.setNickName(userBase.getNickName());
-        this.setPassword(userBase.getPassword());
-        this.setSex(userBase.getSex());
-        this.setAge(userBase.getAge());
-        this.setHeight(userBase.getHeight());
-        this.setWeight(userBase.getWeight());
-        this.setPlatformInfo(userBase.getPlatformInfo());
-        this.userTitle = "新手上路";
-        this.userTitlePic = "http://cyberace.qiniudn.com/walkfun1.png";
-        this.level = 0d;
-        this.goldCoin = 0d;
-        this.goldCoinSpeed = 0d;
-        this.experience = 0d;
-        this.experienceSpeed = 0d;
-        this.health = 0d;
-        this.fatness = 0d;
-        this.totalDistance = 0d;
-        this.totalCarlorie = 0d;
-        this.totalSteps = 0;
-        this.totalWalkingTimes = 0;
-        this.totalActiveTimes = 0;
-        this.currentCombo = 0;
-        this.maxCombo = 0;
-        this.missionCombo = 0;
-        this.updateTime = new Date();
     }
 
     public Integer getUserId() {
@@ -175,22 +141,6 @@ public class UserInfo extends UserBase {
         this.totalActiveTimes = totalActiveTimes;
     }
 
-    public Integer getCurrentCombo() {
-        return currentCombo;
-    }
-
-    public void setCurrentCombo(Integer currentCombo) {
-        this.currentCombo = currentCombo;
-    }
-
-    public Integer getMaxCombo() {
-        return maxCombo;
-    }
-
-    public void setMaxCombo(Integer maxCombo) {
-        this.maxCombo = maxCombo;
-    }
-
     @JsonSerialize(using = CustomDateSerializer.class)
     public Date getUpdateTime() {
         return updateTime;
@@ -199,28 +149,6 @@ public class UserInfo extends UserBase {
     @JsonDeserialize(using = CustomDateDeserializer.class)
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public String getUserFatDesc() {
-        return userFatDesc;
-    }
-
-    public void setUserFatDesc(String userFatDesc) {
-        this.userFatDesc = userFatDesc;
-    }
-
-    public Double getHealth() {
-        return health;
-    }
-
-    public void setHealth(Double health) {
-        if (health < 0) {
-            this.health = 0.0;
-        }
-        if (health > 100) {
-            this.health = 100.0;
-        }
-        this.health = health;
     }
 
     public Double getFatness() {
@@ -253,19 +181,35 @@ public class UserInfo extends UserBase {
         this.missionCombo = missionCombo;
     }
 
-    public Double getGoldCoinSpeed() {
-        return goldCoinSpeed;
+    public Double getPower() {
+        return power;
     }
 
-    public void setGoldCoinSpeed(Double goldCoinSpeed) {
-        this.goldCoinSpeed = goldCoinSpeed;
+    public void setPower(Double power) {
+        this.power = power;
     }
 
-    public Double getExperienceSpeed() {
-        return experienceSpeed;
+    public Double getPowerPlus() {
+        return powerPlus;
     }
 
-    public void setExperienceSpeed(Double experienceSpeed) {
-        this.experienceSpeed = experienceSpeed;
+    public void setPowerPlus(Double powerPlus) {
+        this.powerPlus = powerPlus;
+    }
+
+    public Double getFight() {
+        return fight;
+    }
+
+    public void setFight(Double fight) {
+        this.fight = fight;
+    }
+
+    public Double getFightPlus() {
+        return fightPlus;
+    }
+
+    public void setFightPlus(Double fightPlus) {
+        this.fightPlus = fightPlus;
     }
 }

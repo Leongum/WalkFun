@@ -17,10 +17,6 @@ public interface CommonService {
 
     VersionControl getVersionForRest(String platform);
 
-    List<SystemMessage> getSystemMessage(Date lastUpdateTime);
-
-    List<SystemMessage> getSystemMessageForRest(Date lastUpdateTime);
-
     void evictCache(String cacheId);
 
     List<RecommendApp> getRecommendApp(Date lastUpdateTime);
@@ -30,6 +26,12 @@ public interface CommonService {
     List<ActionDefinition> getActionDefine(Date lastUpdateTime);
 
     List<ActionDefinition> getActionDefineForRest(Date lastUpdateTime);
+
+    List<FightDefinition> getFightDefine(Date lastUpdateTime);
+
+    List<FightDefinition> getFightDefineForRest(Date lastUpdateTime);
+
+    FightDefinition getFightDefineById(Integer fightId);
 
     ActionDefinition getActionDefineById(Integer actionId);
 

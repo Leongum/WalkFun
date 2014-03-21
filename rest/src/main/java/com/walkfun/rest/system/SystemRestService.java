@@ -28,11 +28,6 @@ public class SystemRestService implements SystemRestDef{
     }
 
     @Override
-    public List<SystemMessage> getSystemMessage(String lastUpdateTime) {
-        return commonService.getSystemMessageForRest(CommonUtils.parseDateDefaultToNull(lastUpdateTime));
-    }
-
-    @Override
     public List<RecommendApp> getRecommendApp(String lastUpdateTime) {
         return commonService.getRecommendAppForRest(CommonUtils.parseDateDefaultToNull(lastUpdateTime));
     }
@@ -40,6 +35,11 @@ public class SystemRestService implements SystemRestDef{
     @Override
     public List<ActionDefinition> getActionDefine(String lastUpdateTime) {
         return commonService.getActionDefineForRest(CommonUtils.parseDateDefaultToNull(lastUpdateTime));
+    }
+
+    @Override
+    public List<FightDefinition> getFightDefine(String lastUpdateTime) {
+        return commonService.getFightDefineForRest(CommonUtils.parseDateDefaultToNull(lastUpdateTime));
     }
 
     @Override

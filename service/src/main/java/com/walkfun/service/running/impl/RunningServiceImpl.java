@@ -55,18 +55,23 @@ public class RunningServiceImpl extends BaseService implements RunningService {
                 if (runningHistory.getValid() == 1) {
                     //1. split action list
                     List<Integer> actions = explainActionList(runningHistory.getActionIds());
+                    List<Integer> fights = explainFightList(runningHistory.getActionIds());
                     //2. chang action into props and effective.
                     userInfo = updateUserInfoByActions(userInfo, actions);
                     updateHash = updateUserPropsByActions(actions, updateHash);
-                    userInfo.setHealth(plus(userInfo.getHealth(), runningHistory.getHealth()));
+                    updateHash = updateUserPropsByFights(fights, updateHash);
                     userInfo.setFatness(plus(userInfo.getFatness(), runningHistory.getFatness()));
+                    //todo:: need update calculate.
+                    userInfo.setPower(100 - userInfo.getFatness());
                     userInfo.setGoldCoin(plus(userInfo.getGoldCoin(), runningHistory.getGoldCoin()));
                     userInfo.setExperience(plus(userInfo.getExperience(), plus(runningHistory.getExperience(), runningHistory.getExtraExperience())));
+                    //todo:: need update calculate.
+                    userInfo.setFight(userInfo.getExperience() / 100);
                     userInfo.setTotalActiveTimes(plus(userInfo.getTotalWalkingTimes(), 1));
                     userInfo.setTotalWalkingTimes(plus(userInfo.getTotalWalkingTimes(), runningHistory.getDuration()));
                     userInfo.setTotalCarlorie(plus(userInfo.getTotalCarlorie(), runningHistory.getSpendCarlorie()));
-                    userInfo.setTotalDistance(plus(userInfo.getTotalDistance(),runningHistory.getDistance()));
-                    userInfo.setTotalSteps(plus(userInfo.getTotalSteps(),runningHistory.getSteps()));
+                    userInfo.setTotalDistance(plus(userInfo.getTotalDistance(), runningHistory.getDistance()));
+                    userInfo.setTotalSteps(plus(userInfo.getTotalSteps(), runningHistory.getSteps()));
                 }
                 runningDAO.createRunningHistory(runningHistory);
             }
@@ -78,6 +83,21 @@ public class RunningServiceImpl extends BaseService implements RunningService {
         } catch (Exception ex) {
             throw new ServerRequestException(ex.getMessage());
         }
+    }
+
+    private Map<Integer, Integer> updateUserPropsByFights(List<Integer> fights, Map<Integer, Integer> updateHash) {
+        for (Integer fightId : fights) {
+            FightDefinition actionDefinition = commonService.getFightDefineById(fightId);
+            Map<Integer, Integer> actionRule = explainActionRule(actionDefinition.getWinRule());
+            for (Integer propId : actionRule.keySet()) {
+                if (updateHash.get(propId) != null) {
+                    updateHash.put(propId, updateHash.get(propId) + actionRule.get(propId));
+                } else {
+                    updateHash.put(propId, actionRule.get(propId));
+                }
+            }
+        }
+        return updateHash;
     }
 
     private Map<Integer, Integer> updateUserPropsByActions(List<Integer> actions, Map<Integer, Integer> updateHash) {
@@ -125,18 +145,18 @@ public class RunningServiceImpl extends BaseService implements RunningService {
 
     @Override
     @Transactional
-    public void createOrUpdateMissionHistory(Integer userId,List<MissionHistory> missionHistories) {
+    public void createOrUpdateMissionHistory(Integer userId, List<MissionHistory> missionHistories) {
         try {
             UserInfo userInfo = accountService.getAccountInfoByID(userId, null);
             boolean update = false;
             for (MissionHistory missionHistory : missionHistories) {
-                if(missionHistory.getMissionStatus() == MissionStatusEnum.SUCCESS.ordinal()){
-                    userInfo.setMissionCombo(plus(userInfo.getMissionCombo(),1));
+                if (missionHistory.getMissionStatus() == MissionStatusEnum.SUCCESS.ordinal()) {
+                    userInfo.setMissionCombo(plus(userInfo.getMissionCombo(), 1));
                     update = true;
                 }
                 runningDAO.createOrUpdateMissionHistory(missionHistory);
             }
-            if(update){
+            if (update) {
                 accountService.updateAccountInfo(userInfo);
             }
         } catch (Exception ex) {

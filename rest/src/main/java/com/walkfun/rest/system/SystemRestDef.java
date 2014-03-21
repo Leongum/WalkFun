@@ -25,11 +25,6 @@ public interface SystemRestDef extends RestDef {
             @PathParam(PARAM_PLATFORM) String platform);
 
     @GET
-    @Path("/message/get/{" + PARAM_LAST_UPDATE_TIME + "}")
-    List<SystemMessage> getSystemMessage(
-            @PathParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
-
-    @GET
     @Path("/recommend/get/{" + PARAM_LAST_UPDATE_TIME + "}")
     List<RecommendApp> getRecommendApp(
             @PathParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
@@ -37,6 +32,11 @@ public interface SystemRestDef extends RestDef {
     @GET
     @Path("/actionDefine/get/{" + PARAM_LAST_UPDATE_TIME + "}")
     List<ActionDefinition> getActionDefine(
+            @PathParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
+
+    @GET
+    @Path("/fightDefine/get/{" + PARAM_LAST_UPDATE_TIME + "}")
+    List<FightDefinition> getFightDefine(
             @PathParam(PARAM_LAST_UPDATE_TIME) String lastUpdateTime);
 
     @GET

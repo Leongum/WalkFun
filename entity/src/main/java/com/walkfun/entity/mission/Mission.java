@@ -26,9 +26,11 @@ public class Mission {
     private Integer triggerSteps;
     private Integer triggerTimes;
     private Double  triggerDistances;
-    private Integer triggerPropId;
-    private Integer triggerPropNumbers;
-    private Integer triggerUserNumbers;
+    private Integer triggerActionId;
+    private Integer triggerFightId;
+    private Integer triggerNumbers;
+    private Double minLevelLimit;
+    private Double maxLevelLimit;
     private double goldCoin;
     private double experience;
     private Date updateTime;
@@ -97,28 +99,28 @@ public class Mission {
         this.triggerDistances = triggerDistances;
     }
 
-    public Integer getTriggerPropId() {
-        return triggerPropId;
+    public Integer getTriggerActionId() {
+        return triggerActionId;
     }
 
-    public void setTriggerPropId(Integer triggerPropId) {
-        this.triggerPropId = triggerPropId;
+    public void setTriggerActionId(Integer triggerActionId) {
+        this.triggerActionId = triggerActionId;
     }
 
-    public Integer getTriggerPropNumbers() {
-        return triggerPropNumbers;
+    public Integer getTriggerFightId() {
+        return triggerFightId;
     }
 
-    public void setTriggerPropNumbers(Integer triggerPropNumbers) {
-        this.triggerPropNumbers = triggerPropNumbers;
+    public void setTriggerFightId(Integer triggerFightId) {
+        this.triggerFightId = triggerFightId;
     }
 
-    public Integer getTriggerUserNumbers() {
-        return triggerUserNumbers;
+    public Integer getTriggerNumbers() {
+        return triggerNumbers;
     }
 
-    public void setTriggerUserNumbers(Integer triggerUserNumbers) {
-        this.triggerUserNumbers = triggerUserNumbers;
+    public void setTriggerNumbers(Integer triggerNumbers) {
+        this.triggerNumbers = triggerNumbers;
     }
 
     public double getGoldCoin() {
@@ -135,6 +137,22 @@ public class Mission {
 
     public void setExperience(double experience) {
         this.experience = experience;
+    }
+
+    public Double getMinLevelLimit() {
+        return minLevelLimit;
+    }
+
+    public void setMinLevelLimit(Double minLevelLimit) {
+        this.minLevelLimit = minLevelLimit;
+    }
+
+    public Double getMaxLevelLimit() {
+        return maxLevelLimit;
+    }
+
+    public void setMaxLevelLimit(Double maxLevelLimit) {
+        this.maxLevelLimit = maxLevelLimit;
     }
 
     @JsonSerialize(using = CustomDateSerializer.class)

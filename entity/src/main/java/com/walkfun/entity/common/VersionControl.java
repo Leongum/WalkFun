@@ -28,7 +28,7 @@ public class VersionControl {
 
     private Date missionLastUpdateTime;
 
-    private Date messageLastUpdateTime;
+    private Date fightDefineUpdateTime;
 
     private Date recommendLastUpdateTime;
 
@@ -89,13 +89,13 @@ public class VersionControl {
     }
 
     @JsonSerialize(using = CustomDateSerializer.class)
-    public Date getMessageLastUpdateTime() {
-        return messageLastUpdateTime;
+    public Date getFightDefineUpdateTime() {
+        return fightDefineUpdateTime;
     }
 
     @JsonDeserialize(using = CustomDateDeserializer.class)
-    public void setMessageLastUpdateTime(Date messageLastUpdateTime) {
-        this.messageLastUpdateTime = messageLastUpdateTime;
+    public void setFightDefineUpdateTime(Date fightDefineUpdateTime) {
+        this.fightDefineUpdateTime = fightDefineUpdateTime;
     }
 
     @JsonSerialize(using = CustomDateSerializer.class)

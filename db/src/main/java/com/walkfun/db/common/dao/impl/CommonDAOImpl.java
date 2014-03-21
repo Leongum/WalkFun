@@ -20,11 +20,6 @@ public class CommonDAOImpl implements CommonDAO{
     private CommonMapper commonMapper;
 
     @Override
-    public List<SystemMessage> getSystemMessage(Date lastUpdateTime) {
-        return commonMapper.getSystemMessageInfo(lastUpdateTime);
-    }
-
-    @Override
     public List<RecommendApp> getRecommendApp(Date lastUpdateTime) {
         return commonMapper.getRecommendApp(lastUpdateTime);
     }
@@ -32,6 +27,11 @@ public class CommonDAOImpl implements CommonDAO{
     @Override
     public List<ActionDefinition> getActionDefine(Date lastUpdateTime) {
         return commonMapper.getActionDefine(lastUpdateTime);
+    }
+
+    @Override
+    public List<FightDefinition> getFightDefine(Date lastUpdateTime) {
+        return commonMapper.getFightDefine(lastUpdateTime);
     }
 
     @Override

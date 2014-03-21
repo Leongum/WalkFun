@@ -1,5 +1,6 @@
 package com.walkfun.service;
 
+import com.walkfun.common.lib.CommonUtils;
 import com.walkfun.entity.account.*;
 import com.walkfun.entity.vproduct.VProduct;
 import com.walkfun.service.backend.BackendJobCache;
@@ -15,27 +16,34 @@ import java.util.*;
  */
 public class BaseService {
 
-    public static String PROP_YES = "PY";
-    public static String PROP_NO = "PN";
-    public static String HEALTH = "H";
-    public static String FAT = "F";
-    public static String RANDOM = "R";
-    public static String MONEY = "M";
-    public static String SHOW_DROP = "D";
-    public static String HEAD_BAG = "B";
+    public static String Drop_Down = "D";
+    public static String Fatness = "F";
+    public static String Fight_Win = "FW";
+    public static String Fight_Loose = "FL";
+    public static String Flower_Pot = "FP";
+    public static String Fight_Add = "FA";
+    public static String Fight_Percent = "FPE";
+    public static String Physical_Power_Add = "PPA";
+    public static String Physical_Power_Percent = "PPP";
+    public static String Prop_Yes = "PY";
+    public static String Prop_No = "PN";
+    public static String Show_Position = "SP";
+    public static String Money = "M";
+    public static String Type_Action = "TA";
+    public static String Type_Fight = "TF";
 
     public Map<Integer, Integer> explainActionRule(String actionRule) {
         Map<Integer, Integer> vProductIds = new HashMap<Integer, Integer>();
-        //9,圆润的石头,1,PY|6,1个金币,1,PN
+        //9,1,PY|6,1,PN
         if (actionRule != null) {
             String[] ruleArray = actionRule.split("\\|");
             for (int i = 0; i < ruleArray.length; i++) {
                 String[] ruleDetails = ruleArray[i].split(",");
-                if (ruleDetails != null && ruleDetails.length == 4) {
-                    Integer productId = Integer.parseInt(ruleDetails[0]);
-                    Integer numb = Integer.parseInt(ruleDetails[2]);
-                    String propFlag = ruleDetails[3];
-                    if (propFlag.equalsIgnoreCase(PROP_YES)) {
+                if (ruleDetails != null && ruleDetails.length >= 3) {
+                    Integer productId = CommonUtils.parseIntegerToNull(ruleDetails[0]);
+                    Integer numb = CommonUtils.parseIntegerToNull(ruleDetails[1]);
+                    String propFlag = ruleDetails[2];
+                    if (propFlag.equalsIgnoreCase(Prop_Yes)) {
                         vProductIds.put(productId, numb);
                     }
                 }
@@ -80,9 +88,9 @@ public class BaseService {
             String[] ruleArray = effectiveRule.split("\\|");
             for (int i = 0; i < ruleArray.length; i++) {
                 String[] ruleDetails = ruleArray[i].split(",");
-                if (ruleDetails != null && ruleDetails.length == 2) {
+                if (ruleDetails != null && ruleDetails.length >= 2) {
                     String effectiveName = ruleDetails[0];
-                    Integer numb = Integer.parseInt(ruleDetails[1]);
+                    Integer numb = CommonUtils.parseIntegerToNull(ruleDetails[1]);
                     userStatusMap.put(effectiveName, numb);
                 }
             }
@@ -94,11 +102,19 @@ public class BaseService {
     public UserInfo calculateUserInfo(UserInfo toUser, Map<String, Integer> userStatusMap) {
         UserInfo updateUser = toUser;
         for (String key : userStatusMap.keySet()) {
-            if (key.equalsIgnoreCase(HEALTH)) {
-                updateUser.setHealth(updateUser.getHealth() + userStatusMap.get(key));
-            } else if (key.equalsIgnoreCase(FAT)) {
+            if (key.equalsIgnoreCase(Fight_Percent)) {
+                updateUser.setFightPlus((userStatusMap.get(key) * updateUser.getFight()) / 100);
+            } else if (key.equalsIgnoreCase(Fight_Add)) {
+                updateUser.setFatness(userStatusMap.get(key) * 1.0);
+            } else if (key.equalsIgnoreCase(Physical_Power_Percent)) {
+                updateUser.setPowerPlus((userStatusMap.get(key) * updateUser.getPower()) / 100);
+            } else if (key.equalsIgnoreCase(Physical_Power_Add)) {
+                updateUser.setPowerPlus(userStatusMap.get(key) * 1.0);
+            } else if (key.equalsIgnoreCase(Fatness)) {
                 updateUser.setFatness(updateUser.getFatness() + userStatusMap.get(key));
-            } else if (key.equalsIgnoreCase(MONEY)) {
+                //todo:: need add calculate.
+                updateUser.setPower(100 - updateUser.getFatness());
+            } else if (key.equalsIgnoreCase(Money)) {
                 updateUser.setGoldCoin(updateUser.getGoldCoin() + userStatusMap.get(key));
             }
         }
@@ -109,11 +125,19 @@ public class BaseService {
     public UserInfo calculateUserInfo(UserInfo toUser, Map<String, Integer> userStatusMap, Map<Integer, Integer> vProductIds) {
         UserInfo updateUser = toUser;
         for (String key : userStatusMap.keySet()) {
-            if (key.equalsIgnoreCase(HEALTH)) {
-                updateUser.setHealth(updateUser.getHealth() + userStatusMap.get(key));
-            } else if (key.equalsIgnoreCase(FAT)) {
+            if (key.equalsIgnoreCase(Fight_Percent)) {
+                updateUser.setFightPlus((userStatusMap.get(key) * updateUser.getFight()) / 100);
+            } else if (key.equalsIgnoreCase(Fight_Add)) {
+                updateUser.setFatness(userStatusMap.get(key) * 1.0);
+            } else if (key.equalsIgnoreCase(Physical_Power_Percent)) {
+                updateUser.setPowerPlus((userStatusMap.get(key) * updateUser.getPower()) / 100);
+            } else if (key.equalsIgnoreCase(Physical_Power_Add)) {
+                updateUser.setPowerPlus(userStatusMap.get(key) * 1.0);
+            } else if (key.equalsIgnoreCase(Fatness)) {
                 updateUser.setFatness(updateUser.getFatness() + userStatusMap.get(key));
-            } else if (key.equalsIgnoreCase(MONEY)) {
+                //todo:: need add calculate.
+                updateUser.setPower(updateUser.getFatness());
+            } else if (key.equalsIgnoreCase(Money)) {
                 updateUser.setGoldCoin(updateUser.getGoldCoin() + userStatusMap.get(key));
             }
         }
@@ -136,9 +160,9 @@ public class BaseService {
             String[] ruleArray = propHaving.split("\\|");
             for (int i = 0; i < ruleArray.length; i++) {
                 String[] ruleDetails = ruleArray[i].split(",");
-                if (ruleDetails != null && ruleDetails.length == 2) {
-                    Integer productId = Integer.parseInt(ruleDetails[0]);
-                    Integer numb = Integer.parseInt(ruleDetails[1]);
+                if (ruleDetails != null && ruleDetails.length >= 2) {
+                    Integer productId = CommonUtils.parseIntegerToNull(ruleDetails[0]);
+                    Integer numb = CommonUtils.parseIntegerToNull(ruleDetails[1]);
                     vProductIds.put(productId, numb);
                 }
             }
@@ -148,17 +172,34 @@ public class BaseService {
 
     public List<Integer> explainActionList(String actionList) {
         List<Integer> actions = new ArrayList<Integer>();
-        //9,1|6,1
         if (actionList != null) {
             String[] ruleArray = actionList.split("\\|");
             for (int i = 0; i < ruleArray.length; i++) {
                 String[] ruleDetails = ruleArray[i].split(",");
-                if (ruleDetails != null && ruleDetails.length >= 2) {
-                    actions.add(Integer.parseInt(ruleDetails[1]));
+                if (ruleDetails != null && ruleDetails.length >= 3) {
+                    if (ruleDetails[0].equalsIgnoreCase(Type_Action)) {
+                        actions.add(CommonUtils.parseIntegerToNull(ruleDetails[1]));
+                    }
                 }
             }
         }
         return actions;
+    }
+
+    public List<Integer> explainFightList(String actionList) {
+        List<Integer> fights = new ArrayList<Integer>();
+        if (actionList != null) {
+            String[] ruleArray = actionList.split("\\|");
+            for (int i = 0; i < ruleArray.length; i++) {
+                String[] ruleDetails = ruleArray[i].split(",");
+                if (ruleDetails != null && ruleDetails.length >= 3) {
+                    if (ruleDetails[0].equalsIgnoreCase(Type_Fight) && CommonUtils.parseIntegerToNull(ruleDetails[2]) == 1) {
+                        fights.add(CommonUtils.parseIntegerToNull(ruleDetails[1]));
+                    }
+                }
+            }
+        }
+        return fights;
     }
 
     public <K, V> String transMapToString(Map<K, V> mapList) {

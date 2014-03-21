@@ -42,11 +42,11 @@ public class BackendJobCache {
 
     public static List<Mission> allMissions = new ArrayList<Mission>();
 
-    //public static List<SystemMessage> allMessages = new ArrayList<SystemMessage>();
-
     public static List<RecommendApp> allRecommendApp = new ArrayList<RecommendApp>();
 
     public static List<ActionDefinition> allActionDefine = new ArrayList<ActionDefinition>();
+
+    public static List<FightDefinition> allFightDefine = new ArrayList<FightDefinition>();
 
     public static List<VProduct> allProducts = new ArrayList<VProduct>();
 
@@ -58,10 +58,6 @@ public class BackendJobCache {
 
     public static Date missionFirstTime = CommonUtils.parseDateDefaultToNull("3001-01-01 00:00:00");
 
-//    public static Date messageLastTime = CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00");
-//
-//    public static Date messageFirstTime = CommonUtils.parseDateDefaultToNull("3001-01-01 00:00:00");
-
     public static Date recommendAppLastTime = CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00");
 
     public static Date recommendAppFirstTime = CommonUtils.parseDateDefaultToNull("3001-01-01 00:00:00");
@@ -69,6 +65,10 @@ public class BackendJobCache {
     public static Date actionDefineLastTime = CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00");
 
     public static Date actionDefineFirstTime = CommonUtils.parseDateDefaultToNull("3001-01-01 00:00:00");
+
+    public static Date fightDefineLastTime = CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00");
+
+    public static Date fightDefineFirstTime = CommonUtils.parseDateDefaultToNull("3001-01-01 00:00:00");
 
     public static Date productLastTime = CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00");
 
@@ -85,19 +85,6 @@ public class BackendJobCache {
             }
         }
     }
-
-
-//    public void systemMessageServiceJob() {
-//        allMessages = commonService.getSystemMessage(CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00"));
-//        for (SystemMessage systemMessage : allMessages) {
-//            if (systemMessage.getUpdateTime().after(messageLastTime)) {
-//                messageLastTime = systemMessage.getUpdateTime();
-//            }
-//            if (systemMessage.getUpdateTime().before(messageFirstTime)) {
-//                messageFirstTime = systemMessage.getUpdateTime();
-//            }
-//        }
-//    }
 
     public void recommendAppServiceJob() {
         allRecommendApp = commonService.getRecommendApp(CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00"));
@@ -123,11 +110,23 @@ public class BackendJobCache {
         }
     }
 
+    public void fightDefineServiceJob() {
+        allFightDefine = commonService.getFightDefine(CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00"));
+        for (FightDefinition fightDefinition : allFightDefine) {
+            if (fightDefinition.getUpdateTime().after(fightDefineLastTime)) {
+                fightDefineLastTime = fightDefinition.getUpdateTime();
+            }
+            if (fightDefinition.getUpdateTime().before(fightDefineFirstTime)) {
+                fightDefineFirstTime = fightDefinition.getUpdateTime();
+            }
+        }
+    }
+
     public void versionServiceJob() {
         versionControlIOS = commonService.getVersionControl("ios");
     }
 
-    public void productServiceJob(){
+    public void productServiceJob() {
         allProducts = vProductService.getVProduct(CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00"));
         for (VProduct vProduct : allProducts) {
             if (vProduct.getUpdateTime().after(productLastTime)) {

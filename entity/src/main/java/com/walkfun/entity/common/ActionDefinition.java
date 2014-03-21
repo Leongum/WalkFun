@@ -24,6 +24,8 @@ public class ActionDefinition {
     private String actionAttribute;
     private String actionRule;
     private String effectiveRule;
+    private Double minLevelLimit;
+    private Double maxLevelLimit;
     private Double triggerProbability;
     private String soundLink;
     private String notificationMessage;
@@ -115,6 +117,22 @@ public class ActionDefinition {
 
     public void setNotificationMessage(String notificationMessage) {
         this.notificationMessage = notificationMessage;
+    }
+
+    public Double getMinLevelLimit() {
+        return minLevelLimit;
+    }
+
+    public void setMinLevelLimit(Double minLevelLimit) {
+        this.minLevelLimit = minLevelLimit;
+    }
+
+    public Double getMaxLevelLimit() {
+        return maxLevelLimit;
+    }
+
+    public void setMaxLevelLimit(Double maxLevelLimit) {
+        this.maxLevelLimit = maxLevelLimit;
     }
 
     @JsonSerialize(using = CustomDateSerializer.class)

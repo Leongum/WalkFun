@@ -14,8 +14,6 @@ public class ExperienceDefinition {
     private Integer totalExperience;
     private String title;
     private String titlePic;
-    private Double goldCoinSpeed;
-    private Double experienceSpeed;
 
     public Double getLevel() {
         return level;
@@ -55,21 +53,5 @@ public class ExperienceDefinition {
 
     public void setTitlePic(String titlePic) {
         this.titlePic = titlePic;
-    }
-
-    public Double getGoldCoinSpeed() {
-        return goldCoinSpeed;
-    }
-
-    public void setGoldCoinSpeed(Double goldCoinSpeed) {
-        this.goldCoinSpeed = goldCoinSpeed;
-    }
-
-    public Double getExperienceSpeed() {
-        return experienceSpeed;
-    }
-
-    public void setExperienceSpeed(Double experienceSpeed) {
-        this.experienceSpeed = experienceSpeed;
     }
 }

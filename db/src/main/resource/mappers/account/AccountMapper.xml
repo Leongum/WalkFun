@@ -11,28 +11,23 @@
         <result column="USER_NAME" property="userName"/>
         <result column="NICK_NAME" property="nickName"/>
         <result column="SEX" property="sex"/>
-        <result column="AGE" property="age"/>
-        <result column="WEIGHT" property="weight"/>
-        <result column="HEIGHT" property="height"/>
         <result column="PLATFORM_INFO" property="platformInfo"/>
         <result column="PIC_ID" property="picId"/>
         <result column="USER_TITLE" property="userTitle"/>
         <result column="USER_TITLE_PIC" property="userTitlePic"/>
-        <result column="USER_FAT_DESC" property="userFatDesc"/>
         <result column="LEVEL" property="level"/>
         <result column="GOLD_COIN" property="goldCoin"/>
         <result column="EXPERIENCE" property="experience"/>
-        <result column="GOLD_COIN_SPEED" property="goldCoinSpeed"/>
-        <result column="EXPERIENCE_SPEED" property="experienceSpeed"/>
-        <result column="HEALTH" property="health"/>
         <result column="FATNESS" property="fatness"/>
+        <result column="PHYSICAL_POWER" property="power"/>
+        <result column="PHYSICAL_POWER_PLUS" property="powerPlus"/>
+        <result column="FIGHTING" property="fight"/>
+        <result column="FIGHTING_PLUS" property="fightPlus"/>
         <result column="TOTAL_DISTANCE" property="totalDistance"/>
         <result column="TOTAL_CARLORIE" property="totalCarlorie"/>
         <result column="TOTAL_STEPS" property="totalSteps"/>
         <result column="TOTAL_WALKING_TIMES" property="totalWalkingTimes"/>
         <result column="TOTAL_ACTIVE_TIMES" property="totalActiveTimes"/>
-        <result column="CURRENT_COMBO" property="currentCombo"/>
-        <result column="MAX_COMBO" property="maxCombo"/>
         <result column="MISSION_COMBO" property="missionCombo"/>
         <result column="PROP_HAVING" property="propHaving"/>
         <result column="UPDATE_TIME" property="updateTime"/>
@@ -45,28 +40,23 @@
         U.USER_NAME,
         U.NICK_NAME,
         U.SEX,
-        U.AGE,
-        U.WEIGHT,
-        U.HEIGHT,
         U.PLATFORM_INFO,
         UD.PIC_ID,
         UD.USER_TITLE,
         UD.USER_TITLE_PIC,
-        UD.USER_FAT_DESC,
         UD.LEVEL,
         UD.GOLD_COIN,
-        UD.GOLD_COIN_SPEED,
         UD.EXPERIENCE,
-        UD.EXPERIENCE_SPEED,
-        UD.HEALTH,
         UD.FATNESS,
+        UD.PHYSICAL_POWER,
+        UD.PHYSICAL_POWER_PLUS,
+        UD.FIGHTING,
+        UD.FIGHTING_PLUS,
         UD.TOTAL_DISTANCE,
         UD.TOTAL_CARLORIE,
         UD.TOTAL_STEPS,
         UD.TOTAL_WALKING_TIMES,
         UD.TOTAL_ACTIVE_TIMES,
-        UD.CURRENT_COMBO,
-        UD.MAX_COMBO,
         UD.MISSION_COMBO,
         UD.PROP_HAVING,
         UD.UPDATE_TIME
@@ -115,9 +105,6 @@
             USER_PASSWORD,
             NICK_NAME,
             SEX,
-            AGE,
-            WEIGHT,
-            HEIGHT,
             PLATFORM_INFO,
             CREATE_TIME,
             UPDATE_TIME
@@ -130,9 +117,6 @@
             #{baseEntity.password},
             #{baseEntity.nickName},
             #{baseEntity.sex},
-            #{baseEntity.age},
-            #{baseEntity.weight},
-            #{baseEntity.height},
             #{baseEntity.platformInfo},
             now(),
             now()
@@ -149,9 +133,6 @@
         </if>
         DEVICE_ID = #{baseEntity.deviceId},
         SEX = #{baseEntity.sex},
-        AGE = #{baseEntity.age},
-        WEIGHT = #{baseEntity.weight},
-        HEIGHT = #{baseEntity.height},
         PLATFORM_INFO = #{baseEntity.platformInfo},
         UPDATE_TIME = now()
         WHERE USER_ID = #{baseEntity.userId}
@@ -163,21 +144,19 @@
             PIC_ID = #{detailEntity.picId},
             USER_TITLE = #{detailEntity.userTitle},
             USER_TITLE_PIC = #{detailEntity.userTitlePic},
-            USER_FAT_DESC = #{detailEntity.userFatDesc},
             LEVEL = #{detailEntity.level},
             GOLD_COIN = #{detailEntity.goldCoin},
-            GOLD_COIN_SPEED = #{detailEntity.goldCoinSpeed},
             EXPERIENCE = #{detailEntity.experience},
-            EXPERIENCE_SPEED = #{detailEntity.experienceSpeed},
-            HEALTH = #{detailEntity.health},
             FATNESS = #{detailEntity.fatness},
+            PHYSICAL_POWER = #{detailEntity.power},
+            PHYSICAL_POWER_PLUS = #{detailEntity.powerPlus},
+            FIGHTING = #{detailEntity.fight},
+            FIGHTING_PLUS = #{detailEntity.fightPlus},
             TOTAL_DISTANCE = #{detailEntity.totalDistance},
             TOTAL_CARLORIE = #{detailEntity.totalCarlorie},
             TOTAL_STEPS = #{detailEntity.totalSteps},
             TOTAL_WALKING_TIMES = #{detailEntity.totalWalkingTimes},
             TOTAL_ACTIVE_TIMES = #{detailEntity.totalActiveTimes},
-            CURRENT_COMBO = #{detailEntity.currentCombo},
-            MAX_COMBO = #{detailEntity.maxCombo},
             MISSION_COMBO = #{detailEntity.missionCombo},
             PROP_HAVING = #{detailEntity.propHaving},
             UPDATE_TIME = now()
@@ -327,6 +306,9 @@
         <result column="USER_TITLE" property="userTitle"/>
         <result column="USER_TITLE_PIC" property="userTitlePic"/>
         <result column="LEVEL" property="level"/>
+        <result column="FATNESS" property="fatness"/>
+        <result column="PHYSICAL_POWER" property="power"/>
+        <result column="FIGHTING" property="fight"/>
     </resultMap>
 
     <sql id="searchAccountTable">
@@ -335,7 +317,10 @@
         U.SEX,
         UD.USER_TITLE,
         UD.USER_TITLE_PIC,
-        UD.LEVEL
+        UD.LEVEL,
+        UD.FATNESS,
+        UD.PHYSICAL_POWER,
+        UD.FIGHTING
     </sql>
 
     <select id="searchAccountInfoByName" resultMap="searchAccountInfo">
@@ -366,7 +351,9 @@
         <result column="USER_TITLE" property="userTitle"/>
         <result column="USER_TITLE_PIC" property="userTitlePic"/>
         <result column="LEVEL" property="level"/>
-        <result column="TOTAL_DISTANCE" property="totalDistance"/>
+        <result column="FATNESS" property="fatness"/>
+        <result column="PHYSICAL_POWER" property="power"/>
+        <result column="FIGHTING" property="fight"/>
     </resultMap>
 
     <sql id="friendSortTable">
@@ -376,7 +363,9 @@
         UD.USER_TITLE,
         UD.USER_TITLE_PIC,
         UD.LEVEL,
-        UD.TOTAL_DISTANCE
+        UD.FATNESS,
+        UD.PHYSICAL_POWER,
+        UD.FIGHTING
     </sql>
 
     <select id="getFriendSort" resultMap="friendSortInfo">

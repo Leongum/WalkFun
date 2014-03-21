@@ -11,9 +11,11 @@
         <result column="TRIGGER_STEPS" property="triggerSteps"/>
         <result column="TRIGGER_TIMES" property="triggerTimes"/>
         <result column="TRIGGER_DISTANCES" property="triggerDistances"/>
-        <result column="TRIGGER_PROP_ID" property="triggerPropId"/>
-        <result column="TRIGGER_PROP_NUMBERS" property="triggerPropNumbers"/>
-        <result column="TRIGGER_USER_NUMBERS" property="triggerUserNumbers"/>
+        <result column="TRIGGER_ACTION_ID" property="triggerActionId"/>
+        <result column="TRIGGER_FIGHT_ID" property="triggerFightId"/>
+        <result column="TRIGGER_NUMBERS" property="triggerNumbers"/>
+        <result column="MIN_LEVEL_LIMIT" property="minLevelLimit"/>
+        <result column="MAX_LEVEL_LIMIT" property="maxLevelLimit"/>
         <result column="GOLD_COIN" property="goldCoin"/>
         <result column="EXPERIENCE" property="experience"/>
         <result column="UPDATE_TIME" property="updateTime"/>
@@ -28,9 +30,11 @@
         TRIGGER_STEPS,
         TRIGGER_TIMES,
         TRIGGER_DISTANCES,
-        TRIGGER_PROP_ID,
-        TRIGGER_PROP_NUMBERS,
-        TRIGGER_USER_NUMBERS,
+        TRIGGER_ACTION_ID,
+        TRIGGER_FIGHT_ID,
+        TRIGGER_NUMBERS,
+        MIN_LEVEL_LIMIT,
+        MAX_LEVEL_LIMIT,
         GOLD_COIN,
         EXPERIENCE,
         UPDATE_TIME

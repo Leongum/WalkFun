@@ -16,11 +16,11 @@ public interface CommonDAO {
 
     public VersionControl getVersionControl(String platform);
 
-    public List<SystemMessage> getSystemMessage(Date lastUpdateTime);
-
     public List<RecommendApp> getRecommendApp(Date lastUpdateTime);
 
     public List<ActionDefinition> getActionDefine(Date lastUpdateTime);
+
+    public List<FightDefinition> getFightDefine(Date lastUpdateTime);
 
     public List<ExperienceDefinition> getExperienceDefine();
 }

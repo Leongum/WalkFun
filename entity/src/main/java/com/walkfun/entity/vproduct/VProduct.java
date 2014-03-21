@@ -20,11 +20,13 @@ public class VProduct {
     private String productName;
     private String productDescription;
     private Integer virtualPrice;
-    private Integer dropFlag;
     private String picLink;
     private String effectiveRule;
     private String dropPicList;
     private Integer maxDropNum;
+    private Integer dropFlag;
+    private Double minLevelLimit;
+    private Double maxLevelLimit;
     private Date updateTime;
 
     public Integer getProductId() {
@@ -107,5 +109,21 @@ public class VProduct {
 
     public void setMaxDropNum(Integer maxDropNum) {
         this.maxDropNum = maxDropNum;
+    }
+
+    public Double getMinLevelLimit() {
+        return minLevelLimit;
+    }
+
+    public void setMinLevelLimit(Double minLevelLimit) {
+        this.minLevelLimit = minLevelLimit;
+    }
+
+    public Double getMaxLevelLimit() {
+        return maxLevelLimit;
+    }
+
+    public void setMaxLevelLimit(Double maxLevelLimit) {
+        this.maxLevelLimit = maxLevelLimit;
     }
 }

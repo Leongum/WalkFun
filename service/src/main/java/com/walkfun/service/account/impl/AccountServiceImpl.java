@@ -62,8 +62,6 @@ public class AccountServiceImpl extends BaseService implements AccountService {
                 userInfo.setLevel(experienceDefinition.getLevel());
                 userInfo.setUserTitle(experienceDefinition.getTitle());
                 userInfo.setUserTitlePic(experienceDefinition.getTitlePic());
-                userInfo.setGoldCoinSpeed(experienceDefinition.getGoldCoinSpeed());
-                userInfo.setExperienceSpeed(experienceDefinition.getExperienceSpeed());
                 break;
             }
         }
@@ -316,7 +314,7 @@ public class AccountServiceImpl extends BaseService implements AccountService {
                 rewardDetails.setRewardPropId(vProductIds.get(key));
             }
             for (String key : userStatusMap.keySet()) {
-                if (key.equalsIgnoreCase(MONEY)) {
+                if (key.equalsIgnoreCase(Money)) {
                     rewardDetails.setRewardMoney(userStatusMap.get(key));
                 }
             }

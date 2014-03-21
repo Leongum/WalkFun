@@ -17,11 +17,11 @@ public interface CommonMapper {
 
     public VersionControl getVersionControl(@Param("platform") String platform);
 
-    public List<SystemMessage> getSystemMessageInfo( @Param("lastUpdateTime") Date lastUpdateTime);
-
     public List<RecommendApp> getRecommendApp(@Param("lastUpdateTime")Date lastUpdateTime);
 
     public List<ActionDefinition> getActionDefine(@Param("lastUpdateTime")Date lastUpdateTime);
 
     public List<ExperienceDefinition> getExperienceDefinition();
+
+    public List<FightDefinition> getFightDefine(@Param("lastUpdateTime")Date lastUpdateTime);
 }

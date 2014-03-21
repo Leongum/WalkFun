@@ -22,7 +22,9 @@ public class FriendSortInfo {
     private Double level;
     private String userTitle;
     private String userTitlePic;
-    private Double totalDistance;
+    private Double fatness;
+    private Double power;
+    private Double fight;
 
     public Integer getFriendId() {
         return friendId;
@@ -64,19 +66,35 @@ public class FriendSortInfo {
         this.userTitle = userTitle;
     }
 
-    public Double getTotalDistance() {
-        return totalDistance;
-    }
-
-    public void setTotalDistance(Double totalDistance) {
-        this.totalDistance = totalDistance;
-    }
-
     public String getUserTitlePic() {
         return userTitlePic;
     }
 
     public void setUserTitlePic(String userTitlePic) {
         this.userTitlePic = userTitlePic;
+    }
+
+    public Double getFatness() {
+        return fatness;
+    }
+
+    public void setFatness(Double fatness) {
+        this.fatness = fatness;
+    }
+
+    public Double getPower() {
+        return power;
+    }
+
+    public void setPower(Double power) {
+        this.power = power;
+    }
+
+    public Double getFight() {
+        return fight;
+    }
+
+    public void setFight(Double fight) {
+        this.fight = fight;
     }
 }

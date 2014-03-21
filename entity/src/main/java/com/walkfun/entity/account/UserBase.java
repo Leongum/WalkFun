@@ -24,9 +24,6 @@ public class UserBase {
     private String password;
     private String nickName;
     private String sex;
-    private Integer age;
-    private Double weight;
-    private Double height;
     private String platformInfo;
     private Date updateTime;
 
@@ -39,9 +36,6 @@ public class UserBase {
         userBase.setNickName(userInfo.getNickName());
         userBase.setPassword(userInfo.getPassword());
         userBase.setSex(userInfo.getSex());
-        userBase.setAge(userInfo.getAge());
-        userBase.setHeight(userInfo.getHeight());
-        userBase.setWeight(userInfo.getWeight());
         userBase.setPlatformInfo(userInfo.getPlatformInfo());
         return userBase;
     }
@@ -100,30 +94,6 @@ public class UserBase {
 
     public void setSex(String sex) {
         this.sex = sex;
-    }
-
-    public Integer getAge() {
-        return age == null ? 25 : age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public Double getWeight() {
-        return weight == null ? 60d : weight;
-    }
-
-    public void setWeight(Double weight) {
-        this.weight = weight;
-    }
-
-    public Double getHeight() {
-        return height == null ? 175d : height;
-    }
-
-    public void setHeight(Double height) {
-        this.height = height;
     }
 
     public String getPlatformInfo() {

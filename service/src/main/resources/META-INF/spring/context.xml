@@ -21,13 +21,13 @@
     <bean id="backendJobCache" class="com.walkfun.service.backend.BackendJobCache"/>
 
     <task:scheduled-tasks>
-        <task:scheduled ref="backendJobCache" method="missionServiceJob" fixed-rate="21600000"/>
-        <task:scheduled ref="backendJobCache" method="versionServiceJob" fixed-rate="22000000"/>
-        <!--<task:scheduled ref="backendJobCache" method="systemMessageServiceJob" fixed-rate="23000000"/>-->
-        <task:scheduled ref="backendJobCache" method="recommendAppServiceJob" fixed-rate="35000000"/>
-        <task:scheduled ref="backendJobCache" method="actionDefineServiceJob" fixed-rate="45000000"/>
-        <task:scheduled ref="backendJobCache" method="productServiceJob" fixed-rate="25000000"/>
-        <task:scheduled ref="backendJobCache" method="recommendUserServiceJob" fixed-rate="30000000"/>
-        <task:scheduled ref="backendJobCache" method="experienceServiceJob" fixed-rate="500000000"/>
+        <task:scheduled ref="backendJobCache" method="missionServiceJob" fixed-rate="7777000000"/>
+        <task:scheduled ref="backendJobCache" method="versionServiceJob" fixed-rate="7778000000"/>
+        <task:scheduled ref="backendJobCache" method="recommendAppServiceJob" fixed-rate="7779000000"/>
+        <task:scheduled ref="backendJobCache" method="actionDefineServiceJob" fixed-rate="7771000000"/>
+        <task:scheduled ref="backendJobCache" method="fightDefineServiceJob" fixed-rate="7772000000"/>
+        <task:scheduled ref="backendJobCache" method="productServiceJob" fixed-rate="7773000000"/>
+        <task:scheduled ref="backendJobCache" method="recommendUserServiceJob" fixed-rate="7774000000"/>
+        <task:scheduled ref="backendJobCache" method="experienceServiceJob" fixed-rate="7775000000"/>
     </task:scheduled-tasks>
 </beans>

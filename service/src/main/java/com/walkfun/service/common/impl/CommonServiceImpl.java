@@ -51,40 +51,15 @@ public class CommonServiceImpl implements CommonService {
             } else {
                 versionControl = getVersionControl(platform);
             }
-            versionControl.setMessageLastUpdateTime(CommonUtils.parseDateDefaultToNull("2001-01-01 00:00:00"));
             versionControl.setMissionLastUpdateTime(BackendJobCache.missionLastTime);
             versionControl.setRecommendLastUpdateTime(BackendJobCache.recommendAppLastTime);
             versionControl.setProductLastUpdateTime(BackendJobCache.productLastTime);
             versionControl.setActionDefineUpdateTime(BackendJobCache.actionDefineLastTime);
+            versionControl.setFightDefineUpdateTime(BackendJobCache.fightDefineLastTime);
             return versionControl;
         } catch (Exception ex) {
             throw new ServerRequestException(ex.getMessage());
         }
-    }
-
-    @Override
-    public List<SystemMessage> getSystemMessage(Date lastUpdateTime) {
-        try {
-            return commonDAO.getSystemMessage(lastUpdateTime);
-        } catch (Exception ex) {
-            throw new ServerRequestException(ex.getMessage());
-        }
-    }
-
-    @Override
-    public List<SystemMessage> getSystemMessageForRest(Date lastUpdateTime) {
-//        try {
-//            if (lastUpdateTime.before(BackendJobCache.messageFirstTime)) {
-//                return BackendJobCache.allMessages;
-//            }
-//            if (lastUpdateTime.after(BackendJobCache.messageLastTime)) {
-//                return new ArrayList<SystemMessage>();
-//            }
-//            return getSystemMessage(lastUpdateTime);
-//        } catch (Exception ex) {
-//            throw new ServerRequestException(ex.getMessage());
-//        }
-        return new ArrayList<SystemMessage>();
     }
 
     @Override
@@ -141,9 +116,43 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
+    public List<FightDefinition> getFightDefine(Date lastUpdateTime) {
+        try {
+            return commonDAO.getFightDefine(lastUpdateTime);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public List<FightDefinition> getFightDefineForRest(Date lastUpdateTime) {
+        try {
+            if (lastUpdateTime.before(BackendJobCache.fightDefineFirstTime)) {
+                return BackendJobCache.allFightDefine;
+            }
+            if (lastUpdateTime.after(BackendJobCache.fightDefineLastTime)) {
+                return new ArrayList<FightDefinition>();
+            }
+            return getFightDefine(lastUpdateTime);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public FightDefinition getFightDefineById(Integer fightId) {
+        for (FightDefinition fightDefinition : BackendJobCache.allFightDefine) {
+            if (fightDefinition.getId() == fightId) {
+                return fightDefinition;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public ActionDefinition getActionDefineById(Integer actionId) {
-        for(ActionDefinition actionDefinition : BackendJobCache.allActionDefine){
-            if(actionDefinition.getActionId() == actionId){
+        for (ActionDefinition actionDefinition : BackendJobCache.allActionDefine) {
+            if (actionDefinition.getActionId() == actionId) {
                 return actionDefinition;
             }
         }
@@ -153,8 +162,8 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public List<ActionDefinition> getRewardActionDefine() {
         List<ActionDefinition> actionDefinitionList = new ArrayList<ActionDefinition>();
-        for(ActionDefinition actionDefinition : BackendJobCache.allActionDefine){
-            if(actionDefinition.getActionType() == ActionDefineTypeEnum.REWARD.ordinal()){
+        for (ActionDefinition actionDefinition : BackendJobCache.allActionDefine) {
+            if (actionDefinition.getActionType() == ActionDefineTypeEnum.REWARD.ordinal()) {
                 actionDefinitionList.add(actionDefinition);
             }
         }
@@ -174,19 +183,19 @@ public class CommonServiceImpl implements CommonService {
     public void evictJobCache(String jobCache) {
         if (jobCache.equalsIgnoreCase("missionServiceJob")) {
             backendJobCache.missionServiceJob();
-        } else if (jobCache.equalsIgnoreCase("systemMessageServiceJob")) {
-            //backendJobCache.systemMessageServiceJob();
+        } else if (jobCache.equalsIgnoreCase("fightDefineServiceJob")) {
+            backendJobCache.fightDefineServiceJob();
         } else if (jobCache.equalsIgnoreCase("recommendAppServiceJob")) {
             backendJobCache.recommendAppServiceJob();
         } else if (jobCache.equalsIgnoreCase("versionServiceJob")) {
             backendJobCache.versionServiceJob();
         } else if (jobCache.equalsIgnoreCase("productServiceJob")) {
             backendJobCache.productServiceJob();
-        }  else if (jobCache.equalsIgnoreCase("actionDefineServiceJob")) {
+        } else if (jobCache.equalsIgnoreCase("actionDefineServiceJob")) {
             backendJobCache.actionDefineServiceJob();
-        }  else if (jobCache.equalsIgnoreCase("recommendUserServiceJob")) {
+        } else if (jobCache.equalsIgnoreCase("recommendUserServiceJob")) {
             backendJobCache.recommendUserServiceJob();
-        }  else if (jobCache.equalsIgnoreCase("experienceServiceJob")) {
+        } else if (jobCache.equalsIgnoreCase("experienceServiceJob")) {
             backendJobCache.experienceServiceJob();
         }
 
