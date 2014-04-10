@@ -72,6 +72,10 @@ public class RunningServiceImpl extends BaseService implements RunningService {
                     userInfo.setTotalCarlorie(plus(userInfo.getTotalCarlorie(), runningHistory.getSpendCarlorie()));
                     userInfo.setTotalDistance(plus(userInfo.getTotalDistance(), runningHistory.getDistance()));
                     userInfo.setTotalSteps(plus(userInfo.getTotalSteps(), runningHistory.getSteps()));
+
+                    if (runningHistory.getFriendId() != null && runningHistory.getFriendId() > 0) {
+                        accountService.updateFriendWalkStatus(runningHistory.getFriendId(), userId);
+                    }
                 }
                 runningDAO.createRunningHistory(runningHistory);
             }

@@ -31,6 +31,8 @@
         <result column="SEQUENCE" property="sequence"/>
         <result column="PROP_GET" property="propGet"/>
         <result column="ACTION_IDS" property="actionIds"/>
+        <result column="FRIEND_ID" property="friendId"/>
+        <result column="FRIEND_NAME" property="friendName"/>
         <result column="COMMIT_TIME" property="commitTime"/>
     </resultMap>
 
@@ -61,6 +63,8 @@
         SEQUENCE,
         PROP_GET,
         ACTION_IDS,
+        FRIEND_ID,
+        FRIEND_NAME,
         COMMIT_TIME
     </sql>
 
@@ -110,6 +114,8 @@
             SEQUENCE,
             PROP_GET,
             ACTION_IDS,
+            FRIEND_ID,
+            FRIEND_NAME,
             COMMIT_TIME
         )
         VALUES
@@ -140,6 +146,8 @@
             #{entity.sequence},
             #{entity.propGet},
             #{entity.actionIds},
+            #{entity.friendId},
+            #{entity.friendName},
             now()
         )
     </insert>

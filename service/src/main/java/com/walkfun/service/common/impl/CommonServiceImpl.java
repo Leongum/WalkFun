@@ -142,7 +142,7 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public FightDefinition getFightDefineById(Integer fightId) {
         for (FightDefinition fightDefinition : BackendJobCache.allFightDefine) {
-            if (fightDefinition.getId() == fightId) {
+            if (fightDefinition.getId().intValue() == fightId.intValue()) {
                 return fightDefinition;
             }
         }
@@ -152,7 +152,7 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public ActionDefinition getActionDefineById(Integer actionId) {
         for (ActionDefinition actionDefinition : BackendJobCache.allActionDefine) {
-            if (actionDefinition.getActionId() == actionId) {
+            if (actionDefinition.getActionId().intValue() == actionId.intValue()) {
                 return actionDefinition;
             }
         }

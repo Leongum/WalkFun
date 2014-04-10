@@ -4,6 +4,8 @@ import com.walkfun.common.lib.CommonUtils;
 import com.walkfun.entity.account.*;
 import com.walkfun.entity.vproduct.VProduct;
 import com.walkfun.service.backend.BackendJobCache;
+import org.codehaus.jettison.json.JSONArray;
+import org.codehaus.jettison.json.JSONObject;
 
 import java.util.*;
 
@@ -105,7 +107,7 @@ public class BaseService {
             if (key.equalsIgnoreCase(Fight_Percent)) {
                 updateUser.setFightPlus((userStatusMap.get(key) * updateUser.getFight()) / 100);
             } else if (key.equalsIgnoreCase(Fight_Add)) {
-                updateUser.setFatness(userStatusMap.get(key) * 1.0);
+                updateUser.setFight(userStatusMap.get(key) * 1.0);
             } else if (key.equalsIgnoreCase(Physical_Power_Percent)) {
                 updateUser.setPowerPlus((userStatusMap.get(key) * updateUser.getPower()) / 100);
             } else if (key.equalsIgnoreCase(Physical_Power_Add)) {
@@ -136,7 +138,7 @@ public class BaseService {
             } else if (key.equalsIgnoreCase(Fatness)) {
                 updateUser.setFatness(updateUser.getFatness() + userStatusMap.get(key));
                 //todo:: need add calculate.
-                updateUser.setPower(updateUser.getFatness());
+                updateUser.setPower(100 - updateUser.getFatness());
             } else if (key.equalsIgnoreCase(Money)) {
                 updateUser.setGoldCoin(updateUser.getGoldCoin() + userStatusMap.get(key));
             }
@@ -170,34 +172,67 @@ public class BaseService {
         return vProductIds;
     }
 
+//    public List<Integer> explainActionList(String actionList) {
+//        List<Integer> actions = new ArrayList<Integer>();
+//        if (actionList != null) {
+//            String[] ruleArray = actionList.split("\\|");
+//            for (int i = 0; i < ruleArray.length; i++) {
+//                String[] ruleDetails = ruleArray[i].split(",");
+//                if (ruleDetails != null && ruleDetails.length >= 3) {
+//                    if (ruleDetails[0].equalsIgnoreCase(Type_Action)) {
+//                        actions.add(CommonUtils.parseIntegerToNull(ruleDetails[1]));
+//                    }
+//                }
+//            }
+//        }
+//        return actions;
+//    }
+
+//    public List<Integer> explainFightList(String actionList) {
+//        List<Integer> fights = new ArrayList<Integer>();
+//        if (actionList != null) {
+//            String[] ruleArray = actionList.split("\\|");
+//            for (int i = 0; i < ruleArray.length; i++) {
+//                String[] ruleDetails = ruleArray[i].split(",");
+//                if (ruleDetails != null && ruleDetails.length >= 3) {
+//                    if (ruleDetails[0].equalsIgnoreCase(Type_Fight) && CommonUtils.parseIntegerToNull(ruleDetails[2]) == 1) {
+//                        fights.add(CommonUtils.parseIntegerToNull(ruleDetails[1]));
+//                    }
+//                }
+//            }
+//        }
+//        return fights;
+//    }
+
     public List<Integer> explainActionList(String actionList) {
         List<Integer> actions = new ArrayList<Integer>();
-        if (actionList != null) {
-            String[] ruleArray = actionList.split("\\|");
-            for (int i = 0; i < ruleArray.length; i++) {
-                String[] ruleDetails = ruleArray[i].split(",");
-                if (ruleDetails != null && ruleDetails.length >= 3) {
-                    if (ruleDetails[0].equalsIgnoreCase(Type_Action)) {
-                        actions.add(CommonUtils.parseIntegerToNull(ruleDetails[1]));
-                    }
+        try {
+            JSONArray jsonArray = new JSONArray(actionList);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                if (String.valueOf(jsonObject.get("eType")).equalsIgnoreCase(Type_Action)) {
+                    actions.add(CommonUtils.parseIntegerToNull(String.valueOf(jsonObject.get("eId"))));
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return actions;
     }
 
     public List<Integer> explainFightList(String actionList) {
         List<Integer> fights = new ArrayList<Integer>();
-        if (actionList != null) {
-            String[] ruleArray = actionList.split("\\|");
-            for (int i = 0; i < ruleArray.length; i++) {
-                String[] ruleDetails = ruleArray[i].split(",");
-                if (ruleDetails != null && ruleDetails.length >= 3) {
-                    if (ruleDetails[0].equalsIgnoreCase(Type_Fight) && CommonUtils.parseIntegerToNull(ruleDetails[2]) == 1) {
-                        fights.add(CommonUtils.parseIntegerToNull(ruleDetails[1]));
-                    }
+        try {
+            JSONArray jsonArray = new JSONArray(actionList);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                if (String.valueOf(jsonObject.get("eType")).equalsIgnoreCase(Type_Fight)
+                        && CommonUtils.parseIntegerToNull(String.valueOf(jsonObject.get("eWin"))) == 1) {
+                    fights.add(CommonUtils.parseIntegerToNull(String.valueOf(jsonObject.get("eId"))));
                 }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return fights;
     }

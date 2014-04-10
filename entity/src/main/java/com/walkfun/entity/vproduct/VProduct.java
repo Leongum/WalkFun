@@ -24,7 +24,7 @@ public class VProduct {
     private String effectiveRule;
     private String dropPicList;
     private Integer maxDropNum;
-    private Integer dropFlag;
+    private Integer propFlag;
     private Double minLevelLimit;
     private Double maxLevelLimit;
     private Date updateTime;
@@ -61,12 +61,12 @@ public class VProduct {
         this.virtualPrice = virtualPrice;
     }
 
-    public Integer getDropFlag() {
-        return dropFlag;
+    public Integer getPropFlag() {
+        return propFlag;
     }
 
-    public void setDropFlag(Integer dropFlag) {
-        this.dropFlag = dropFlag;
+    public void setPropFlag(Integer propFlag) {
+        this.propFlag = propFlag;
     }
 
     @JsonSerialize(using = CustomDateSerializer.class)

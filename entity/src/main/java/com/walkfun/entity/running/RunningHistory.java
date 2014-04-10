@@ -42,6 +42,8 @@ public class RunningHistory {
     private Integer sequence;
     private String propGet;
     private String actionIds;
+    private Integer friendId;
+    private String friendName;
     private Date commitTime;
 
     public Integer getUserId() {
@@ -266,5 +268,21 @@ public class RunningHistory {
 
     public void setHealth(double health) {
         this.health = health;
+    }
+
+    public Integer getFriendId() {
+        return friendId;
+    }
+
+    public void setFriendId(Integer friendId) {
+        this.friendId = friendId;
+    }
+
+    public String getFriendName() {
+        return friendName;
+    }
+
+    public void setFriendName(String friendName) {
+        this.friendName = friendName;
     }
 }

@@ -29,5 +29,6 @@
         <task:scheduled ref="backendJobCache" method="productServiceJob" fixed-rate="7773000000"/>
         <task:scheduled ref="backendJobCache" method="recommendUserServiceJob" fixed-rate="7774000000"/>
         <task:scheduled ref="backendJobCache" method="experienceServiceJob" fixed-rate="7775000000"/>
+        <task:scheduled ref="backendJobCache" method="refreshUserInfoCache" cron="0 01 0 * * ?"/>
     </task:scheduled-tasks>
 </beans>

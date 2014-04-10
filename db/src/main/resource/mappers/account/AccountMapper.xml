@@ -170,6 +170,7 @@
         <result column="FRIEND_ID" property="friendId"/>
         <result column="FRIEND_STATUS" property="friendStatus"/>
         <result column="FRIEND_EACH" property="friendEach"/>
+        <result column="LAST_WALK_TIME" property="lastWalkTime"/>
         <result column="ADD_TIME" property="addTime"/>
         <result column="UPDATE_TIME" property="updateTime"/>
     </resultMap>
@@ -179,6 +180,7 @@
         UF.FRIEND_ID,
         UF.FRIEND_STATUS,
         UF.FRIEND_EACH,
+        UF.LAST_WALK_TIME,
         UF.ADD_TIME,
         UF.UPDATE_TIME
     </sql>
@@ -216,6 +218,15 @@
             FRIEND_EACH= #{entity.friendEach},
             UPDATE_TIME= now();
     </insert>
+
+    <update id="updateFriendWalkStatus">
+        UPDATE FRIENDSHIP
+        SET
+            LAST_WALK_TIME = now(),
+            UPDATE_TIME = now()
+        WHERE USER_ID = #{userId}
+        AND FRIEND_ID = #{friendId}
+    </update>
 
     <select id="getUserFriends" resultMap="userFriendInfo">
         SELECT
@@ -354,6 +365,7 @@
         <result column="FATNESS" property="fatness"/>
         <result column="PHYSICAL_POWER" property="power"/>
         <result column="FIGHTING" property="fight"/>
+        <result column="FIGHTING_PLUS" property="fightPlus"/>
     </resultMap>
 
     <sql id="friendSortTable">
@@ -365,7 +377,8 @@
         UD.LEVEL,
         UD.FATNESS,
         UD.PHYSICAL_POWER,
-        UD.FIGHTING
+        UD.FIGHTING,
+        UD.FIGHTING_PLUS
     </sql>
 
     <select id="getFriendSort" resultMap="friendSortInfo">

@@ -5,6 +5,7 @@ import com.walkfun.entity.account.SearchUserInfo;
 import com.walkfun.entity.common.*;
 import com.walkfun.entity.mission.Mission;
 import com.walkfun.entity.vproduct.VProduct;
+import com.walkfun.service.Cache.CacheFacade;
 import com.walkfun.service.account.def.AccountService;
 import com.walkfun.service.common.def.CommonService;
 import com.walkfun.service.mission.def.MissionService;
@@ -144,6 +145,10 @@ public class BackendJobCache {
 
     public void recommendUserServiceJob() {
         allRecommendUsers = accountService.getRecommendFriend();
+    }
+
+    public void refreshUserInfoCache(){
+        CacheFacade.USER.evictAll();
     }
 
 }

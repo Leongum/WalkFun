@@ -31,11 +31,13 @@ public interface AccountDAO {
 
     public List<UserFriend> getUserFriends(Integer userId, Date lastUpdateTime);
 
+    public void updateFriendWalkStatus(Integer userId, Integer friendId);
+
     public void createUserAction(UserAction userAction);
 
     public List<UserAction> getNewlyUserAction(Integer userId);
 
-    public List<UserAction>  getUserActionById(Integer userId);
+    public List<UserAction> getUserActionById(Integer userId);
 
     public List<SearchUserInfo> searchAccountInfoByName(String nickName);
 

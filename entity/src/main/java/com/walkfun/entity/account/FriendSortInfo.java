@@ -25,6 +25,7 @@ public class FriendSortInfo {
     private Double fatness;
     private Double power;
     private Double fight;
+    private Double fightPlus;
 
     public Integer getFriendId() {
         return friendId;
@@ -96,5 +97,13 @@ public class FriendSortInfo {
 
     public void setFight(Double fight) {
         this.fight = fight;
+    }
+
+    public Double getFightPlus() {
+        return fightPlus;
+    }
+
+    public void setFightPlus(Double fightPlus) {
+        this.fightPlus = fightPlus;
     }
 }

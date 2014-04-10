@@ -32,6 +32,8 @@ public interface AccountService{
 
     public List<UserFriend> getUserFriends(Integer userId, Date lastUpdateTime);
 
+    public void updateFriendWalkStatus(Integer userId, Integer friendId);
+
     public void createUserAction(UserAction userAction);
 
     public List<UserAction> getNewlyUserAction(Integer userId);

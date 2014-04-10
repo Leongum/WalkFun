@@ -175,6 +175,15 @@ public class AccountServiceImpl extends BaseService implements AccountService {
     }
 
     @Override
+    public void updateFriendWalkStatus(Integer userId, Integer friendId) {
+        try {
+            accountDAO.updateFriendWalkStatus(userId, friendId);
+        } catch (Exception ex) {
+            throw new ServerRequestException(ex.getMessage());
+        }
+    }
+
+    @Override
     @Transactional
     public void createUserAction(UserAction userAction) {
         try {

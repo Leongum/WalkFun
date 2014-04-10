@@ -77,7 +77,7 @@ public class AccountDAOImpl implements AccountDAO {
             }
         }
         accountMapper.createOrUpdateUserFriend(userFriend);
-        if(friendFollow != null){
+        if (friendFollow != null) {
             accountMapper.createOrUpdateUserFriend(friendFollow);
         }
     }
@@ -85,6 +85,11 @@ public class AccountDAOImpl implements AccountDAO {
     @Override
     public List<UserFriend> getUserFriends(Integer userId, Date lastUpdateTime) {
         return accountMapper.getUserFriends(userId, lastUpdateTime);
+    }
+
+    @Override
+    public void updateFriendWalkStatus(Integer userId, Integer friendId) {
+        accountMapper.updateFriendWalkStatus(userId, friendId);
     }
 
     @Override
@@ -96,7 +101,7 @@ public class AccountDAOImpl implements AccountDAO {
     public List<UserAction> getNewlyUserAction(Integer userId) {
         List<UserAction> userActionList = accountMapper.getNewlyUserAction(userId);
         accountMapper.updateUserActionSyncTime(userId);
-        return  userActionList;
+        return userActionList;
     }
 
     @Override
@@ -121,7 +126,7 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public List<UserProp> getUserProps(Integer userId, Date lastUpdateTime) {
-        return accountMapper.getUserProps(userId,lastUpdateTime);
+        return accountMapper.getUserProps(userId, lastUpdateTime);
     }
 
     @Override

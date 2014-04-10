@@ -12,7 +12,7 @@
         <result column="PIC_LINK" property="picLink"/>
         <result column="EFFECTIVE_RULE" property="effectiveRule"/>
         <result column="DROP_PIC_LIST" property="dropPicList"/>
-        <result column="DROP_FLAG" property="dropFlag"/>
+        <result column="PROP_FLAG" property="propFlag"/>
         <result column="MAX_DROP_NUM" property="maxDropNum"/>
         <result column="MIN_LEVEL_LIMIT" property="minLevelLimit"/>
         <result column="MAX_LEVEL_LIMIT" property="maxLevelLimit"/>
@@ -24,7 +24,7 @@
         PRODUCT_NAME,
         PRODUCT_DESCRIPTION,
         VIRTUAL_PRICE,
-        DROP_FLAG,
+        PROP_FLAG,
         PIC_LINK,
         EFFECTIVE_RULE,
         DROP_PIC_LIST,

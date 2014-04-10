@@ -33,6 +33,8 @@ public interface AccountMapper {
 
     public List<UserFriend> getUserFriends(@Param("userId") Integer userId, @Param("lastUpdateTime") Date lastUpdateTime);
 
+    public void updateFriendWalkStatus(@Param("userId") Integer userId, @Param("friendId") Integer friendId);
+
     public void createUserAction(@Param("entity") UserAction userAction);
 
     public List<UserAction> getNewlyUserAction(@Param("userId") Integer userId);

@@ -89,7 +89,7 @@ public class UserBase {
     }
 
     public String getSex() {
-        return sex == null ? "男" : sex;
+        return sex == null ? "未知" : sex;
     }
 
     public void setSex(String sex) {

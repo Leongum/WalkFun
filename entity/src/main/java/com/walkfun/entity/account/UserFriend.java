@@ -22,6 +22,7 @@ public class UserFriend{
     private Integer friendEach;   //'0 - 仅关注 1 - 相互关注',
     private Date addTime;
     private Date updateTime;
+    private Date lastWalkTime;
 
     public Integer getUserId() {
         return userId;
@@ -73,5 +74,15 @@ public class UserFriend{
     @JsonDeserialize(using = CustomDateDeserializer.class)
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @JsonSerialize(using = CustomDateSerializer.class)
+    public Date getLastWalkTime() {
+        return lastWalkTime;
+    }
+
+    @JsonDeserialize(using = CustomDateDeserializer.class)
+    public void setLastWalkTime(Date lastWalkTime) {
+        this.lastWalkTime = lastWalkTime;
     }
 }
