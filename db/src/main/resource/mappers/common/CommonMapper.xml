@@ -114,11 +114,8 @@
         <result column="BASE_POWER_CONSUME" property="bPower"/>
         <result column="BASE_EXPERIENCE" property="bExperience"/>
         <result column="BASE_GOLD" property="bGold"/>
-        <result column="FIGHT_WIN" property="fWin"/>
         <result column="WIN_GOT" property="winGot"/>
         <result column="WIN_GOT_RULE" property="winRule"/>
-        <result column="FIGHT_LOOSE" property="fLoose"/>
-        <result column="TRIGGER_PROBABILITY" property="tProb"/>
         <result column="UPDATE_TIME" property="updateTime"/>
     </resultMap>
 
@@ -135,11 +132,8 @@
         BASE_POWER_CONSUME,
         BASE_EXPERIENCE,
         BASE_GOLD,
-        FIGHT_WIN,
         WIN_GOT,
         WIN_GOT_RULE,
-        FIGHT_LOOSE,
-        TRIGGER_PROBABILITY,
         UPDATE_TIME
     </sql>
 

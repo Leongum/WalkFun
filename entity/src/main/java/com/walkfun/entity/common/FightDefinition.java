@@ -28,11 +28,11 @@ public class FightDefinition {
     private Double bPower;
     private Double bGold;
     private Double bExperience;
-    private String fWin;
+    //private String fWin;
     private String winGot;
     private String winRule;
-    private String fLoose;
-    private String tProb;
+    //private String fLoose;
+    //private String tProb;
     private Date updateTime;
 
     public Integer getId() {
@@ -131,14 +131,6 @@ public class FightDefinition {
         this.bExperience = bExperience;
     }
 
-    public String getfWin() {
-        return fWin;
-    }
-
-    public void setfWin(String fWin) {
-        this.fWin = fWin;
-    }
-
     public String getWinGot() {
         return winGot;
     }
@@ -153,22 +145,6 @@ public class FightDefinition {
 
     public void setWinRule(String winRule) {
         this.winRule = winRule;
-    }
-
-    public String getfLoose() {
-        return fLoose;
-    }
-
-    public void setfLoose(String fLoose) {
-        this.fLoose = fLoose;
-    }
-
-    public String gettProb() {
-        return tProb;
-    }
-
-    public void settProb(String tProb) {
-        this.tProb = tProb;
     }
 
     @JsonSerialize(using = CustomDateSerializer.class)

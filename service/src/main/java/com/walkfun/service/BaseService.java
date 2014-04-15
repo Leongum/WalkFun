@@ -114,7 +114,6 @@ public class BaseService {
                 updateUser.setPowerPlus(userStatusMap.get(key) * 1.0);
             } else if (key.equalsIgnoreCase(Fatness)) {
                 updateUser.setFatness(updateUser.getFatness() + userStatusMap.get(key));
-                //todo:: need add calculate.
                 updateUser.setPower(100 - updateUser.getFatness());
             } else if (key.equalsIgnoreCase(Money)) {
                 updateUser.setGoldCoin(updateUser.getGoldCoin() + userStatusMap.get(key));
@@ -137,7 +136,6 @@ public class BaseService {
                 updateUser.setPowerPlus(userStatusMap.get(key) * 1.0);
             } else if (key.equalsIgnoreCase(Fatness)) {
                 updateUser.setFatness(updateUser.getFatness() + userStatusMap.get(key));
-                //todo:: need add calculate.
                 updateUser.setPower(100 - updateUser.getFatness());
             } else if (key.equalsIgnoreCase(Money)) {
                 updateUser.setGoldCoin(updateUser.getGoldCoin() + userStatusMap.get(key));
@@ -227,7 +225,7 @@ public class BaseService {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                 if (String.valueOf(jsonObject.get("eType")).equalsIgnoreCase(Type_Fight)
-                        && CommonUtils.parseIntegerToNull(String.valueOf(jsonObject.get("eWin"))) == 1) {
+                        && CommonUtils.parseIntegerToNull(String.valueOf(jsonObject.get("eWin"))) > 0) {
                     fights.add(CommonUtils.parseIntegerToNull(String.valueOf(jsonObject.get("eId"))));
                 }
             }

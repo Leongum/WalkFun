@@ -61,12 +61,10 @@ public class RunningServiceImpl extends BaseService implements RunningService {
                     updateHash = updateUserPropsByActions(actions, updateHash);
                     updateHash = updateUserPropsByFights(fights, updateHash);
                     userInfo.setFatness(plus(userInfo.getFatness(), runningHistory.getFatness()));
-                    //todo:: need update calculate.
                     userInfo.setPower(100 - userInfo.getFatness());
                     userInfo.setGoldCoin(plus(userInfo.getGoldCoin(), runningHistory.getGoldCoin()));
                     userInfo.setExperience(plus(userInfo.getExperience(), plus(runningHistory.getExperience(), runningHistory.getExtraExperience())));
-                    //todo:: need update calculate.
-                    userInfo.setFight(userInfo.getExperience() / 100);
+                    userInfo.setFight(((userInfo.getLevel() * userInfo.getExperience()) / 103.415) + 5);
                     userInfo.setTotalActiveTimes(plus(userInfo.getTotalWalkingTimes(), 1));
                     userInfo.setTotalWalkingTimes(plus(userInfo.getTotalWalkingTimes(), runningHistory.getDuration()));
                     userInfo.setTotalCarlorie(plus(userInfo.getTotalCarlorie(), runningHistory.getSpendCarlorie()));

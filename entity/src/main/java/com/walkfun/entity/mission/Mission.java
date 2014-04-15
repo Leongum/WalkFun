@@ -25,6 +25,7 @@ public class Mission {
     private String missionDescription;
     private Integer triggerSteps;
     private Integer triggerTimes;
+    private Integer triggerDirection;
     private Double  triggerDistances;
     private Integer triggerActionId;
     private Integer triggerFightId;
@@ -153,6 +154,14 @@ public class Mission {
 
     public void setMaxLevelLimit(Double maxLevelLimit) {
         this.maxLevelLimit = maxLevelLimit;
+    }
+
+    public Integer getTriggerDirection() {
+        return triggerDirection;
+    }
+
+    public void setTriggerDirection(Integer triggerDirection) {
+        this.triggerDirection = triggerDirection;
     }
 
     @JsonSerialize(using = CustomDateSerializer.class)

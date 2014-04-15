@@ -10,6 +10,7 @@
         <result column="MISSION_DESCRIPTION" property="missionDescription"/>
         <result column="TRIGGER_STEPS" property="triggerSteps"/>
         <result column="TRIGGER_TIMES" property="triggerTimes"/>
+        <result column="TRIGGER_DIRECTION" property="triggerDirection"/>
         <result column="TRIGGER_DISTANCES" property="triggerDistances"/>
         <result column="TRIGGER_ACTION_ID" property="triggerActionId"/>
         <result column="TRIGGER_FIGHT_ID" property="triggerFightId"/>
@@ -29,6 +30,7 @@
         MISSION_DESCRIPTION,
         TRIGGER_STEPS,
         TRIGGER_TIMES,
+        TRIGGER_DIRECTION,
         TRIGGER_DISTANCES,
         TRIGGER_ACTION_ID,
         TRIGGER_FIGHT_ID,
