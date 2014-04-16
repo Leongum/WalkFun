@@ -28,6 +28,10 @@
         <result column="TOTAL_STEPS" property="totalSteps"/>
         <result column="TOTAL_WALKING_TIMES" property="totalWalkingTimes"/>
         <result column="TOTAL_ACTIVE_TIMES" property="totalActiveTimes"/>
+        <result column="TOTAL_FIGHTS" property="totalFights"/>
+        <result column="FIGHTS_WIN" property="fightsWin"/>
+        <result column="TOTAL_FRIEND_FIGHTS" property="totalFriendFights"/>
+        <result column="FRIEND_FIGHT_WIN" property="friendFightWin"/>
         <result column="MISSION_COMBO" property="missionCombo"/>
         <result column="PROP_HAVING" property="propHaving"/>
         <result column="UPDATE_TIME" property="updateTime"/>
@@ -57,6 +61,10 @@
         UD.TOTAL_STEPS,
         UD.TOTAL_WALKING_TIMES,
         UD.TOTAL_ACTIVE_TIMES,
+        UD.TOTAL_FIGHTS,
+        UD.FIGHTS_WIN,
+        UD.TOTAL_FRIEND_FIGHTS,
+        UD.FRIEND_FIGHT_WIN,
         UD.MISSION_COMBO,
         UD.PROP_HAVING,
         UD.UPDATE_TIME
@@ -157,6 +165,10 @@
             TOTAL_STEPS = #{detailEntity.totalSteps},
             TOTAL_WALKING_TIMES = #{detailEntity.totalWalkingTimes},
             TOTAL_ACTIVE_TIMES = #{detailEntity.totalActiveTimes},
+            TOTAL_FIGHTS = #{detailEntity.totalFights},
+            FIGHTS_WIN = #{detailEntity.fightsWin},
+            TOTAL_FRIEND_FIGHTS = #{detailEntity.totalFriendFights},
+            FRIEND_FIGHT_WIN = #{detailEntity.friendFightWin},
             MISSION_COMBO = #{detailEntity.missionCombo},
             PROP_HAVING = #{detailEntity.propHaving},
             UPDATE_TIME = now()
@@ -314,24 +326,28 @@
         <id column="USER_ID" property="userId"/>
         <result column="NICK_NAME" property="nickName"/>
         <result column="SEX" property="sex"/>
-        <result column="USER_TITLE" property="userTitle"/>
-        <result column="USER_TITLE_PIC" property="userTitlePic"/>
         <result column="LEVEL" property="level"/>
         <result column="FATNESS" property="fatness"/>
         <result column="PHYSICAL_POWER" property="power"/>
         <result column="FIGHTING" property="fight"/>
+        <result column="TOTAL_FIGHTS" property="totalFights"/>
+        <result column="FIGHTS_WIN" property="fightsWin"/>
+        <result column="TOTAL_FRIEND_FIGHTS" property="totalFriendFights"/>
+        <result column="FRIEND_FIGHT_WIN" property="friendFightWin"/>
     </resultMap>
 
     <sql id="searchAccountTable">
         U.USER_ID,
         U.NICK_NAME,
         U.SEX,
-        UD.USER_TITLE,
-        UD.USER_TITLE_PIC,
         UD.LEVEL,
         UD.FATNESS,
         UD.PHYSICAL_POWER,
-        UD.FIGHTING
+        UD.FIGHTING,
+        UD.TOTAL_FIGHTS,
+        UD.FIGHTS_WIN,
+        UD.TOTAL_FRIEND_FIGHTS,
+        UD.FRIEND_FIGHT_WIN
     </sql>
 
     <select id="searchAccountInfoByName" resultMap="searchAccountInfo">
@@ -359,26 +375,30 @@
         <id column="USER_ID" property="friendId"/>
         <result column="NICK_NAME" property="friendName"/>
         <result column="SEX" property="sex"/>
-        <result column="USER_TITLE" property="userTitle"/>
-        <result column="USER_TITLE_PIC" property="userTitlePic"/>
         <result column="LEVEL" property="level"/>
         <result column="FATNESS" property="fatness"/>
         <result column="PHYSICAL_POWER" property="power"/>
         <result column="FIGHTING" property="fight"/>
         <result column="FIGHTING_PLUS" property="fightPlus"/>
+        <result column="TOTAL_FIGHTS" property="totalFights"/>
+        <result column="FIGHTS_WIN" property="fightsWin"/>
+        <result column="TOTAL_FRIEND_FIGHTS" property="totalFriendFights"/>
+        <result column="FRIEND_FIGHT_WIN" property="friendFightWin"/>
     </resultMap>
 
     <sql id="friendSortTable">
         U.USER_ID,
         U.NICK_NAME,
         U.SEX,
-        UD.USER_TITLE,
-        UD.USER_TITLE_PIC,
         UD.LEVEL,
         UD.FATNESS,
         UD.PHYSICAL_POWER,
         UD.FIGHTING,
-        UD.FIGHTING_PLUS
+        UD.FIGHTING_PLUS,
+        UD.TOTAL_FIGHTS,
+        UD.FIGHTS_WIN,
+        UD.TOTAL_FRIEND_FIGHTS,
+        UD.FRIEND_FIGHT_WIN
     </sql>
 
     <select id="getFriendSort" resultMap="friendSortInfo">

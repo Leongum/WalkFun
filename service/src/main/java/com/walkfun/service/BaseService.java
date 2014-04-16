@@ -33,6 +33,7 @@ public class BaseService {
     public static String Money = "M";
     public static String Type_Action = "TA";
     public static String Type_Fight = "TF";
+    public static String Type_Fight_Friend = "TFF";
 
     public Map<Integer, Integer> explainActionRule(String actionRule) {
         Map<Integer, Integer> vProductIds = new HashMap<Integer, Integer>();
@@ -170,38 +171,6 @@ public class BaseService {
         return vProductIds;
     }
 
-//    public List<Integer> explainActionList(String actionList) {
-//        List<Integer> actions = new ArrayList<Integer>();
-//        if (actionList != null) {
-//            String[] ruleArray = actionList.split("\\|");
-//            for (int i = 0; i < ruleArray.length; i++) {
-//                String[] ruleDetails = ruleArray[i].split(",");
-//                if (ruleDetails != null && ruleDetails.length >= 3) {
-//                    if (ruleDetails[0].equalsIgnoreCase(Type_Action)) {
-//                        actions.add(CommonUtils.parseIntegerToNull(ruleDetails[1]));
-//                    }
-//                }
-//            }
-//        }
-//        return actions;
-//    }
-
-//    public List<Integer> explainFightList(String actionList) {
-//        List<Integer> fights = new ArrayList<Integer>();
-//        if (actionList != null) {
-//            String[] ruleArray = actionList.split("\\|");
-//            for (int i = 0; i < ruleArray.length; i++) {
-//                String[] ruleDetails = ruleArray[i].split(",");
-//                if (ruleDetails != null && ruleDetails.length >= 3) {
-//                    if (ruleDetails[0].equalsIgnoreCase(Type_Fight) && CommonUtils.parseIntegerToNull(ruleDetails[2]) == 1) {
-//                        fights.add(CommonUtils.parseIntegerToNull(ruleDetails[1]));
-//                    }
-//                }
-//            }
-//        }
-//        return fights;
-//    }
-
     public List<Integer> explainActionList(String actionList) {
         List<Integer> actions = new ArrayList<Integer>();
         try {
@@ -225,7 +194,7 @@ public class BaseService {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                 if (String.valueOf(jsonObject.get("eType")).equalsIgnoreCase(Type_Fight)
-                        && CommonUtils.parseIntegerToNull(String.valueOf(jsonObject.get("eWin"))) > 0) {
+                        && (CommonUtils.parseIntegerToNull(String.valueOf(jsonObject.get("eWin"))) % 10) > 1) {
                     fights.add(CommonUtils.parseIntegerToNull(String.valueOf(jsonObject.get("eId"))));
                 }
             }
@@ -233,6 +202,39 @@ public class BaseService {
             e.printStackTrace();
         }
         return fights;
+    }
+
+    public UserInfo updateUserInfoByFights(UserInfo userInfo, String actionList) {
+        UserInfo returnUserInfo = userInfo;
+        try {
+            JSONArray jsonArray = new JSONArray(actionList);
+            int totalFight = 0;
+            int fightWin = 0;
+            int totalFightFriend = 0;
+            int fightFriendWin = 0;
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                if (String.valueOf(jsonObject.get("eType")).equalsIgnoreCase(Type_Fight)) {
+                    totalFight++;
+                    if (CommonUtils.parseIntegerToNull(String.valueOf(jsonObject.get("eWin"))) > 0) {
+                        fightWin++;
+                    }
+                }
+                if (String.valueOf(jsonObject.get("eType")).equalsIgnoreCase(Type_Fight_Friend)) {
+                    totalFightFriend++;
+                    if (CommonUtils.parseIntegerToNull(String.valueOf(jsonObject.get("eWin"))) > 0) {
+                        fightFriendWin++;
+                    }
+                }
+            }
+            userInfo.setTotalFights(plus(userInfo.getTotalFights(), totalFight));
+            userInfo.setFightsWin(plus(userInfo.getFightsWin(), fightWin));
+            userInfo.setTotalFriendFights(plus(userInfo.getTotalFriendFights(), totalFightFriend));
+            userInfo.setFriendFightWin(plus(userInfo.getFriendFightWin(), fightFriendWin));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return returnUserInfo;
     }
 
     public <K, V> String transMapToString(Map<K, V> mapList) {

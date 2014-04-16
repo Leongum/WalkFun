@@ -1,12 +1,5 @@
 package com.walkfun.entity.account;
 
-import com.walkfun.common.lib.CustomDateDeserializer;
-import com.walkfun.common.lib.CustomDateSerializer;
-import org.codehaus.jackson.map.annotate.JsonDeserialize;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-
-import java.util.Date;
-
 /**
  * Created with IntelliJ IDEA.
  * User: p
@@ -20,12 +13,14 @@ public class FriendSortInfo {
     private String friendName;
     private String sex;
     private Double level;
-    private String userTitle;
-    private String userTitlePic;
     private Double fatness;
     private Double power;
     private Double fight;
     private Double fightPlus;
+    private Integer totalFights;
+    private Integer fightsWin;
+    private Integer totalFriendFights;
+    private Integer friendFightWin;
 
     public Integer getFriendId() {
         return friendId;
@@ -59,22 +54,6 @@ public class FriendSortInfo {
         this.level = level;
     }
 
-    public String getUserTitle() {
-        return userTitle;
-    }
-
-    public void setUserTitle(String userTitle) {
-        this.userTitle = userTitle;
-    }
-
-    public String getUserTitlePic() {
-        return userTitlePic;
-    }
-
-    public void setUserTitlePic(String userTitlePic) {
-        this.userTitlePic = userTitlePic;
-    }
-
     public Double getFatness() {
         return fatness;
     }
@@ -105,5 +84,37 @@ public class FriendSortInfo {
 
     public void setFightPlus(Double fightPlus) {
         this.fightPlus = fightPlus;
+    }
+
+    public Integer getTotalFights() {
+        return totalFights;
+    }
+
+    public void setTotalFights(Integer totalFights) {
+        this.totalFights = totalFights;
+    }
+
+    public Integer getFightsWin() {
+        return fightsWin;
+    }
+
+    public void setFightsWin(Integer fightsWin) {
+        this.fightsWin = fightsWin;
+    }
+
+    public Integer getTotalFriendFights() {
+        return totalFriendFights;
+    }
+
+    public void setTotalFriendFights(Integer totalFriendFights) {
+        this.totalFriendFights = totalFriendFights;
+    }
+
+    public Integer getFriendFightWin() {
+        return friendFightWin;
+    }
+
+    public void setFriendFightWin(Integer friendFightWin) {
+        this.friendFightWin = friendFightWin;
     }
 }

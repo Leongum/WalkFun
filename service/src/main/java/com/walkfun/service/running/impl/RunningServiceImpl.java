@@ -58,6 +58,7 @@ public class RunningServiceImpl extends BaseService implements RunningService {
                     List<Integer> fights = explainFightList(runningHistory.getActionIds());
                     //2. chang action into props and effective.
                     userInfo = updateUserInfoByActions(userInfo, actions);
+                    userInfo = updateUserInfoByFights(userInfo, runningHistory.getActionIds());
                     updateHash = updateUserPropsByActions(actions, updateHash);
                     updateHash = updateUserPropsByFights(fights, updateHash);
                     userInfo.setFatness(plus(userInfo.getFatness(), runningHistory.getFatness()));

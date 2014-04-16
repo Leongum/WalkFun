@@ -34,6 +34,10 @@ public class UserInfo extends UserBase {
     private Integer totalSteps;
     private Integer totalWalkingTimes;
     private Integer totalActiveTimes;
+    private Integer totalFights;
+    private Integer fightsWin;
+    private Integer totalFriendFights;
+    private Integer friendFightWin;
     private Integer missionCombo;
     private String propHaving;
     private Date updateTime;
@@ -211,5 +215,37 @@ public class UserInfo extends UserBase {
 
     public void setFightPlus(Double fightPlus) {
         this.fightPlus = fightPlus;
+    }
+
+    public Integer getTotalFights() {
+        return totalFights;
+    }
+
+    public void setTotalFights(Integer totalFights) {
+        this.totalFights = totalFights;
+    }
+
+    public Integer getFightsWin() {
+        return fightsWin;
+    }
+
+    public void setFightsWin(Integer fightsWin) {
+        this.fightsWin = fightsWin;
+    }
+
+    public Integer getTotalFriendFights() {
+        return totalFriendFights;
+    }
+
+    public void setTotalFriendFights(Integer totalFriendFights) {
+        this.totalFriendFights = totalFriendFights;
+    }
+
+    public Integer getFriendFightWin() {
+        return friendFightWin;
+    }
+
+    public void setFriendFightWin(Integer friendFightWin) {
+        this.friendFightWin = friendFightWin;
     }
 }
