@@ -147,8 +147,9 @@ public class BaseService {
         for (Integer key : vProductIds.keySet()) {
             if (propMap.containsKey(key)) {
                 propMap.put(key, propMap.get(key) + (-vProductIds.get(key)));
+            } else {
+                propMap.put(key, -vProductIds.get(key));
             }
-            propMap.put(key, -vProductIds.get(key));
         }
         updateUser.setPropHaving(transMapToString(propMap));
         return updateUser;
@@ -156,7 +157,7 @@ public class BaseService {
 
     public Map<Integer, Integer> explainPropHaveRule(String propHaving) {
         Map<Integer, Integer> vProductIds = new HashMap<Integer, Integer>();
-        //9,1|6,1
+        //17,1|1,1|18,1|3,1|
         if (propHaving != null) {
             String[] ruleArray = propHaving.split("\\|");
             for (int i = 0; i < ruleArray.length; i++) {
