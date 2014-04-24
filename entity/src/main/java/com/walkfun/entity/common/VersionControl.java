@@ -22,6 +22,8 @@ public class VersionControl {
 
     private Integer subVersion;
 
+    private Integer descVersion;
+
     private String description;
 
     private Date systemTime;
@@ -58,6 +60,14 @@ public class VersionControl {
 
     public void setSubVersion(Integer subVersion) {
         this.subVersion = subVersion;
+    }
+
+    public Integer getDescVersion() {
+        return descVersion;
+    }
+
+    public void setDescVersion(Integer descVersion) {
+        this.descVersion = descVersion;
     }
 
     public String getDescription() {

@@ -18,22 +18,38 @@ import java.util.*;
  */
 public class BaseService {
 
+    //是否可以掉落在地上
     public static String Drop_Down = "D";
+    //掉落在的花盆上
+    public static String RULE_Drop_Pot = "DP";
+    //标注肥肉的改变值
     public static String Fatness = "F";
-    public static String Fight_Win = "FW";
-    public static String Fight_Loose = "FL";
-    public static String Flower_Pot = "FP";
+    //是否可以显示在脸上
+    public static String RULE_On_Face = "OF";
+    //是否需要改变脸的颜色
+    public static String RULE_Face_Color = "FC";
+    //标注肥肉的直接增加值
     public static String Fight_Add = "FA";
+    //标注肥肉的百分比真价值
     public static String Fight_Percent = "FPE";
+    //标注体力的临时上限增加
     public static String Physical_Power_Add = "PPA";
+    //标注体力的临时上限的增加的百分比
     public static String Physical_Power_Percent = "PPP";
+    //标注为道具。
     public static String Prop_Yes = "PY";
+    //标注不是道具
     public static String Prop_No = "PN";
-    public static String Show_Position = "SP";
+    //标注是否是钱
     public static String Money = "M";
+    //标注触发是一个action事件
     public static String Type_Action = "TA";
+    //标注触发是一个战斗事件
     public static String Type_Fight = "TF";
+    //标注触发是一个好友战斗事件
     public static String Type_Fight_Friend = "TFF";
+    //标注出发事件。
+    public static String RULE_Type_Start = "TS";
 
     public Map<Integer, Integer> explainActionRule(String actionRule) {
         Map<Integer, Integer> vProductIds = new HashMap<Integer, Integer>();
@@ -108,7 +124,7 @@ public class BaseService {
             if (key.equalsIgnoreCase(Fight_Percent)) {
                 updateUser.setFightPlus((userStatusMap.get(key) * updateUser.getFight()) / 100);
             } else if (key.equalsIgnoreCase(Fight_Add)) {
-                updateUser.setFight(userStatusMap.get(key) * 1.0);
+                updateUser.setFightPlus(userStatusMap.get(key) * 1.0);
             } else if (key.equalsIgnoreCase(Physical_Power_Percent)) {
                 updateUser.setPowerPlus((userStatusMap.get(key) * updateUser.getPower()) / 100);
             } else if (key.equalsIgnoreCase(Physical_Power_Add)) {
@@ -130,7 +146,7 @@ public class BaseService {
             if (key.equalsIgnoreCase(Fight_Percent)) {
                 updateUser.setFightPlus((userStatusMap.get(key) * updateUser.getFight()) / 100);
             } else if (key.equalsIgnoreCase(Fight_Add)) {
-                updateUser.setFatness(userStatusMap.get(key) * 1.0);
+                updateUser.setFightPlus(userStatusMap.get(key) * 1.0);
             } else if (key.equalsIgnoreCase(Physical_Power_Percent)) {
                 updateUser.setPowerPlus((userStatusMap.get(key) * updateUser.getPower()) / 100);
             } else if (key.equalsIgnoreCase(Physical_Power_Add)) {

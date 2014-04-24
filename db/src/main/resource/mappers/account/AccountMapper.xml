@@ -412,7 +412,7 @@
         WHERE (UF.USER_ID = #{userId} OR UF.FRIEND_ID = #{userId})
         <if test="lastUpdateTime != null">
             <![CDATA[
-        AND UF.UPDATE_TIME > #{lastUpdateTime}
+        AND UD.UPDATE_TIME > #{lastUpdateTime}
             ]]>
         </if>
     </select>

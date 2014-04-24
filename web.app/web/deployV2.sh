@@ -87,21 +87,13 @@ function deploy(){
     check_task_status $?
     run_scp_cmd_r "${_app_root_path}/WEB-INF/*.xml" "/alidata/apache-tomcat-7.0.39/webapps/walkfun/WEB-INF/"
     check_task_status $?
-    run_scp_cmd_r "${_app_root_path}/css/*.css" "/alidata/apache-tomcat-7.0.39/webapps/walkfun/css/"
-    check_task_status $?
-    run_scp_cmd_r "${_app_root_path}/js/*.js" "/alidata/apache-tomcat-7.0.39/webapps/walkfun/js/"
-    check_task_status $?
-    run_scp_cmd_r "${_app_root_path}/images/*.*" "/alidata/apache-tomcat-7.0.39/webapps/walkfun/images/"
-    check_task_status $?
-    run_scp_cmd_r "${_app_root_path}/index.html" "/alidata/apache-tomcat-7.0.39/webapps/walkfun"
-    check_task_status $?
 
     echo Waiting for remote 1box to finish deploying ...
     echo Shutdown Old service ...
-    run_ssh_remote_cmd "/alidata/apache-tomcat-7.0.39/bin/shutdown.sh"
+    #run_ssh_remote_cmd "/alidata/apache-tomcat-7.0.39/bin/shutdown.sh"
     check_task_status $?
     echo Start up New service ...
-    run_ssh_remote_cmd "/alidata/apache-tomcat-7.0.39/bin/startup.sh"
+    #run_ssh_remote_cmd "/alidata/apache-tomcat-7.0.39/bin/startup.sh"
     check_task_status $?
     _remote_default_ssh_username=${_remote_username}@${_remote_ip}
 }

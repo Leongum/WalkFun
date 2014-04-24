@@ -161,10 +161,10 @@ public class UserInfo extends UserBase {
 
     public void setFatness(Double fatness) {
         if (fatness < 0) {
-            this.fatness = 0.0;
+            fatness = 0.0;
         }
         if (fatness > 100) {
-            this.fatness = 100.0;
+            fatness = 100.0;
         }
         this.fatness = fatness;
     }

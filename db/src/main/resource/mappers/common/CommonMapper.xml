@@ -8,6 +8,7 @@
         <id column="PLATFORM" property="platform"/>
         <result column="VERSION" property="version"/>
         <result column="SUBVERSION" property="subVersion"/>
+        <result column="DESC_VERSION" property="descVersion"/>
         <result column="DESCRIPTION" property="description"/>
     </resultMap>
 
@@ -15,6 +16,7 @@
         VC.PLATFORM,
         VC.VERSION,
         VC.SUBVERSION,
+        VC.DESC_VERSION,
         VC.DESCRIPTION
     </sql>
 
