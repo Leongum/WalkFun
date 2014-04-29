@@ -41,6 +41,8 @@ public class IOSMessageSend {
     // @param threads 表示创建多少个push thread
     private int maxThread;
 
+    private static PushQueue queue = null;
+
     public Resource getPath() {
         return path;
     }
@@ -148,11 +150,13 @@ public class IOSMessageSend {
             payLoad.addBadge(count);
             payLoad.addSound(sound);
 
+            if (queue == null) {
             /* Create the queue */
-            PushQueue queue = Push.queue(path.getInputStream(), password, production, maxThread);
+                queue = Push.queue(path.getInputStream(), password, production, maxThread);
 
             /* Start the queue (all threads and connections and initiated) */
-            queue.start();
+                queue.start();
+            }
 
             /* Add a notification for the queue to push */
             queue.add(payLoad, token);

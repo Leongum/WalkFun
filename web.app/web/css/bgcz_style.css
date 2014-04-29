@@ -1,0 +1,174 @@
+/* css reset */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+fieldset,img {
+    border:0;
+}
+h1,h2,h3,h4,h5,h6 {
+    font-weight:normal;
+}
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.clearfix{*zoom:1;}
+.clearfix:after{display:block; overflow:hidden; clear:both; height:0; visibility:hidden; content:".";}
+
+a{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration:underline;
+}
+.window{
+    background:#119d28 url(../images/bgcz_bg.jpg) no-repeat center top;
+}
+.banner{
+    height:900px;
+    position:relative;
+}
+.banner h1{display:none;}
+.top_share{
+    width: 81px;
+    height: 80px;
+    position:absolute;
+    top:0;
+    left:0;
+    padding: 45px 17px 0;
+    background: url(../images/icons.png) no-repeat -182px -65px;
+}
+.top_share a{
+    width: 38px;
+    height: 38px;
+    float:left;
+    text-indent: -9999px;
+    overflow: hidden;
+    /* margin-top:30px; */
+    background: url(../images/icons.png) no-repeat -197px 0px;
+}
+.top_share .weibo_share{
+
+}
+.top_share .tencent_share{
+    background-position: -249px 0px;
+    float: right;
+}
+.body_wrap{
+    width:1000px;margin:0 auto;
+}
+.footer{background-color:#140a01;}
+.copy_right{
+    width:1000px;
+    padding:20px 0;
+    margin:0 auto;
+    font-size:14px;
+    text-align:center;
+    line-height:26px;
+    color:#f0f9f2;
+    font-family:"MicroSoft YaHei",SimHei,Arial;
+}
+.copy_right a,.copy_right a:visited{
+    color:#f0f9f2;
+}
+.app_download{
+    position:absolute;
+    top: 375px;
+    right: 60px;
+}
+.ios_link,.android_link{
+    display:block;
+    width: 175px;
+    height: 51px;
+    overflow:hidden;
+    text-indent: -9999px;
+    background: url(../images/icons.png) no-repeat 0px 0px;
+}
+.ios_link:hover{
+    background-position: 0 -52px;
+}
+
+.app_download a.ios_link img{
+    display: none;
+    margin-top: 5px;
+    margin-left: -210px;
+    position: absolute;
+}
+
+.app_download a.ios_link:hover img{
+    display: block;
+}
+
+.android_link{
+    background-position: 0px -106px;
+    margin-top: 10px;
+}
+.android_link:hover{
+    background-position: 0px -158px;
+}
+
+
+.functional_share{
+    width:1200px;min-height: 280px;margin:0 auto;overflow:hidden;
+}
+
+.functional_box{
+    width: 400px; min-height: 280px; float: left; overflow:hidden;
+}
+
+.f_box_button{
+    background: url(../images/stone.png) no-repeat; margin-left: 40px; width: 264px; height: 126px;
+}
+
+.f_box_title{
+    color: #56431a; font-size: 25px; font-weight:bolder; text-align: center; height: 126px; line-height: 140px;
+}
+
+.functional_box a {
+    color: #56431a;
+}
+
+.functional_box a:hover{
+    color: #56431a;
+    text-decoration:none;
+}
+
+
+.f_box_content{
+    font-size: 14px; color: #ffffff; padding:20px 100px 0 60px; line-height: 25px;
+}
