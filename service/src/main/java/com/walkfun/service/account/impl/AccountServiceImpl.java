@@ -5,6 +5,7 @@ import com.walkfun.common.lib.*;
 import com.walkfun.db.account.dao.def.AccountDAO;
 import com.walkfun.entity.common.ActionDefinition;
 import com.walkfun.entity.common.ExperienceDefinition;
+import com.walkfun.entity.enums.ActionDefineTypeEnum;
 import com.walkfun.entity.enums.FollowStatusEnum;
 import com.walkfun.service.BaseService;
 import com.walkfun.service.Cache.CacheFacade;
@@ -197,6 +198,11 @@ public class AccountServiceImpl extends BaseService implements AccountService {
             //4. add effective into user
             List<UserProp> updateProps = getUserProps(userAction.getActionFromId(), null);
             updateProps = calculateUserProp(userAction.getActionFromId(), updateProps, vProductIds);
+            for (UserProp userProp : updateProps) {
+                if (userProp.getOwnNumber() < 0) {
+                    return;
+                }
+            }
             UserInfo updateUserInfo = calculateUserInfo(toUser, userStatusMap, vProductIds);
             //5. update database
             accountDAO.createUserAction(userAction);
@@ -300,27 +306,43 @@ public class AccountServiceImpl extends BaseService implements AccountService {
     @Override
     public RewardDetails getRandomReward(Integer userId) {
         try {
+            /**************hack cache.***********************/
+            String cacheKey = "user.reward.id." + userId.toString();
+            Date lastReward = CacheFacade.USERREWARD.get(cacheKey, new Callable<Date>() {
+                @Override
+                public Date execute() {
+                    return null;
+                }
+            });
+            if (lastReward != null && CommonUtils.hoursBetween(lastReward, new Date()) > 24) {
+                CacheFacade.USERREWARD.evict(cacheKey);
+                lastReward = null;
+            }
+            if (lastReward != null) {
+
+                RewardDetails rewardDetails = new RewardDetails();
+                rewardDetails.setUserId(userId);
+                rewardDetails.setActionId(2000);
+                rewardDetails.setRewardMoney(0);
+                return rewardDetails;
+            }
+            /**************hack cache.***********************/
             UserInfo userInfo = checkUserExisting(userId, null);
             List<UserProp> userProps = getUserProps(userId, null);
             RewardDetails rewardDetails = new RewardDetails();
             rewardDetails.setUserId(userId);
-            rewardDetails.setActionId(200);
+            rewardDetails.setActionId(2001);
             Random random = new Random(new Date().getTime());
             List<ActionDefinition> rewardActions = commonService.getRewardActionDefine();
-            for (ActionDefinition actionDefinition : rewardActions) {
-                int randomNum = random.nextInt(100);
-                if (randomNum < actionDefinition.getTriggerProbability() * 100) {
-                    rewardDetails.setActionId(actionDefinition.getActionId());
-                    break;
-                }
-            }
+            int randomNum = random.nextInt(rewardActions.size());
+            rewardDetails.setActionId(rewardActions.get(randomNum).getActionId());
             ActionDefinition randomActionDefinition = commonService.getActionDefineById(rewardDetails.getActionId());
             Map<Integer, Integer> vProductIds = explainActionRule(randomActionDefinition.getActionRule());
             Map<String, Integer> userStatusMap = explainActionEffectiveRule(randomActionDefinition.getEffectiveRule());
             userProps = calculateUserProp(userId, userProps, vProductIds);
             userInfo = calculateUserInfo(userInfo, userStatusMap);
             for (Integer key : vProductIds.keySet()) {
-                rewardDetails.setRewardPropId(vProductIds.get(key));
+                rewardDetails.setRewardPropId(key);
             }
             for (String key : userStatusMap.keySet()) {
                 if (key.equalsIgnoreCase(Money)) {
@@ -333,6 +355,15 @@ public class AccountServiceImpl extends BaseService implements AccountService {
             if (rewardDetails.getRewardMoney() != null) {
                 this.updateAccountInfo(userInfo);
             }
+            /**************hack cache.***********************/
+            CacheFacade.USERREWARD.evict(cacheKey);
+            CacheFacade.USERREWARD.get(cacheKey, new Callable<Date>() {
+                @Override
+                public Date execute() {
+                    return new Date();
+                }
+            });
+            /**************hack cache.***********************/
             return rewardDetails;
         } catch (Exception ex) {
             throw new ServerRequestException(ex.getMessage());

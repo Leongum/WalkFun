@@ -66,7 +66,7 @@ public class VProductServiceImpl extends BaseService implements VProductService 
             VProduct vProduct = getVProductById(vProductHistory.getProductId());
             //update old props
             for (UserProp userProp : userProps) {
-                if (userProp.getProductId() == vProductHistory.getProductId()) {
+                if (userProp.getProductId().intValue() == vProductHistory.getProductId().intValue()) {
                     userProp.setOwnNumber(userProp.getOwnNumber() + vProductHistory.getNumbers());
                     updateProps.add(userProp);
                     double price = -(double) (vProductHistory.getNumbers() * vProduct.getVirtualPrice());
@@ -97,7 +97,7 @@ public class VProductServiceImpl extends BaseService implements VProductService 
     @Override
     public VProduct getVProductById(Integer vProductId) {
         for (VProduct vProduct : BackendJobCache.allProducts) {
-            if (vProduct.getProductId() == vProductId) {
+            if (vProduct.getProductId().intValue() == vProductId.intValue()) {
                 return vProduct;
             }
         }

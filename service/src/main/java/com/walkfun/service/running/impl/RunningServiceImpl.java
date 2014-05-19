@@ -65,7 +65,6 @@ public class RunningServiceImpl extends BaseService implements RunningService {
                     userInfo.setPower(100 - userInfo.getFatness());
                     userInfo.setGoldCoin(plus(userInfo.getGoldCoin(), runningHistory.getGoldCoin()));
                     userInfo.setExperience(plus(userInfo.getExperience(), plus(runningHistory.getExperience(), runningHistory.getExtraExperience())));
-                    userInfo.setFight(((userInfo.getLevel() * userInfo.getExperience()) / 103.415) + 5);
                     userInfo.setTotalActiveTimes(plus(userInfo.getTotalWalkingTimes(), 1));
                     userInfo.setTotalWalkingTimes(plus(userInfo.getTotalWalkingTimes(), runningHistory.getDuration()));
                     userInfo.setTotalCarlorie(plus(userInfo.getTotalCarlorie(), runningHistory.getSpendCarlorie()));
@@ -80,6 +79,7 @@ public class RunningServiceImpl extends BaseService implements RunningService {
             }
             // 3. update user info and user props
             userInfo = accountService.checkUserLevel(userInfo);
+            userInfo.setFight(((userInfo.getLevel() * userInfo.getExperience()) / 103.415) + 5);
             accountService.updateAccountInfo(userInfo);
             List<UserProp> updateProps = calculateUserProp(userId, userProps, updateHash);
             accountService.createOrUpdateUserProp(updateProps);
