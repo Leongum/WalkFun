@@ -373,7 +373,7 @@ public class AccountServiceImpl extends BaseService implements AccountService {
     @Override
     public UserInfo getAccountInfoByID(Integer userId, Date lastUpdateTime) {
         try {
-            if (userId == Universe.current().getUserId()) {
+            if (userId.intValue() == Universe.current().getUserId()) {
                 checkUserLoginStatus(userId);
             }
             return checkUserExisting(userId, lastUpdateTime);

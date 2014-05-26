@@ -77,7 +77,7 @@ public class BaseService {
         for (Integer key : vProductIds.keySet()) {
             int i = 0;
             for (; i < userProps.size(); i++) {
-                if (userProps.get(i).getProductId() == key) {
+                if (userProps.get(i).getProductId().intValue() == key.intValue()) {
                     UserProp userProp = userProps.get(i);
                     userProp.setOwnNumber(userProp.getOwnNumber() + vProductIds.get(key));
                     updateProps.add(userProp);
@@ -89,7 +89,7 @@ public class BaseService {
                 userProp.setUserId(userId);
                 userProp.setProductId(key);
                 for (VProduct vProduct : BackendJobCache.allProducts) {
-                    if (vProduct.getProductId() == key) {
+                    if (vProduct.getProductId().intValue() == key.intValue()) {
                         userProp.setProductName(vProduct.getProductName());
                     }
                 }
