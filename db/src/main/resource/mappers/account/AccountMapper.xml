@@ -309,7 +309,7 @@
         SELECT
         <include refid="userActionInfoTable"/>
         FROM ACTION AS A
-        WHERE A.ACTION_TO_ID = #{userId}
+        WHERE A.ACTION_TO_ID = #{userId} AND A.ACTION_ID >= 0
         ORDER BY A.ID DESC
         LIMIT 1
     </select>

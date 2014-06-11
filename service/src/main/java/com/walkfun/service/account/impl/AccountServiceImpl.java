@@ -7,11 +7,13 @@ import com.walkfun.entity.common.ActionDefinition;
 import com.walkfun.entity.common.ExperienceDefinition;
 import com.walkfun.entity.enums.ActionDefineTypeEnum;
 import com.walkfun.entity.enums.FollowStatusEnum;
+import com.walkfun.entity.vproduct.VProduct;
 import com.walkfun.service.BaseService;
 import com.walkfun.service.Cache.CacheFacade;
 import com.walkfun.service.account.def.AccountService;
 import com.walkfun.service.backend.BackendJobCache;
 import com.walkfun.service.common.def.CommonService;
+import com.walkfun.service.vproduct.def.VProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.walkfun.entity.account.*;
@@ -33,6 +35,9 @@ public class AccountServiceImpl extends BaseService implements AccountService {
 
     @Autowired
     private CommonService commonService;
+
+    @Autowired
+    private VProductService vProductService;
 
     @Autowired
     IOSMessageSend iosMessageSend;
@@ -191,6 +196,7 @@ public class AccountServiceImpl extends BaseService implements AccountService {
             //1. get action definition
             ActionDefinition actionDefinition = commonService.getActionDefineById(userAction.getActionId());
             //2. get user info
+            UserInfo fromUser = checkUserExisting(userAction.getActionFromId(), null);
             UserInfo toUser = checkUserExisting(userAction.getActionToId(), null);
             //3. explain action and effective
             Map<Integer, Integer> vProductIds = explainActionRule(actionDefinition.getActionRule());
@@ -208,15 +214,76 @@ public class AccountServiceImpl extends BaseService implements AccountService {
             accountDAO.createUserAction(userAction);
             this.createOrUpdateUserProp(updateProps);
             this.updateAccountInfo(updateUserInfo);
+            String notification = userAction.getActionFromName() + actionDefinition.getNotificationMessage();
+            // 判断是否有防御性道具。
+            if (actionDefinition.getActionType().intValue() == ActionDefineTypeEnum.USE.ordinal()
+                    && userAction.getActionToId().intValue() != userAction.getActionFromId().intValue()) {
+                Map<String, Integer> defenseActions = calculateDefenseActions(toUser, vProductIds);
+                for (String defenseKey : defenseActions.keySet()) {
+                    ActionDefinition defenseActionDefinition = commonService.getActionDefineById(defenseActions.get(defenseKey));
+                    UserAction defenseAction = null;
+                    if (defenseKey.equalsIgnoreCase(Rule_Defense_Action)) {
+                        defenseAction = new UserAction();
+                        defenseAction.setActionFromId(userAction.getActionToId());
+                        defenseAction.setActionFromName(userAction.getActionToName());
+                        defenseAction.setActionId(defenseActionDefinition.getActionId());
+                        defenseAction.setActionName(defenseActionDefinition.getActionName());
+                        defenseAction.setActionToId(userAction.getActionFromId());
+                        defenseAction.setActionToName(userAction.getActionFromName());
+                        Map<Integer, Integer> defenseVProductIds = explainActionRule(defenseActionDefinition.getActionRule());
+                        Map<String, Integer> defenseUserStatusMap = explainActionEffectiveRule(defenseActionDefinition.getEffectiveRule());
+                        UserInfo updateFromUser = calculateUserInfo(fromUser, defenseUserStatusMap, defenseVProductIds);
+                        this.updateAccountInfo(updateFromUser);
+                    }
+                    if (defenseKey.equalsIgnoreCase(Rule_Defense_Self_Action)) {
+                        defenseAction = new UserAction();
+                        defenseAction.setActionFromId(userAction.getActionFromId());
+                        defenseAction.setActionFromName(userAction.getActionFromName());
+                        defenseAction.setActionId(defenseActionDefinition.getActionId());
+                        defenseAction.setActionName(defenseActionDefinition.getActionName());
+                        defenseAction.setActionToId(userAction.getActionToId());
+                        defenseAction.setActionToName(userAction.getActionToName());
+                        notification = notification + defenseActionDefinition.getNotificationMessage();
+                    }
+                    if (defenseAction != null) {
+                        accountDAO.createUserAction(defenseAction);
+                    }
+                }
+            }
             if (userAction.getActionFromId() != userAction.getActionToId()) {
                 String token = CommonUtils.getDeviceId(toUser.getDeviceId());
                 if (token != null) {
-                    iosMessageSend.send(token, userAction.getActionFromName() + actionDefinition.getNotificationMessage());
+                    iosMessageSend.send(token, notification);
                 }
             }
         } catch (Exception ex) {
             throw new ServerRequestException(ex.getMessage());
         }
+    }
+
+    private Map<String, Integer> calculateDefenseActions(UserInfo toUser, Map<Integer, Integer> vProductIds) {
+        Map<String, Integer> defenseActions = new HashMap<String, Integer>();
+        String propHaving = toUser.getPropHaving();
+        Map<Integer, Integer> propMap = explainPropHaveRule(propHaving);
+        for (Integer key : vProductIds.keySet()) {
+            if (vProductIds.get(key).intValue() == -1) {
+                VProduct vProduct = vProductService.getVProductById(key);
+                Map<String, Integer> effectiveMapBase = explainActionEffectiveRule(vProduct.getEffectiveRule());
+                for (Integer propHavingKey : propMap.keySet()) {
+                    if (propMap.get(propHavingKey).intValue() > 0) {
+                        VProduct prop = vProductService.getVProductById(propHavingKey);
+                        Map<String, Integer> effectiveMap = explainActionEffectiveRule(prop.getEffectiveRule());
+                        for (String effKey : effectiveMap.keySet()) {
+                            if ((effKey.equalsIgnoreCase(Rule_Defense_Action) || effKey.equalsIgnoreCase(Rule_Defense_Self_Action))
+                                    && effectiveMapBase.get(Drop_Down) != null) {
+                                defenseActions.put(effKey, effectiveMap.get(effKey));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return defenseActions;
     }
 
     @Override

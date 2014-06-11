@@ -22,6 +22,10 @@ public class BaseService {
     public static String Drop_Down = "D";
     //掉落在的花盆上
     public static String RULE_Drop_Pot = "DP";
+    //防御行道具使用时产生的反作用力
+    public static String Rule_Defense_Action = "DA";
+    //防御道具使用时自己收到的消息
+    public static String Rule_Defense_Self_Action = "DSA";
     //标注肥肉的改变值
     public static String Fatness = "F";
     //是否可以显示在脸上
@@ -161,12 +165,27 @@ public class BaseService {
         String propHaving = toUser.getPropHaving();
         Map<Integer, Integer> propMap = explainPropHaveRule(propHaving);
         for (Integer key : vProductIds.keySet()) {
+            // 判断是否有国旗 id >202 <300
+            if (key.intValue() > 202 && key.intValue() < 300) {
+                int needRemoveKey = -1;
+                for (Integer propHavingKey : propMap.keySet()) {
+                    if (propHavingKey.intValue() > 202 && propHavingKey.intValue() < 300) {
+                        needRemoveKey = propHavingKey;
+
+                    }
+                }
+                if (needRemoveKey > 0) {
+                    propMap.remove(needRemoveKey);
+                }
+            }
+
             if (propMap.containsKey(key)) {
                 propMap.put(key, propMap.get(key) + (-vProductIds.get(key)));
             } else {
                 propMap.put(key, -vProductIds.get(key));
             }
         }
+
         updateUser.setPropHaving(transMapToString(propMap));
         return updateUser;
     }
